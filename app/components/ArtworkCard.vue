@@ -27,28 +27,15 @@ type ImageProp = {
   srcset?: string
 }
 
-const props = defineProps<{
-  title: string
-  description: string
-  image: ImageProp
-}>({
-  title: {
-    type: String,
-    required: true
-  },
-  description: {
-    type: String,
-    required: true
-  },
-  image: {
-    type: Object as () => ImageProp,
-    required: true
-  }
-})
+const props = defineProps({
+    title: { type: String, required: true },
+    description: { type: String, required: true },
+    image: { type: Object as PropType<ImageProp>, required: true }
+  } as const)
 </script>
 
 <style>
-@import url("assets/css/artworkcard.css");
+@import url("~/assets/css/artworkcard.css");
 
 .card-image {
   display: block;
