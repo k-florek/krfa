@@ -7,6 +7,9 @@
     :image=artworkImage
     />
   </div>
+  <div>
+    <SquareCatalog></SquareCatalog>
+  </div>
 </template>
 
 <script lang="ts" setup>
