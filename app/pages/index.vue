@@ -8,6 +8,9 @@
   <div>
     <FeaturedWorks/>
   </div>
+  <div>
+    <Footer/>
+  </div>
 </template>
 
 <script lang="ts" setup>
