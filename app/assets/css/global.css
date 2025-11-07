@@ -1,0 +1,180 @@
+/* Reset some basic elements */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Color Palette Variables */
+:root {
+    --color-text-primary: #333;
+    --color-bg-body: #fefefe;
+    --color-bg-body-dark: #F0f0f0;
+    --color-bg-subtle: #fafafa;
+    --color-border-muted: #ddd;
+    --color-heading: #222;
+    --color-text-inverse: #fafafa;
+    --color-shadow-strong: rgba(0, 0, 0, 0.7);
+    --color-shadow-soft: rgba(0, 0, 0, 0.1);
+    --color-text-muted: #777;
+    --color-link: #0070f3;
+    --color-link-hover: #0051a3;
+}
+
+body {
+    font-family: "Satoshi-Regular", sans-serif;
+    font-size: 1.125rem;
+    line-height: 1.6;
+    color: var(--color-text-primary);
+    background-color: var(--color-bg-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Layout */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+/* Header */
+
+/* Headings
+    - Normal heading defaults (h1–h6)
+    - Utility classes: .heading (normal), .heading--watercolor (decorative)
+*/
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: "Satoshi-Regular", sans-serif;
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    color: var(--color-heading);
+    margin: 0 0 0.5em;
+}
+
+h1 {
+    font-size: clamp(3rem, 1.8rem + 3.9vw, 4.5rem);
+}
+
+h2 {
+    font-size: clamp(2.625rem, 1.65rem + 2.7vw, 3.375rem);
+}
+
+h3 {
+    font-size: clamp(2.25rem, 1.5rem + 1.8vw, 2.8125rem);
+}
+
+h4 {
+    font-size: 1.875rem;
+}
+
+h5 {
+    font-size: 1.6875rem;
+}
+
+h6 {
+    font-size: 1.5rem;
+}
+
+/* Normal heading utility (apply to any element) */
+.heading {
+    font-family: "Satoshi-Regular", sans-serif;
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    color: var(--color-heading);
+}
+
+/* Watercolor heading utility (decorative display) */
+.watercolor-heading {
+    font-family: 'Squidrock', serif;
+    color: var(--color-heading);
+    font-weight: 500;
+    line-height: 2;
+    letter-spacing: 0.15em;
+}
+
+header {
+    padding: 2rem 0;
+    text-align: center;
+    background-color: var(--color-bg-subtle);
+    border-bottom: 1px solid var(--color-border-muted);
+}
+
+header h1 {
+    font-size: 3.75rem;
+    font-weight: 700;
+    color: var(--color-heading);
+}
+
+/* Gallery */
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+    margin: 3rem 0;
+}
+
+.gallery-item {
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px var(--color-shadow-soft);
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.gallery-item:hover {
+    transform: scale(1.05);
+}
+
+.gallery-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Footer */
+footer {
+    padding: 2rem 0;
+    text-align: center;
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    border-top: 1px solid var(--color-border-muted);
+    background-color: var(--color-bg-subtle);
+}
+
+/* Links */
+a {
+    color: var(--color-link);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+a:hover,
+a:focus {
+    color: var(--color-link-hover);
+    text-decoration: underline;
+}
+
+/* Utility */
+.visually-hidden {
+    border: 0 !important;
+    clip: rect(1px, 1px, 1px, 1px) !important;
+    -webkit-clip-path: inset(50%) !important;
+    clip-path: inset(50%) !important;
+    height: 1px !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+    position: absolute !important;
+    width: 1px !important;
+    white-space: nowrap !important;
+}
