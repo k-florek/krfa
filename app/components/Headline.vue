@@ -1,5 +1,5 @@
 <template>
-  <div style="padding-left:5rem; padding-top:2rem; padding-bottom: 2rem;">
+  <div class="headline">
     <h3>Kelsey Raine Art</h3>
   </div>
 </template>
@@ -8,6 +8,17 @@
 
 </script>
 
-<style>
+<style scoped>
+.headline {
+  padding-left: 5rem;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
 
+@media (max-width: 768px) {
+  .headline {
+    padding-left: 0;
+    text-align: center;
+  }
+}
 </style>
