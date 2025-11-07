@@ -1,0 +1,46 @@
+[
+  {
+    "id": "sandhill-crane",
+    "title": "Sandhill Crane",
+    "description": "A beautiful watercolor painting of a sandhill crane in its natural habitat.",
+    "image": {
+      "src": "/img/artwork/sandhill_crane.jpg",
+      "alt": "Sandhill Crane watercolor painting",
+      "width": 800,
+      "height": 600,
+      "loading": "eager"
+    },
+    "prints": [
+      {
+        "size": "4 X 5",
+        "url": "https://"
+      },
+      {
+        "size": "8 X 10",
+        "url": "https://"
+      }
+    ]
+  },
+  {
+    "id": "cardinal",
+    "title": "Cardinal",
+    "description": "A vibrant red cardinal perched on a winter branch, capturing the beauty of nature.",
+    "image": {
+      "src": "/img/artwork/cardinal.jpg",
+      "alt": "Cardinal watercolor painting",
+      "width": 800,
+      "height": 600,
+      "loading": "lazy"
+    },
+    "prints": [
+      {
+        "size": "4 X 5",
+        "url": "https://"
+      },
+      {
+        "size": "8 X 10",
+        "url": "https://"
+      }
+    ]
+  }
+]
