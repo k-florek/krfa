@@ -1,0 +1,14 @@
+/**
+ * Font Family: Squidrock
+ */
+
+@font-face {
+    font-family: 'Squidrock';
+    src: url('./Squidrock.woff2') format('woff2'),
+        url('./Squidrock.woff') format('woff'),
+        url('./Squidrock.ttf') format('truetype'),
+        url('./Squidrock.otf') format('opentype');
+    font-weight: normal;
+    font-display: swap;
+    font-style: normal;
+}

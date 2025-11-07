@@ -1,0 +1,68 @@
+/**
+ * Font Family: Refresh Screen
+ */
+
+@font-face {
+    font-family: 'Refresh Screen';
+    src: url('./Refresh Screen.woff2') format('woff2'),
+        url('./Refresh Screen.woff') format('woff'),
+        url('./Refresh Screen.ttf') format('truetype'),
+        url('./Refresh Screen.otf') format('opentype');
+    font-weight: normal;
+    font-display: swap;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Refresh Screen Alternate';
+    src: url('./Refresh Screen Alternate.woff2') format('woff2'),
+        url('./Refresh Screen Alternate.woff') format('woff'),
+        url('./Refresh Screen Alternate.ttf') format('truetype'),
+        url('./Refresh Screen Alternate.otf') format('opentype');
+    font-weight: normal;
+    font-display: swap;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Refresh Screen Clean';
+    src: url('./Refresh Screen Clean.woff2') format('woff2'),
+        url('./Refresh Screen Clean.woff') format('woff'),
+        url('./Refresh Screen Clean.ttf') format('truetype'),
+        url('./Refresh Screen Clean.otf') format('opentype');
+    font-weight: normal;
+    font-display: swap;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Refresh Screen Display';
+    src: url('./Refresh Screen Display.woff2') format('woff2'),
+        url('./Refresh Screen Display.woff') format('woff'),
+        url('./Refresh Screen Display.ttf') format('truetype'),
+        url('./Refresh Screen Display.otf') format('opentype');
+    font-weight: normal;
+    font-display: swap;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Refresh Screen Display Grunge';
+    src: url('./Refresh Screen Display Grunge.woff2') format('woff2'),
+        url('./Refresh Screen Display Grunge.woff') format('woff'),
+        url('./Refresh Screen Display Grunge.ttf') format('truetype'),
+        url('./Refresh Screen Display Grunge.otf') format('opentype');
+    font-weight: normal;
+    font-display: swap;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Refresh Screen Swash';
+    src: url('./Refresh Screen Swash.woff2') format('woff2'),
+        url('./Refresh Screen Swash.woff') format('woff'),
+        url('./Refresh Screen Swash.otf') format('opentype');
+    font-weight: normal;
+    font-display: swap;
+    font-style: normal;
+}
