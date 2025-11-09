@@ -1,46 +1,54 @@
 [
   {
-    "id": "sandhill-crane",
-    "title": "Sandhill Crane",
-    "description": "A beautiful watercolor painting of a sandhill crane in its natural habitat.",
+    "id": "portrait-of-a-fairy",
+    "title": "Portrait of a fairy",
+    "description": "Equally beautiful and mysterious, what do the fae long for?",
     "image": {
-      "src": "/img/artwork/sandhill_crane.jpg",
-      "alt": "Sandhill Crane watercolor painting",
+      "src": "/img/artwork/portrait_of_a_fairy.jpg",
+      "alt": "A watercolor portrait of a fairy",
       "width": 800,
       "height": 600,
       "loading": "eager"
     },
-    "prints": [
-      {
-        "size": "4 X 5",
-        "url": "https://"
-      },
-      {
-        "size": "8 X 10",
-        "url": "https://"
-      }
-    ]
+    "prints": []
   },
   {
-    "id": "cardinal",
-    "title": "Cardinal",
-    "description": "A vibrant red cardinal perched on a winter branch, capturing the beauty of nature.",
+    "id": "bun-bun",
+    "title": "Bun-Bun",
+    "description": "That which brings comfort in times of need.",
     "image": {
-      "src": "/img/artwork/cardinal.jpg",
-      "alt": "Cardinal watercolor painting",
+      "src": "/img/artwork/bun-bun.jpg",
+      "alt": "A watercolor painting of a young girl and a bunny",
       "width": 800,
       "height": 600,
       "loading": "lazy"
     },
-    "prints": [
-      {
-        "size": "4 X 5",
-        "url": "https://"
-      },
-      {
-        "size": "8 X 10",
-        "url": "https://"
-      }
-    ]
+    "prints": []
+  },
+  {
+    "id": "goat",
+    "title": "GOAT",
+    "description": "Not the G.O.A.T of goats but a goat of goats!",
+    "image": {
+      "src": "/img/artwork/goat.jpg",
+      "alt": "A watercolor painting of a goat",
+      "width": 800,
+      "height": 600,
+      "loading": "lazy"
+    },
+    "prints": []
+  },
+  {
+    "id": "wet",
+    "title": "Wet",
+    "description": "Cold and wet",
+    "image": {
+      "src": "/img/artwork/wet_crow.jpg",
+      "alt": "A watercolor painting of a wet crow",
+      "width": 800,
+      "height": 600,
+      "loading": "lazy"
+    },
+    "prints": []
   }
 ]
