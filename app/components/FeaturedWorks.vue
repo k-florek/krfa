@@ -87,8 +87,8 @@ onMounted(async () => {
 
 .artwork-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8rem;
   justify-items: center;
 }
 
@@ -108,13 +108,14 @@ onMounted(async () => {
   font-size: 1.1rem;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1000px) {
   .featured-works {
     padding-top: 3rem;
   }
   
   .artwork-grid {
-    gap: 1.5rem;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 5rem;
   }
 }
 </style>
