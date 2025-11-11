@@ -13,11 +13,10 @@
       />
     </div>
     <h4>{{ title }}</h4>
-    <p>{{ description }}</p>
     <div v-if="prints && prints.length" class="prints-buttons">
       <span v-for="print in prints" :key="print.size">
         <a :href="print.url" target="_blank" rel="noopener" class="print-btn">
-          Purchase {{ print.size }} Print
+          {{ print.size }} Open-ended Print
         </a>
       </span>
     </div>
@@ -34,7 +33,7 @@
       <div v-if="prints && prints.length" class="prints-buttons-modal">
         <span v-for="print in prints" :key="print.size">
           <a :href="print.url" target="_blank" rel="noopener" class="print-btn">
-            Purchase {{ print.size }} Print
+            {{ print.size }} Open-ended Print
           </a>
         </span>
       </div>
@@ -61,7 +60,6 @@ type PrintProp = {
 
 const props = defineProps({
   title: { type: String, required: true },
-  description: { type: String, required: true },
   image: { type: Object as PropType<ImageProp>, required: true },
   prints: { type: Array as PropType<PrintProp[]>, required: false, default: () => [] }
 } as const)
@@ -81,7 +79,9 @@ function closeModal() {
 .card-image {
   width: 100%;
   height: 100%;
-  object-fit: cover; 
+  display: block;
+  object-fit: cover;
+  object-position: top center;
 }
 
 .modal-overlay {

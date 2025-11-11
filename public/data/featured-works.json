@@ -2,12 +2,11 @@
   {
     "id": "portrait-of-a-fairy",
     "title": "Portrait of a fairy",
-    "description": "Equally beautiful and mysterious, what do the fae long for?",
     "image": {
       "src": "/img/artwork/portrait_of_a_fairy.jpg",
       "alt": "A watercolor portrait of a fairy",
       "width": 800,
-      "height": 600,
+      "height": 900,
       "loading": "eager"
     },
     "prints": []
@@ -15,7 +14,6 @@
   {
     "id": "bun-bun",
     "title": "Bun-Bun",
-    "description": "That which brings comfort in times of need.",
     "image": {
       "src": "/img/artwork/bun-bun.jpg",
       "alt": "A watercolor painting of a young girl and a bunny",
@@ -27,8 +25,7 @@
   },
   {
     "id": "goat",
-    "title": "GOAT",
-    "description": "Not the G.O.A.T of goats but a goat of goats!",
+    "title": "Goat",
     "image": {
       "src": "/img/artwork/goat.jpg",
       "alt": "A watercolor painting of a goat",
@@ -40,8 +37,7 @@
   },
   {
     "id": "wet",
-    "title": "Wet",
-    "description": "Cold and wet",
+    "title": "Wet Crow",
     "image": {
       "src": "/img/artwork/wet_crow.jpg",
       "alt": "A watercolor painting of a wet crow",
