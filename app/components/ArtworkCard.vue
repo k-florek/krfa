@@ -16,7 +16,7 @@
     <div v-if="prints && prints.length" class="prints-buttons">
       <span v-for="print in prints" :key="print.size">
         <a :href="print.url" target="_blank" rel="noopener" class="print-btn">
-          {{ print.size }} Open-ended Print
+          {{ print.size }} Open-edition Print
         </a>
       </span>
     </div>
@@ -33,7 +33,7 @@
       <div v-if="prints && prints.length" class="prints-buttons-modal">
         <span v-for="print in prints" :key="print.size">
           <a :href="print.url" target="_blank" rel="noopener" class="print-btn">
-            {{ print.size }} Open-ended Print
+            {{ print.size }} Open-edition Print
           </a>
         </span>
       </div>
