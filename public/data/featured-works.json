@@ -9,19 +9,12 @@
       "height": 900,
       "loading": "eager"
     },
-    "prints": []
-  },
-  {
-    "id": "bun-bun",
-    "title": "Bun-Bun",
-    "image": {
-      "src": "/img/artwork/bun-bun.jpg",
-      "alt": "A watercolor painting of a young girl and a bunny",
-      "width": 800,
-      "height": 600,
-      "loading": "lazy"
-    },
-    "prints": []
+    "prints": [
+      {
+        "size": "8 X 10",
+        "url": "https://buy.prints.io/p/mgjDQeMLNQjaS0kChHr6"
+      }
+    ]
   },
   {
     "id": "goat",
@@ -33,7 +26,12 @@
       "height": 600,
       "loading": "lazy"
     },
-    "prints": []
+    "prints": [
+      {
+        "size": "8 X 10",
+        "url": "https://buy.prints.io/p/PMbYnzRzMGljfXzFU3sN"
+      }
+    ]
   },
   {
     "id": "wet",
@@ -45,6 +43,11 @@
       "height": 600,
       "loading": "lazy"
     },
-    "prints": []
+    "prints": [
+      {
+        "size": "8 X 10",
+        "url": "https://buy.prints.io/p/MH7zaZghdNba3wM2d5Dh"
+      }
+    ]
   }
 ]
