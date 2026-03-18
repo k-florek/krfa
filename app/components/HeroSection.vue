@@ -2,14 +2,14 @@
   <div class="hero-section-wrapper">
     <div class="hero-section">
       <div class="hero-content">
-        <h5 style="color:var(--color-text-muted)">About the Artist</h5>
+        <p class="artist-label">About the Artist</p>
         <h1 class="watercolor-heading">Kelsey Raine</h1>
         <p>Kelsey is an emerging artist from Madison WI whose creative works seek to explore the emotional and physical connections in humanity and the natural world. Working in both watercolor and oil mediums, Kelsey captures the essence we share with each other and world around us.</p>
       </div>
     </div>
     <div class="hero-images">
-      <img src="/img/photo/kelsey.jpg" alt="Artwork 1" class="hero-img hero-img-1" />
-      <img src="/img/photo/raven.jpg" alt="Artwork 2" class="hero-img hero-img-2" />
+      <img src="/img/photo/kelsey.jpg" alt="Kelsey Raine, visual artist from Madison WI" class="hero-img hero-img-1" />
+      <img src="/img/photo/raven.jpg" alt="Raven painting by Kelsey Raine" class="hero-img hero-img-2" />
     </div>
   </div>
 </template>
@@ -19,6 +19,10 @@
 </script>
 
 <style>
+.artist-label {
+  color: var(--color-text-muted);
+  margin: 0 0 0.5rem 0;
+}
 .hero-section-wrapper {
   position: relative;
   overflow: visible;

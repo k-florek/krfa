@@ -1,6 +1,6 @@
 <template>
   <div class="headline">
-    <h3>Kelsey Raine Art</h3>
+    <p class="site-brand">Kelsey Raine Art</p>
   </div>
 </template>
 
@@ -9,6 +9,12 @@
 </script>
 
 <style scoped>
+.site-brand {
+  font-size: inherit;
+  font-weight: inherit;
+  margin: 0;
+}
+
 .headline {
   padding-left: 5rem;
   padding-top: 2rem;

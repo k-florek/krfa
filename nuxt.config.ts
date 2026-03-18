@@ -11,7 +11,30 @@ export default defineNuxtConfig({
   modules: ['@nuxt/content', '@nuxt/image', '@nuxt/ui'],
   app: {
     head: {
+      htmlAttrs: {
+        lang: 'en'
+      },
+      titleTemplate: '%s | Kelsey Raine Art',
+      meta: [
+        { name: 'description', content: 'Kelsey Raine is an emerging visual artist from Madison, WI, creating watercolor and oil paintings that explore emotional and physical connections in humanity and the natural world.' },
+        { name: 'author', content: 'Kelsey Raine' },
+        { property: 'og:site_name', content: 'Kelsey Raine Art' },
+        { property: 'og:type', content: 'website' },
+        { property: 'og:url', content: 'https://kelseyraineart.com' },
+        { property: 'og:title', content: 'Kelsey Raine Art | Watercolor & Oil Paintings' },
+        { property: 'og:description', content: 'Kelsey Raine is an emerging visual artist from Madison, WI, creating watercolor and oil paintings that explore emotional and physical connections in humanity and the natural world.' },
+        { property: 'og:image', content: 'https://kelseyraineart.com/img/photo/kelsey.jpg' },
+        { property: 'og:locale', content: 'en_US' },
+        { name: 'twitter:card', content: 'summary_large_image' },
+        { name: 'twitter:title', content: 'Kelsey Raine Art | Watercolor & Oil Paintings' },
+        { name: 'twitter:description', content: 'Kelsey Raine is an emerging visual artist from Madison, WI, creating watercolor and oil paintings that explore emotional and physical connections in humanity and the natural world.' },
+        { name: 'twitter:image', content: 'https://kelseyraineart.com/img/photo/kelsey.jpg' },
+      ],
       link: [
+        {
+          rel: 'canonical',
+          href: 'https://kelseyraineart.com'
+        },
         {
           rel: 'stylesheet',
           href: 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css',
