@@ -8,7 +8,7 @@
       </div>
     </div>
     <div class="hero-images">
-      <img src="/img/photo/self-portrait.png" alt="self-portrait painted by Kelsey Raine" class="hero-img hero-img-1" />
+      <img src="/img/photo/self-portrait-small.jpg" alt="self-portrait painted by Kelsey Raine" class="hero-img hero-img-1" />
       <img src="/img/photo/kelsey.jpg" alt="Kelsey Raine, visual artist from Madison WI" class="hero-img hero-img-2" />
       
     </div>
