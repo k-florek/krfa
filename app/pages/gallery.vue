@@ -1,12 +1,15 @@
 <template>
   <section class="gallery-page">
     <div class="gallery-header">
-      <div>
-        <p class="artist-label">Collect Work</p>
+      <div class="gallery-header-inner">
+        <div class="headline">
+          <NuxtLink to="/" class="site-brand">Kelsey Raine Art</NuxtLink>
+          <NuxtLink to="/" class="back-home">Back to Home</NuxtLink>
+        </div>
         <h1 class="watercolor-heading">Gallery Shop</h1>
         <p class="subtitle">Choose prints now and prepare originals for future releases.</p>
       </div>
-      <NuxtLink to="/" class="back-home">Back to Home</NuxtLink>
+      
     </div>
 
     <div class="shop-layout">
@@ -258,6 +261,51 @@ useSeoMeta({
 </script>
 
 <style scoped>
+.site-brand {
+  font-size: inherit;
+  font-weight: inherit;
+  margin: 0;
+  color: inherit;
+}
+
+.headline {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.headline-nav {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.nav-link {
+  border: 1px solid var(--color-border-muted);
+  border-radius: 999px;
+  color: var(--color-text-primary);
+  padding: 0.35rem 0.8rem;
+  text-decoration: none;
+}
+
+.nav-link.is-active {
+  background: #14213d;
+  color: #fff;
+  border-color: #14213d;
+}
+
+@media (max-width: 768px) {
+  .headline {
+    padding-left: 0;
+    padding-right: 0;
+    text-align: center;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+}
+
 .gallery-page {
   max-width: 1300px;
   margin: 0 auto;
@@ -272,6 +320,10 @@ useSeoMeta({
   margin-bottom: 2rem;
 }
 
+.gallery-header-inner {
+  width: 100%;
+}
+
 .artist-label {
   color: var(--color-text-muted);
   margin-bottom: 0.5rem;
@@ -282,11 +334,22 @@ useSeoMeta({
 }
 
 .back-home {
-  border: 1px solid var(--color-border-muted);
-  border-radius: 999px;
-  padding: 0.5rem 1rem;
+  border: 2px solid #000;
+  border-radius: 4px;
+  color: #000;
+  padding: 1rem 2.5rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  text-decoration: none;
   background: #fff;
   white-space: nowrap;
+  display: inline-block;
+  transition: all 0.3s ease;
+}
+
+.back-home:hover {
+  background-color: #000;
+  color: #fff;
 }
 
 .shop-layout {

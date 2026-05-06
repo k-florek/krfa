@@ -1,10 +1,6 @@
 <template>
   <div class="headline">
     <NuxtLink to="/" class="site-brand">Kelsey Raine Art</NuxtLink>
-    <nav class="headline-nav" aria-label="Primary">
-      <NuxtLink to="/" class="nav-link" active-class="is-active">Home</NuxtLink>
-      <NuxtLink to="/gallery" class="nav-link" active-class="is-active">Gallery Shop</NuxtLink>
-    </nav>
   </div>
 </template>
 

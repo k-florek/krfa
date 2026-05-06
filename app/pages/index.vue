@@ -5,6 +5,11 @@
   <div>
     <HeroSection/>
   </div>
+  <div class="gallery-cta-section">
+    <NuxtLink to="/gallery" class="gallery-cta-button">
+      Shop Gallery
+    </NuxtLink>
+  </div>
   <div>
     <FeaturedWorks/>
   </div>
@@ -54,5 +59,31 @@ useHead({
 </script>
 
 <style>
+.gallery-cta-section {
+  background-color: #000;
+  padding: 4rem 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+}
 
+.gallery-cta-button {
+  background-color: white;
+  color: #000;
+  padding: 1rem 2.5rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  text-decoration: none;
+  border: 2px solid white;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.gallery-cta-button:hover {
+  background-color: transparent;
+  color: white;
+}
 </style>
