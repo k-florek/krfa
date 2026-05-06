@@ -128,6 +128,7 @@ Recommended statuses:
 
 - GitHub Pages deployment stays static via `pnpm generate`.
 - Netlify functions should be deployed as a separate backend service or combined deployment if you move hosting.
+- On Netlify, Nuxt uses the `netlify-static` preset and outputs static assets to `dist`.
 - Frontend must point `NUXT_PUBLIC_CHECKOUT_API_BASE_URL` to the live Netlify backend domain.
 
 ## Next Implementation Targets
