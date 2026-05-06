@@ -273,6 +273,7 @@
   border: 1px solid transparent;
   padding: 0.65rem 1rem;
   text-decoration: none;
+  text-align: center;
   cursor: pointer;
   transition: all 0.2s ease;
 }
@@ -561,11 +562,14 @@
     justify-items: center;
   }
 
-  .gallery-cta-section .social-links,
-  .gallery-cta-section .gallery-cta-button {
+  .gallery-cta-section .social-links {
     grid-column: auto;
     padding-left: 0;
     justify-content: center;
+  }
+
+  .gallery-cta-section .gallery-cta-button {
+    grid-column: auto;
   }
 
   .card {
