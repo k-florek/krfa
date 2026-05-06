@@ -5,6 +5,7 @@
         <p class="artist-label">About the Artist</p>
         <h1 class="watercolor-heading">Kelsey Raine</h1>
         <p>Kelsey is an emerging artist from Madison WI whose creative works seek to explore the emotional and physical connections in humanity and the natural world. Working in both watercolor and oil mediums, Kelsey captures the essence we share with each other and world around us.</p>
+        <NuxtLink to="/gallery" class="hero-cta">Shop Prints</NuxtLink>
       </div>
     </div>
     <div class="hero-images">
@@ -45,6 +46,16 @@
   padding-left: 5rem;
   width: 40%;
   z-index: 2;
+}
+
+.hero-cta {
+  display: inline-block;
+  margin-top: 1rem;
+  border-radius: 999px;
+  background: #0f5132;
+  color: #fff;
+  padding: 0.55rem 1rem;
+  text-decoration: none;
 }
 .hero-images {
   position: absolute;

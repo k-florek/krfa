@@ -2,6 +2,13 @@
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
+  runtimeConfig: {
+    public: {
+      checkoutApiBaseUrl: process.env.NUXT_PUBLIC_CHECKOUT_API_BASE_URL || '',
+      checkoutSuccessPath: '/gallery/success',
+      checkoutCancelPath: '/gallery/cancel'
+    }
+  },
   css: [
     '@/assets/css/global.css',
     '@/assets/fonts/Satoshi_Complete/Fonts/WEB/css/satoshi.css',

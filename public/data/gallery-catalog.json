@@ -1,0 +1,89 @@
+[
+  {
+    "id": "portrait-of-a-fairy",
+    "slug": "portrait-of-a-fairy",
+    "title": "Portrait of a Fairy",
+    "description": "A whimsical watercolor portrait exploring wonder and softness.",
+    "medium": "Watercolor",
+    "type": "print",
+    "active": true,
+    "image": {
+      "src": "/img/artwork/portrait_of_a_fairy.jpg",
+      "alt": "Portrait of a Fairy watercolor painting",
+      "width": 800,
+      "height": 900
+    },
+    "variants": [
+      {
+        "id": "8x10",
+        "label": "8 x 10 Open Edition Print",
+        "stripePriceId": "price_replace_me_8x10",
+        "priceCents": 4500,
+        "currency": "usd",
+        "whccSku": "WHCC-POAF-8X10",
+        "inStock": true
+      },
+      {
+        "id": "11x14",
+        "label": "11 x 14 Open Edition Print",
+        "stripePriceId": "price_replace_me_11x14",
+        "priceCents": 6500,
+        "currency": "usd",
+        "whccSku": "WHCC-POAF-11X14",
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "wet-crow",
+    "slug": "wet-crow",
+    "title": "Wet Crow",
+    "description": "An expressive study of texture and resilience.",
+    "medium": "Watercolor",
+    "type": "print",
+    "active": true,
+    "image": {
+      "src": "/img/artwork/wet_crow.jpg",
+      "alt": "Wet Crow watercolor painting",
+      "width": 800,
+      "height": 600
+    },
+    "variants": [
+      {
+        "id": "8x10",
+        "label": "8 x 10 Open Edition Print",
+        "stripePriceId": "price_replace_me_wetcrow_8x10",
+        "priceCents": 4500,
+        "currency": "usd",
+        "whccSku": "WHCC-WC-8X10",
+        "inStock": true
+      }
+    ]
+  },
+  {
+    "id": "goat-original",
+    "slug": "goat-original",
+    "title": "Goat (Original)",
+    "description": "Original watercolor artwork, one-of-one piece.",
+    "medium": "Watercolor",
+    "type": "original",
+    "active": true,
+    "image": {
+      "src": "/img/artwork/goat.jpg",
+      "alt": "Goat watercolor original painting",
+      "width": 800,
+      "height": 600
+    },
+    "variants": [
+      {
+        "id": "original",
+        "label": "Original Artwork",
+        "stripePriceId": "price_replace_me_original_goat",
+        "priceCents": 45000,
+        "currency": "usd",
+        "whccSku": "ORIGINAL-GOAT",
+        "inStock": false
+      }
+    ]
+  }
+]

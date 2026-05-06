@@ -63,7 +63,11 @@
         </p>
         <p class="info-text">
           <i class="fa-solid fa-shield-halved"></i>
-          Secure transactions powered by Stripe
+          Stripe checkout for secure payments
+        </p>
+        <p class="info-text">
+          <i class="fa-solid fa-print"></i>
+          Fulfillment is reviewed before WHCC print submission
         </p>
       </div>
     </div>
