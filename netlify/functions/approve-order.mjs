@@ -29,7 +29,7 @@ export async function handler(event) {
 
     if (!isOrderStoreConfigured()) {
       return jsonResponse(500, origin, {
-        error: 'Order store is not configured. Set SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY.',
+        error: 'Order store is not configured. Set NETLIFY_DATABASE_URL (or DATABASE_URL).',
       })
     }
 

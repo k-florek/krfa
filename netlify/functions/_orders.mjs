@@ -1,23 +1,41 @@
-import { createClient } from '@supabase/supabase-js'
+import pg from 'pg'
 
-const supabaseUrl = process.env.SUPABASE_URL
-const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY
+const { Pool } = pg
 
-function getClient() {
-  if (!supabaseUrl || !supabaseServiceRoleKey) {
+const databaseUrl =
+  process.env.NETLIFY_DATABASE_URL || process.env.DATABASE_URL || process.env.POSTGRES_URL
+
+let pool
+
+function getPool() {
+  if (!databaseUrl) {
     return null
   }
 
-  return createClient(supabaseUrl, supabaseServiceRoleKey, {
-    auth: {
-      autoRefreshToken: false,
-      persistSession: false,
-    },
-  })
+  if (!pool) {
+    pool = new Pool({
+      connectionString: databaseUrl,
+      ssl: {
+        rejectUnauthorized: false,
+      },
+      max: 4,
+    })
+  }
+
+  return pool
+}
+
+async function query(text, params = []) {
+  const activePool = getPool()
+  if (!activePool) {
+    throw new Error('Netlify Database is not configured.')
+  }
+
+  return activePool.query(text, params)
 }
 
 export function isOrderStoreConfigured() {
-  return !!(supabaseUrl && supabaseServiceRoleKey)
+  return !!databaseUrl
 }
 
 export async function upsertPendingOrder({
@@ -27,137 +45,126 @@ export async function upsertPendingOrder({
   customerEmail,
   lineItems,
 }) {
-  const supabase = getClient()
-  if (!supabase) {
-    return { skipped: true, reason: 'Supabase is not configured.' }
+  if (!isOrderStoreConfigured()) {
+    return { skipped: true, reason: 'Netlify Database is not configured.' }
   }
 
-  const payload = {
-    stripe_session_id: stripeSessionId,
-    status: 'pending_approval',
-    amount_total: amountTotal,
-    currency,
-    customer_email: customerEmail,
-    line_items: lineItems,
-  }
+  const { rows } = await query(
+    `
+      insert into public.orders (
+        stripe_session_id,
+        status,
+        amount_total,
+        currency,
+        customer_email,
+        line_items
+      )
+      values ($1, 'pending_approval', $2, $3, $4, $5::jsonb)
+      on conflict (stripe_session_id)
+      do update set
+        amount_total = excluded.amount_total,
+        currency = excluded.currency,
+        customer_email = excluded.customer_email,
+        line_items = excluded.line_items,
+        status = 'pending_approval'
+      returning *
+    `,
+    [stripeSessionId, amountTotal, currency, customerEmail, JSON.stringify(lineItems || [])]
+  )
 
-  const { data, error } = await supabase
-    .from('orders')
-    .upsert(payload, { onConflict: 'stripe_session_id' })
-    .select('*')
-    .single()
-
-  if (error) {
-    throw error
-  }
-
-  return { order: data }
+  return { order: rows[0] }
 }
 
 export async function listOrdersByStatus(status) {
-  const supabase = getClient()
-  if (!supabase) {
-    throw new Error('Supabase is not configured.')
-  }
+  const { rows } = await query(
+    `
+      select *
+      from public.orders
+      where status = $1
+      order by created_at desc
+    `,
+    [status]
+  )
 
-  const { data, error } = await supabase
-    .from('orders')
-    .select('*')
-    .eq('status', status)
-    .order('created_at', { ascending: false })
-
-  if (error) {
-    throw error
-  }
-
-  return data
+  return rows
 }
 
 export async function approveOrder(orderId) {
-  const supabase = getClient()
-  if (!supabase) {
-    throw new Error('Supabase is not configured.')
+  const { rows } = await query(
+    `
+      update public.orders
+      set status = 'approved'
+      where id = $1
+        and status = 'pending_approval'
+      returning *
+    `,
+    [orderId]
+  )
+
+  if (!rows[0]) {
+    throw new Error('Order not found in pending_approval state.')
   }
 
-  const { data, error } = await supabase
-    .from('orders')
-    .update({ status: 'approved' })
-    .eq('id', orderId)
-    .eq('status', 'pending_approval')
-    .select('*')
-    .single()
-
-  if (error) {
-    throw error
-  }
-
-  return data
+  return rows[0]
 }
 
 export async function getApprovedOrder(orderId) {
-  const supabase = getClient()
-  if (!supabase) {
-    throw new Error('Supabase is not configured.')
+  const { rows } = await query(
+    `
+      select *
+      from public.orders
+      where id = $1
+        and status = 'approved'
+      limit 1
+    `,
+    [orderId]
+  )
+
+  if (!rows[0]) {
+    throw new Error('Approved order not found.')
   }
 
-  const { data, error } = await supabase
-    .from('orders')
-    .select('*')
-    .eq('id', orderId)
-    .eq('status', 'approved')
-    .single()
-
-  if (error) {
-    throw error
-  }
-
-  return data
+  return rows[0]
 }
 
 export async function markOrderSubmitted(orderId, externalId, rawResponse) {
-  const supabase = getClient()
-  if (!supabase) {
-    throw new Error('Supabase is not configured.')
+  const { rows } = await query(
+    `
+      update public.orders
+      set
+        status = 'submitted_to_whcc',
+        whcc_external_id = $2,
+        whcc_response = $3::jsonb,
+        whcc_last_error = null
+      where id = $1
+      returning *
+    `,
+    [orderId, externalId, JSON.stringify(rawResponse ?? null)]
+  )
+
+  if (!rows[0]) {
+    throw new Error('Order not found while marking submitted.')
   }
 
-  const { data, error } = await supabase
-    .from('orders')
-    .update({
-      status: 'submitted_to_whcc',
-      whcc_external_id: externalId,
-      whcc_response: rawResponse,
-      whcc_last_error: null,
-    })
-    .eq('id', orderId)
-    .select('*')
-    .single()
-
-  if (error) {
-    throw error
-  }
-
-  return data
+  return rows[0]
 }
 
 export async function markOrderFailed(orderId, errorMessage) {
-  const supabase = getClient()
-  if (!supabase) {
-    throw new Error('Supabase is not configured.')
+  const { rows } = await query(
+    `
+      update public.orders
+      set
+        status = 'approved',
+        whcc_last_error = $2
+      where id = $1
+      returning *
+    `,
+    [orderId, errorMessage]
+  )
+
+  if (!rows[0]) {
+    throw new Error('Order not found while marking failed submission.')
   }
 
-  const { data, error } = await supabase
-    .from('orders')
-    .update({
-      status: 'approved',
-      whcc_last_error: errorMessage,
-    })
-    .eq('id', orderId)
-    .select('*')
-    .single()
-
-  if (error) {
-    throw error
-  }
-
-  return data
+  return rows[0]
 }

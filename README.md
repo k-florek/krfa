@@ -65,7 +65,7 @@ Notes:
 - `netlify/functions/submit-whcc-order.mjs`
 - `netlify/functions/list-orders.mjs`
 
-The checkout + webhook paths are implemented for Stripe test mode. Approval and WHCC submission now use a Supabase-backed order store.
+The checkout + webhook paths are implemented for Stripe test mode. Approval and WHCC submission now use a Netlify Database (Postgres)-backed order store.
 
 ## Stripe Catalog Sync
 
@@ -90,14 +90,13 @@ Defined in `.env.example`:
 - `STRIPE_SECRET_KEY`
 - `STRIPE_WEBHOOK_SECRET`
 - `ADMIN_API_TOKEN`
-- `SUPABASE_URL`
-- `SUPABASE_SERVICE_ROLE_KEY`
+- `NETLIFY_DATABASE_URL` (or `DATABASE_URL`)
 - `WHCC_API_BASE_URL`
 - `WHCC_API_KEY`
 
-## Supabase Schema
+## Database Schema
 
-Apply the SQL in `supabase/orders.sql` before enabling webhooks/approval flow.
+Apply the SQL in `database/orders.sql` before enabling webhooks/approval flow.
 
 Equivalent schema:
 
