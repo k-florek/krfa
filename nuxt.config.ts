@@ -10,7 +10,7 @@ export default defineNuxtConfig({
     }
   },
   css: [
-    '@/assets/css/global.css',
+    '@/assets/css/index.css',
     '@/assets/fonts/Satoshi_Complete/Fonts/WEB/css/satoshi.css',
     '@/assets/fonts/Squidrock/squidrock.css',
     '@/assets/fonts/Refresh-Screen/refresh-screen.css'

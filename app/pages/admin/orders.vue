@@ -5,20 +5,20 @@
 
     <div class="auth-row">
       <label for="token">Admin API Token</label>
-      <input id="token" v-model="adminToken" type="password" placeholder="Paste ADMIN_API_TOKEN" />
-      <button @click="saveToken">Save Token</button>
+      <input id="token" v-model="adminToken" type="password" placeholder="Paste ADMIN_API_TOKEN" class="form-control" />
+      <button @click="saveToken" class="btn btn-primary">Save Token</button>
     </div>
 
     <div class="controls">
-      <select v-model="statusFilter">
+      <select v-model="statusFilter" class="form-control">
         <option value="pending_approval">Pending Approval</option>
         <option value="approved">Approved</option>
         <option value="submitted_to_whcc">Submitted to WHCC</option>
       </select>
-      <button @click="loadOrders" :disabled="loading">{{ loading ? 'Loading...' : 'Refresh' }}</button>
+      <button @click="loadOrders" :disabled="loading" class="btn btn-primary">{{ loading ? 'Loading...' : 'Refresh' }}</button>
     </div>
 
-    <p v-if="error" class="error">{{ error }}</p>
+    <p v-if="error" class="status error">{{ error }}</p>
 
     <div v-if="!orders.length && !loading" class="empty">
       No orders found for this status.
@@ -28,12 +28,12 @@
       <li v-for="order in orders" :key="order.id" class="order-card">
         <div class="order-head">
           <h3>{{ order.id }}</h3>
-          <span class="status">{{ order.status }}</span>
+          <span class="status-chip">{{ order.status }}</span>
         </div>
         <p><strong>Email:</strong> {{ order.customer_email || 'Unknown' }}</p>
         <p><strong>Amount:</strong> {{ formatMoney(order.amount_total, order.currency) }}</p>
         <p><strong>Stripe Session:</strong> {{ order.stripe_session_id }}</p>
-        <p v-if="order.whcc_last_error" class="error">
+        <p v-if="order.whcc_last_error" class="status error">
           <strong>WHCC Error:</strong> {{ order.whcc_last_error }}
         </p>
 
@@ -46,6 +46,7 @@
           <button
             v-if="order.status === 'pending_approval'"
             @click="approve(order.id)"
+            class="btn btn-primary"
             :disabled="workingOrderId === order.id"
           >
             Approve
@@ -53,6 +54,7 @@
           <button
             v-if="order.status === 'approved'"
             @click="submitWhcc(order.id)"
+            class="btn btn-primary"
             :disabled="workingOrderId === order.id"
           >
             Submit to WHCC
@@ -178,79 +180,3 @@ useSeoMeta({
 })
 </script>
 
-<style scoped>
-.admin-orders {
-  max-width: 1000px;
-  margin: 2.5rem auto;
-  padding: 1rem;
-}
-
-.subtitle {
-  color: var(--color-text-muted);
-  margin-bottom: 1rem;
-}
-
-.auth-row,
-.controls {
-  display: flex;
-  gap: 0.5rem;
-  align-items: center;
-  margin-bottom: 0.8rem;
-  flex-wrap: wrap;
-}
-
-input,
-select,
-button {
-  border: 1px solid var(--color-border-muted);
-  border-radius: 8px;
-  padding: 0.45rem 0.65rem;
-}
-
-button {
-  background: #1d4ed8;
-  color: #fff;
-  cursor: pointer;
-}
-
-.orders-list {
-  list-style: none;
-  display: grid;
-  gap: 0.8rem;
-}
-
-.order-card {
-  border: 1px solid var(--color-border-muted);
-  border-radius: 12px;
-  padding: 1rem;
-  background: #fff;
-}
-
-.order-head {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-
-.status {
-  background: #eef2ff;
-  color: #1e3a8a;
-  border-radius: 999px;
-  padding: 0.2rem 0.6rem;
-  font-size: 0.8rem;
-}
-
-.error {
-  color: #b42318;
-}
-
-.actions {
-  margin-top: 0.8rem;
-}
-
-pre {
-  white-space: pre-wrap;
-  word-break: break-word;
-}
-</style>

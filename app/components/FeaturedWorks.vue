@@ -25,10 +25,12 @@
     </div>
 
     <Teleport to="body">
-      <div v-if="selected" class="lightbox" @click.self="closeLightbox">
-        <button class="lightbox-close" @click="closeLightbox" aria-label="Close">&times;</button>
-        <img :src="selected.image.src" :alt="selected.image.alt || selected.title" class="lightbox-img" />
-        <p class="lightbox-title">{{ selected.title }}</p>
+      <div v-if="selected" class="modal-overlay" @click.self="closeLightbox">
+        <div class="modal-content">
+          <button class="modal-close" @click="closeLightbox" aria-label="Close">&times;</button>
+          <img :src="selected.image.src" :alt="selected.image.alt || selected.title" class="modal-image" />
+          <p class="modal-title">{{ selected.title }}</p>
+        </div>
       </div>
     </Teleport>
   </section>
@@ -95,136 +97,3 @@ function onKeydown(e: KeyboardEvent) {
 onMounted(() => window.addEventListener('keydown', onKeydown))
 onUnmounted(() => window.removeEventListener('keydown', onKeydown))
 </script>
-
-<style scoped>
-.featured-works {
-  padding: 5rem 1rem 4rem;
-  max-width: 1200px;
-  margin: 0 auto;
-  text-align: center;
-}
-
-.featured-works h2 {
-  margin-bottom: 2.5rem;
-}
-
-.masonry-grid {
-  columns: 2;
-  column-gap: 0.75rem;
-}
-
-.masonry-cell {
-  position: relative;
-  overflow: hidden;
-  border-radius: 12px;
-  cursor: pointer;
-  background: var(--color-bg-body-dark);
-  break-inside: avoid;
-  margin-bottom: 0.75rem;
-}
-
-.bento-img {
-  width: 100%;
-  height: auto;
-  display: block;
-  transition: transform 0.4s ease;
-}
-
-.masonry-cell:hover .bento-img {
-  transform: scale(1.04);
-}
-
-.masonry-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.55) 0%, transparent 50%);
-  display: flex;
-  align-items: flex-end;
-  padding: 1.25rem;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.masonry-cell:hover .masonry-overlay {
-  opacity: 1;
-}
-
-.masonry-title {
-  color: #fff;
-  font-size: 1rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-}
-
-/* Lightbox */
-.lightbox {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.88);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-  padding: 2rem;
-}
-
-.lightbox-img {
-  max-width: 90vw;
-  max-height: 80vh;
-  object-fit: contain;
-  border-radius: 8px;
-  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
-}
-
-.lightbox-title {
-  color: #fff;
-  margin-top: 1rem;
-  font-size: 1.1rem;
-  font-weight: 600;
-}
-
-.lightbox-close {
-  position: absolute;
-  top: 1.25rem;
-  right: 1.5rem;
-  background: none;
-  border: none;
-  color: #fff;
-  font-size: 2.5rem;
-  line-height: 1;
-  cursor: pointer;
-  opacity: 0.8;
-  transition: opacity 0.2s;
-}
-
-.lightbox-close:hover {
-  opacity: 1;
-}
-
-.fw-error {
-  color: #d32f2f;
-  padding: 1rem;
-  margin: 1rem auto;
-  max-width: 600px;
-  border: 1px solid #d32f2f;
-  border-radius: 8px;
-  background-color: #ffebee;
-}
-
-.fw-loading {
-  padding: 2rem;
-  color: var(--color-text-muted);
-  font-size: 1.1rem;
-}
-
-@media (max-width: 540px) {
-  .masonry-grid {
-    columns: 1;
-  }
-
-  .masonry-overlay {
-    opacity: 1;
-  }
-}
-</style>

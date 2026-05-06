@@ -35,7 +35,7 @@
         <i class="fa-brands fa-bluesky"></i>
       </a>
     </div>
-    <NuxtLink to="/gallery" class="gallery-cta-button">
+    <NuxtLink to="/gallery" class="gallery-cta-button btn btn-outline-dark">
       Shop Gallery
     </NuxtLink>
   </div>
@@ -86,86 +86,3 @@ useHead({
   ],
 })
 </script>
-
-<style>
-.gallery-cta-section {
-  background-color: #000;
-  padding: 4rem 2rem;
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
-  min-height: 200px;
-}
-
-.gallery-cta-section .social-links {
-  grid-column: 1;
-  justify-content: flex-start;
-  padding-left: 8em;
-}
-
-.gallery-cta-section .gallery-cta-button {
-  grid-column: 2;
-}
-
-.gallery-cta-button {
-  background-color: white;
-  color: #000;
-  padding: 1rem 2.5rem;
-  font-size: 1.125rem;
-  font-weight: 600;
-  text-decoration: none;
-  border: 2px solid white;
-  border-radius: 4px;
-  transition: all 0.3s ease;
-  display: inline-block;
-  cursor: pointer;
-}
-
-.gallery-cta-button:hover {
-  background-color: transparent;
-  color: white;
-}
-
-/* Social Links */
-.social-links {
-  display: flex;
-  gap: 1.5rem;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.social-link {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background-color: var(--color-bg-body);
-  color: var(--color-text-primary);
-  font-size: 1.5rem;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 8px var(--color-shadow-soft);
-  text-decoration: none;
-}
-
-.social-link:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 16px var(--color-shadow-soft);
-}
-
-.social-link.instagram:hover {
-  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-  color: white;
-}
-
-.social-link.bluesky:hover {
-  background-color: #1285fe;
-  color: white;
-}
-
-.social-link.facebook:hover {
-  background-color: #1877f2;
-  color: white;
-}
-</style>

@@ -19,7 +19,7 @@
 
 </script>
 
-<style>
+<style scoped>
 .artist-label {
   color: var(--color-text-muted);
   margin: 0 0 0.5rem 0;
@@ -47,15 +47,6 @@
   z-index: 2;
 }
 
-.hero-cta {
-  display: inline-block;
-  margin-top: 1rem;
-  border-radius: 999px;
-  background: #0f5132;
-  color: #fff;
-  padding: 0.55rem 1rem;
-  text-decoration: none;
-}
 .hero-images {
   position: absolute;
   top: 8rem;

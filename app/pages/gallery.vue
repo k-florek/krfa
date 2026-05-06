@@ -2,18 +2,17 @@
   <section class="gallery-page">
     <div class="gallery-header">
       <div class="gallery-header-inner">
-        <div class="headline">
+        <div class="site-headline">
           <NuxtLink to="/" class="site-brand">Kelsey Raine Art</NuxtLink>
-          <NuxtLink to="/" class="back-home">Back to Home</NuxtLink>
+          <NuxtLink to="/" class="back-home btn btn-outline-dark">Back to Home</NuxtLink>
         </div>
         <h1 class="watercolor-heading">Gallery Shop</h1>
-        <p class="subtitle">Choose prints now and prepare originals for future releases.</p>
       </div>
       
     </div>
 
     <div class="shop-layout">
-      <section class="products-panel">
+      <section class="products-panel panel">
         <div class="filters">
           <button
             v-for="option in filterOptions"
@@ -53,7 +52,7 @@
                 </option>
               </select>
 
-              <button class="add-cart" :disabled="!canAddToCart(product)" @click="addToCart(product)">
+              <button class="add-cart btn btn-success btn-block" :disabled="!canAddToCart(product)" @click="addToCart(product)">
                 {{ canAddToCart(product) ? 'Add to Cart' : 'Unavailable' }}
               </button>
             </div>
@@ -61,7 +60,7 @@
         </div>
       </section>
 
-      <aside class="cart-panel">
+      <aside class="cart-panel panel">
         <h2>Cart ({{ itemCount }})</h2>
 
         <div v-if="items.length === 0" class="empty-cart">
@@ -79,7 +78,7 @@
                 <button @click="decreaseItem(item)">-</button>
                 <span>{{ item.quantity }}</span>
                 <button @click="increaseItem(item)">+</button>
-                <button class="remove-btn" @click="removeItem(item.productId, item.variantId)">Remove</button>
+                <button class="remove-btn btn btn-danger-text" @click="removeItem(item.productId, item.variantId)">Remove</button>
               </div>
             </div>
           </li>
@@ -91,10 +90,10 @@
             <strong>{{ formatMoney(subtotalCents) }}</strong>
           </div>
           <p class="summary-note">Shipping and tax calculated at Stripe checkout.</p>
-          <button class="checkout-btn" :disabled="checkoutLoading || items.length === 0" @click="startCheckout">
+          <button class="checkout-btn btn btn-primary btn-block" :disabled="checkoutLoading || items.length === 0" @click="startCheckout">
             {{ checkoutLoading ? 'Redirecting...' : 'Checkout with Stripe' }}
           </button>
-          <button class="clear-btn" :disabled="items.length === 0" @click="clearCart">Clear Cart</button>
+          <button class="clear-btn btn btn-muted btn-block" :disabled="items.length === 0" @click="clearCart">Clear Cart</button>
           <p v-if="checkoutError" class="checkout-error">{{ checkoutError }}</p>
         </div>
       </aside>
@@ -260,340 +259,3 @@ useSeoMeta({
 })
 </script>
 
-<style scoped>
-.site-brand {
-  font-size: inherit;
-  font-weight: inherit;
-  margin: 0;
-  color: inherit;
-}
-
-.headline {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-top: 2rem;
-  padding-bottom: 2rem;
-}
-
-.headline-nav {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.nav-link {
-  border: 1px solid var(--color-border-muted);
-  border-radius: 999px;
-  color: var(--color-text-primary);
-  padding: 0.35rem 0.8rem;
-  text-decoration: none;
-}
-
-.nav-link.is-active {
-  background: #14213d;
-  color: #fff;
-  border-color: #14213d;
-}
-
-@media (max-width: 768px) {
-  .headline {
-    padding-left: 0;
-    padding-right: 0;
-    text-align: center;
-    flex-direction: column;
-    gap: 0.8rem;
-  }
-}
-
-.gallery-page {
-  max-width: 1300px;
-  margin: 0 auto;
-  padding: 2rem 1rem 4rem;
-}
-
-.gallery-header {
-  display: flex;
-  justify-content: space-between;
-  gap: 2rem;
-  align-items: flex-start;
-  margin-bottom: 2rem;
-}
-
-.gallery-header-inner {
-  width: 100%;
-}
-
-.artist-label {
-  color: var(--color-text-muted);
-  margin-bottom: 0.5rem;
-}
-
-.subtitle {
-  max-width: 60ch;
-}
-
-.back-home {
-  border: 2px solid #000;
-  border-radius: 4px;
-  color: #000;
-  padding: 1rem 2.5rem;
-  font-size: 1.125rem;
-  font-weight: 600;
-  text-decoration: none;
-  background: #fff;
-  white-space: nowrap;
-  display: inline-block;
-  transition: all 0.3s ease;
-}
-
-.back-home:hover {
-  background-color: #000;
-  color: #fff;
-}
-
-.shop-layout {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 1.5rem;
-}
-
-.products-panel,
-.cart-panel {
-  background: #fff;
-  border: 1px solid var(--color-border-muted);
-  border-radius: 16px;
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.06);
-  padding: 1.25rem;
-}
-
-.filters {
-  display: flex;
-  gap: 0.5rem;
-  margin-bottom: 1.25rem;
-}
-
-.filter-btn {
-  background: var(--color-bg-subtle);
-  border: 1px solid var(--color-border-muted);
-  border-radius: 999px;
-  padding: 0.4rem 0.8rem;
-  cursor: pointer;
-}
-
-.filter-btn.active {
-  background: #14213d;
-  color: #fff;
-}
-
-.status {
-  padding: 1rem;
-  border-radius: 10px;
-}
-
-.status.error {
-  border: 1px solid #b42318;
-  background: #fef3f2;
-  color: #912018;
-}
-
-.status.loading {
-  border: 1px solid #bdd5ea;
-  background: #eef6ff;
-  color: #084b83;
-}
-
-.products-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1rem;
-}
-
-.product-card {
-  border: 1px solid var(--color-border-muted);
-  border-radius: 12px;
-  overflow: hidden;
-  background: #fff;
-}
-
-.product-image {
-  width: 100%;
-  height: 220px;
-  object-fit: cover;
-}
-
-.product-content {
-  padding: 0.9rem;
-}
-
-.product-type {
-  font-size: 0.8rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--color-text-muted);
-}
-
-.product-description,
-.product-medium {
-  font-size: 0.95rem;
-}
-
-.product-medium {
-  color: var(--color-text-muted);
-  margin-bottom: 0.5rem;
-}
-
-.variant-label {
-  font-size: 0.8rem;
-  display: block;
-  margin-bottom: 0.3rem;
-}
-
-.variant-select {
-  width: 100%;
-  padding: 0.55rem;
-  border-radius: 8px;
-  border: 1px solid var(--color-border-muted);
-  margin-bottom: 0.7rem;
-}
-
-.add-cart {
-  width: 100%;
-  background: #0f5132;
-  color: #fff;
-  border: 0;
-  border-radius: 8px;
-  padding: 0.65rem;
-  cursor: pointer;
-}
-
-.add-cart:disabled {
-  background: #7f8c8d;
-  cursor: not-allowed;
-}
-
-.cart-items {
-  list-style: none;
-  display: grid;
-  gap: 0.8rem;
-  margin: 1rem 0;
-}
-
-.cart-item {
-  display: grid;
-  grid-template-columns: 58px 1fr;
-  gap: 0.7rem;
-  padding-bottom: 0.8rem;
-  border-bottom: 1px solid var(--color-border-muted);
-}
-
-.cart-thumb {
-  width: 58px;
-  height: 58px;
-  border-radius: 8px;
-  object-fit: cover;
-}
-
-.cart-item-title {
-  font-weight: 700;
-  font-size: 0.95rem;
-}
-
-.cart-item-variant,
-.cart-item-price {
-  font-size: 0.85rem;
-}
-
-.qty-row {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  margin-top: 0.2rem;
-}
-
-.qty-row button {
-  border: 1px solid var(--color-border-muted);
-  background: #fff;
-  border-radius: 6px;
-  padding: 0.2rem 0.45rem;
-  cursor: pointer;
-}
-
-.remove-btn {
-  margin-left: auto;
-  color: #b42318;
-}
-
-.cart-summary {
-  border-top: 1px solid var(--color-border-muted);
-  padding-top: 1rem;
-}
-
-.summary-line {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 0.4rem;
-}
-
-.summary-note {
-  color: var(--color-text-muted);
-  font-size: 0.8rem;
-  margin-bottom: 0.7rem;
-}
-
-.checkout-btn,
-.clear-btn {
-  width: 100%;
-  border: 0;
-  border-radius: 8px;
-  padding: 0.65rem;
-  cursor: pointer;
-}
-
-.checkout-btn {
-  background: #1d4ed8;
-  color: #fff;
-  margin-bottom: 0.5rem;
-}
-
-.checkout-btn:disabled,
-.clear-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.clear-btn {
-  background: #f3f4f6;
-}
-
-.checkout-error {
-  margin-top: 0.65rem;
-  font-size: 0.85rem;
-  color: #b42318;
-}
-
-.empty-cart {
-  margin: 1rem 0;
-  color: var(--color-text-muted);
-}
-
-@media (max-width: 1024px) {
-  .shop-layout {
-    grid-template-columns: 1fr;
-  }
-
-  .products-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 700px) {
-  .gallery-header {
-    flex-direction: column;
-  }
-
-  .products-grid {
-    grid-template-columns: 1fr;
-  }
-}
-</style>
