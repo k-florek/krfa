@@ -13,13 +13,6 @@
       />
     </div>
     <h4>{{ title }}</h4>
-    <div v-if="prints && prints.length" class="prints-buttons">
-      <span v-for="print in prints" :key="print.size">
-        <a :href="print.url" target="_blank" rel="noopener" class="print-btn">
-          {{ print.size }} Open-edition Print
-        </a>
-      </span>
-    </div>
   </div>
 
   <div v-if="showModal" class="modal-overlay" @click.self="closeModal">
@@ -30,13 +23,6 @@
         :alt="image.alt || title"
         class="modal-image"
       />
-      <div v-if="prints && prints.length" class="prints-buttons-modal">
-        <span v-for="print in prints" :key="print.size">
-          <a :href="print.url" target="_blank" rel="noopener" class="print-btn">
-            {{ print.size }} Open-edition Print
-          </a>
-        </span>
-      </div>
     </div>
   </div>
 </template>
@@ -53,15 +39,9 @@ type ImageProp = {
   srcset?: string
 }
 
-type PrintProp = {
-  size: string
-  url: string
-}
-
 const props = defineProps({
   title: { type: String, required: true },
   image: { type: Object as PropType<ImageProp>, required: true },
-  prints: { type: Array as PropType<PrintProp[]>, required: false, default: () => [] }
 } as const)
 
 const showModal = ref(false)
@@ -124,25 +104,5 @@ function closeModal() {
   color: #333;
 }
 
-.prints-buttons, .prints-buttons-modal {
-  margin-top: 2rem;
-  display: flex;
-  gap: 0.5rem;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-.print-btn {
-  background: #1976d2;
-  color: #fff;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  text-decoration: none;
-  font-weight: 500;
-  transition: background 0.2s;
-  border: none;
-  cursor: pointer;
-}
-.print-btn:hover {
-  background: #1565c0;
-}
+
 </style>
