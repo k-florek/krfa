@@ -10,7 +10,7 @@
  */
 
 import { handlePreflight, jsonResponse } from './_shared.mjs'
-import { getSessionCookieHeader, isEmailAuthorized } from './_auth-common.mjs'
+import { getSessionCookieHeader, isEmailAuthorized, shouldUseSecureCookies } from './_auth-common.mjs'
 import { getCorsHeaders } from './_shared.mjs'
 
 
@@ -65,7 +65,9 @@ export async function handler(event) {
     }
 
     // Create session cookie
-    const { header: setCookieHeader } = getSessionCookieHeader(userEmail)
+    const { header: setCookieHeader } = getSessionCookieHeader(userEmail, 7, {
+      secure: shouldUseSecureCookies(event, origin),
+    })
 
     return {
       statusCode: 200,

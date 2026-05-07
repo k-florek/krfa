@@ -4,7 +4,12 @@
     <p class="subtitle">Review paid orders, approve them, and submit approved orders to WHCC.</p>
 
     <div class="auth-row">
-      <h2>Welcome, Admin</h2>
+      <div>
+        <h2>Welcome, {{ adminEmail || 'Admin' }}</h2>
+        <p class="admin-orders-meta">
+          <NuxtLink to="/admin">Back to admin home</NuxtLink>
+        </p>
+      </div>
       <button @click="handleLogout" class="btn btn-secondary">Sign Out</button>
     </div>
 
@@ -82,21 +87,20 @@ type OrderRecord = {
   whcc_last_error: string | null
 }
 
-const config = useRuntimeConfig()
 const orders = ref<OrderRecord[]>([])
 const loading = ref(false)
 const error = ref<string | null>(null)
 const workingOrderId = ref<string | null>(null)
 const statusFilter = ref<'pending_approval' | 'approved' | 'submitted_to_whcc'>('pending_approval')
+const { adminEmail, logout } = useAdminAuth()
+const { callAdminApi } = useAdminApi()
 
 onMounted(() => {
   loadOrders()
 })
 
-const { logout } = useAdminAuth()
-
 function handleLogout() {
-  logout()
+  return logout()
 }
 
 async function loadOrders() {
@@ -135,31 +139,6 @@ async function runAction(orderId: string, path: string) {
   }
 }
 
-async function callApi(path: string, method: 'GET' | 'POST', body?: unknown) {
-  const baseUrl = (config.public.checkoutApiBaseUrl || '').replace(/\/$/, '')
-
-  if (!baseUrl) {
-    throw new Error('NUXT_PUBLIC_CHECKOUT_API_BASE_URL is not configured.')
-  }
-
-  const response = await fetch(`${baseUrl}${path}`, {
-    method,
-    headers: {
-      'content-type': 'application/json',
-    },
-      credentials: 'include',
-    body: method === 'POST' ? JSON.stringify(body || {}) : undefined,
-  })
-
-  const payload = await response.json().catch(() => ({}))
-
-  if (!response.ok) {
-    throw new Error(payload.error || 'Request failed.')
-  }
-
-  return payload
-}
-
 function formatMoney(cents: number, currency: string) {
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
@@ -173,4 +152,11 @@ useSeoMeta({
   robots: 'noindex,nofollow',
 })
 </script>
+
+<style scoped>
+.admin-orders-meta {
+  margin: 0;
+  color: var(--color-text-muted);
+}
+</style>
 

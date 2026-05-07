@@ -37,107 +37,84 @@ definePageMeta({
 const isLoading = ref(false)
 const errorMessage = ref('')
 const successMessage = ref('')
+let removeLoginListener: (() => void) | null = null
 
-// Exchange a Netlify Identity user object for an admin session cookie
-const processLogin = async (user: any) => {
+const {
+  establishSession,
+  isAuthenticated,
+  refreshSession,
+  sessionError,
+  waitForIdentity,
+} = useAdminAuth()
+
+const finalizeLogin = async (user: { jwt: () => Promise<string> }) => {
   isLoading.value = true
   errorMessage.value = ''
+  successMessage.value = 'Authentication successful! Verifying access...'
 
   try {
-    // user.jwt() refreshes the token if needed; do not rely on user.token?.access_token
-    // which can be null when the user was restored from localStorage after an OAuth redirect.
-    const token: string = await user.jwt()
-
-    if (!token) {
-      throw new Error('Failed to obtain authentication token')
-    }
-
-    successMessage.value = 'Authentication successful! Verifying access...'
-
-    const response = await fetch('/api/verify-admin', {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-      },
-      body: JSON.stringify({ token }),
-    })
-
-    const data = await response.json()
-
-    if (!response.ok) {
-      throw new Error(data.error || 'Failed to verify admin access')
-    }
-
-    await navigateTo('/admin/orders')
+    await establishSession(user)
+    await navigateTo('/admin')
   } catch (error) {
     console.error('Login error:', error)
     errorMessage.value = error instanceof Error ? error.message : 'An unexpected error occurred'
+    successMessage.value = ''
+  } finally {
     isLoading.value = false
   }
 }
 
-// Initialize Netlify Identity. If the user is already authenticated (e.g.
-// returning from an OAuth redirect via the global plugin), auto-proceed.
-onMounted(() => {
-  const setupIdentity = () => {
-    const existingUser = window.netlifyIdentity.currentUser()
-    if (existingUser) {
-      processLogin(existingUser)
-    }
+onMounted(async () => {
+  const session = await refreshSession(true)
+
+  if (session.authenticated || isAuthenticated.value) {
+    await navigateTo('/admin')
+    return
   }
 
-  if (window.netlifyIdentity) {
-    setupIdentity()
-  } else {
-    const script = document.createElement('script')
-    script.src = 'https://identity.netlify.com/v1/netlify-identity-widget.js'
-    script.async = true
-    script.onload = setupIdentity
-    document.head.appendChild(script)
+  if (sessionError.value && sessionError.value !== 'No session cookie') {
+    errorMessage.value = sessionError.value
+  }
+
+  try {
+    const identity = await waitForIdentity()
+    const handleIdentityLogin = async (user: { jwt: () => Promise<string> }) => {
+      await finalizeLogin(user)
+    }
+
+    identity.on('login', handleIdentityLogin)
+    removeLoginListener = () => {
+      identity.off('login', handleIdentityLogin)
+    }
+
+    const existingUser = identity.currentUser()
+    if (existingUser) {
+      await finalizeLogin(existingUser)
+    }
+  } catch (error) {
+    errorMessage.value = error instanceof Error ? error.message : 'Unable to initialize Netlify Identity.'
   }
 })
 
+onBeforeUnmount(() => {
+  removeLoginListener?.()
+})
+
 const handleLogin = async () => {
-  isLoading.value = true
   errorMessage.value = ''
   successMessage.value = ''
 
   try {
-    if (!window.netlifyIdentity) {
-      throw new Error('Netlify Identity is not loaded. Please refresh the page and try again.')
-    }
-
-    // Open Netlify Identity modal
-    window.netlifyIdentity.open('login')
-
-    // Wait for the modal to close, then check for a logged-in user
-    const user = await new Promise<any>((resolve, reject) => {
-      const handleClose = () => {
-        const user = window.netlifyIdentity.currentUser()
-        if (user) {
-          resolve(user)
-        } else {
-          reject(new Error('Login cancelled'))
-        }
-        window.netlifyIdentity.off('close', handleClose)
-      }
-
-      const timeout = setTimeout(() => {
-        window.netlifyIdentity.off('close', handleClose)
-        reject(new Error('Login timeout'))
-      }, 5 * 60 * 1000)
-
-      window.netlifyIdentity.on('close', () => {
-        clearTimeout(timeout)
-        handleClose()
-      })
-    })
-
-    await processLogin(user)
+    isLoading.value = true
+    const identity = await waitForIdentity()
+    identity.open('login')
   } catch (error) {
     console.error('Login error:', error)
     errorMessage.value = error instanceof Error ? error.message : 'An unexpected error occurred'
-    isLoading.value = false
+  } finally {
+    if (!successMessage.value) {
+      isLoading.value = false
+    }
   }
 }
 </script>

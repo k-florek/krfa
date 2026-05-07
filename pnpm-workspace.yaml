@@ -1,7 +1,11 @@
+ignoredBuiltDependencies:
+  - unix-dgram
+
 onlyBuiltDependencies:
   - '@parcel/watcher'
   - '@tailwindcss/oxide'
   - better-sqlite3
   - esbuild
+  - netlify-cli
   - sharp
   - vue-demi

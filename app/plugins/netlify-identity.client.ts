@@ -16,16 +16,30 @@ declare global {
 export default defineNuxtPlugin(() => {
   const route = useRoute()
   const config = useRuntimeConfig()
+  let initialized = false
 
   const initListeners = () => {
-    // When running locally, the widget cannot auto-detect the Netlify site.
-    // Point it at the production (or branch) Identity service explicitly.
-    if (config.public.netlifySiteUrl) {
-      window.netlifyIdentity.init({ APIUrl: `${config.public.netlifySiteUrl}/.netlify/identity` })
+    if (initialized) {
+      return
+    }
+
+    initialized = true
+
+    const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+    const configuredSiteUrl = String(config.public.netlifySiteUrl || '').replace(/\/$/, '')
+
+    // Keep local testing on localhost when running via `netlify dev`.
+    // For deployed environments, fall back to the configured site URL.
+    const apiUrl = isLocalhost
+      ? `${window.location.origin}/.netlify/identity`
+      : (configuredSiteUrl ? `${configuredSiteUrl}/.netlify/identity` : '')
+
+    if (apiUrl) {
+      window.netlifyIdentity.init({ APIUrl: apiUrl })
     }
     // Handle the case where the login event fires after we register the listener
     window.netlifyIdentity.on('login', () => {
-      if (route.path !== '/admin/login') {
+      if (!route.path.startsWith('/admin')) {
         navigateTo('/admin/login')
       }
     })

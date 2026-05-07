@@ -3,25 +3,24 @@
  * Redirects to /admin/login if no valid session cookie
  */
 
-export default defineNuxtRouteMiddleware((to, from) => {
-  // Only check on client-side
-  if (process.server) return
+export default defineNuxtRouteMiddleware(async (to) => {
+  if (process.server || !to.path.startsWith('/admin')) return
 
-  const cookies = document.cookie.split(';').reduce((acc, cookie) => {
-    const [name, value] = cookie.split('=')
-    acc[name?.trim()] = value?.trim()
-    return acc
-  }, {} as Record<string, string>)
+  const { isAuthenticated, refreshSession, sessionState } = useAdminAuth()
 
-  const hasSession = !!cookies.admin_session
-
-  // If accessing admin routes without session, redirect to login
-  if (to.path.startsWith('/admin') && !hasSession && to.path !== '/admin/login') {
-    return navigateTo('/admin/login')
+  if (sessionState.value === 'unknown') {
+    await refreshSession()
   }
 
-  // If already logged in and visiting login page, redirect to admin dashboard
-  if (to.path === '/admin/login' && hasSession) {
-    return navigateTo('/admin/orders')
+  if (to.path === '/admin/login') {
+    if (isAuthenticated.value) {
+      return navigateTo('/admin')
+    }
+
+    return
+  }
+
+  if (!isAuthenticated.value) {
+    return navigateTo('/admin/login')
   }
 })

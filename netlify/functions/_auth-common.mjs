@@ -2,6 +2,25 @@
  * Shared authentication utilities for admin endpoints
  */
 
+function isLocalhostHost(host = '') {
+  return host.startsWith('localhost') || host.startsWith('127.0.0.1')
+}
+
+function buildSessionCookieHeader(token, expiryDate, secure) {
+  const attributes = [
+    `admin_session=${token}`,
+    'Path=/',
+    `SameSite=${secure ? 'Strict' : 'Lax'}`,
+    `Expires=${expiryDate.toUTCString()}`,
+  ]
+
+  if (secure) {
+    attributes.push('Secure')
+  }
+
+  return attributes.join('; ')
+}
+
 // Parse cookies from request
 export function parseCookies(cookieHeader) {
   const cookies = {}
@@ -31,15 +50,40 @@ export function createSessionCookie(userEmail, expiryDays = 7) {
   }
 }
 
+export function shouldUseSecureCookies(event, origin = '') {
+  const forwardedProto = event?.headers?.['x-forwarded-proto'] || event?.headers?.['X-Forwarded-Proto'] || ''
+  const host = event?.headers?.host || event?.headers?.Host || ''
+
+  if (origin.startsWith('http://localhost') || origin.startsWith('http://127.0.0.1')) {
+    return false
+  }
+
+  if (isLocalhostHost(host)) {
+    return false
+  }
+
+  if (forwardedProto) {
+    return forwardedProto === 'https'
+  }
+
+  return true
+}
+
 // Get session cookie header
-export function getSessionCookieHeader(userEmail, expiryDays = 7) {
+export function getSessionCookieHeader(userEmail, expiryDays = 7, options = {}) {
   const { token, expiryDate } = createSessionCookie(userEmail, expiryDays)
+  const secure = options.secure !== false
   
   return {
     name: 'admin_session',
-    header: `admin_session=${token}; Path=/; Secure; SameSite=Strict; Expires=${expiryDate.toUTCString()}`,
+    header: buildSessionCookieHeader(token, expiryDate, secure),
     token,
   }
+}
+
+export function getClearedSessionCookieHeader(options = {}) {
+  const secure = options.secure !== false
+  return buildSessionCookieHeader('', new Date(0), secure)
 }
 
 // Validate admin session from cookie

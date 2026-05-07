@@ -3,8 +3,16 @@ const allowedOrigins = (process.env.ALLOWED_ORIGINS || '')
   .map((entry) => entry.trim())
   .filter(Boolean)
 
+function isImplicitlyAllowedOrigin(origin = '') {
+  return /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)
+    || /^https:\/\/[a-z0-9-]+\.netlify\.app$/.test(origin)
+    || /^https:\/\/[a-z0-9-]+--[a-z0-9-]+\.netlify\.app$/.test(origin)
+}
+
 export function getCorsHeaders(origin) {
-  const allowedOrigin = allowedOrigins.includes(origin) ? origin : allowedOrigins[0] || '*'
+  const allowedOrigin = allowedOrigins.includes(origin) || isImplicitlyAllowedOrigin(origin)
+    ? origin
+    : allowedOrigins[0] || '*'
 
   return {
     'access-control-allow-origin': allowedOrigin,
