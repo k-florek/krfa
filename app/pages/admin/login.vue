@@ -44,7 +44,9 @@ const processLogin = async (user: any) => {
   errorMessage.value = ''
 
   try {
-    const token = user.token?.access_token
+    // user.jwt() refreshes the token if needed; do not rely on user.token?.access_token
+    // which can be null when the user was restored from localStorage after an OAuth redirect.
+    const token: string = await user.jwt()
 
     if (!token) {
       throw new Error('Failed to obtain authentication token')
