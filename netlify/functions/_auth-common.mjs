@@ -37,7 +37,7 @@ export function getSessionCookieHeader(userEmail, expiryDays = 7) {
   
   return {
     name: 'admin_session',
-    header: `admin_session=${token}; Path=/; HttpOnly; Secure; SameSite=Strict; Expires=${expiryDate.toUTCString()}`,
+    header: `admin_session=${token}; Path=/; Secure; SameSite=Strict; Expires=${expiryDate.toUTCString()}`,
     token,
   }
 }
