@@ -6,7 +6,7 @@
     "build": "nuxt build",
     "dev": "nuxt dev",
     "dev:netlify": "netlify dev",
-    "generate": "nuxt generate",
+    "generate": "nuxt generate && rm -f dist/_redirects",
     "preview": "nuxt preview",
     "sync:stripe-catalog": "node scripts/sync-stripe-catalog.mjs",
     "postinstall": "nuxt prepare"
