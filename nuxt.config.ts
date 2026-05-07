@@ -2,12 +2,6 @@
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
-  nitro: {
-    prerender: {
-      // Admin pages rely on auth/runtime APIs and should not be statically generated.
-      ignore: ['/admin/**', '/admin/login', '/admin/orders']
-    }
-  },
   routeRules: {
     // Keep admin routes server-rendered only.
     '/admin/**': { prerender: false }
