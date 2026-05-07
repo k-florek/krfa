@@ -1,6 +1,6 @@
 [build]
   command = "pnpm generate"
-  publish = "dist"
+  publish = ".output/public"
 
 [functions]
   directory = "netlify/functions"
