@@ -38,13 +38,59 @@ const isLoading = ref(false)
 const errorMessage = ref('')
 const successMessage = ref('')
 
-// Initialize Netlify Identity
+// Exchange a Netlify Identity user object for an admin session cookie
+const processLogin = async (user: any) => {
+  isLoading.value = true
+  errorMessage.value = ''
+
+  try {
+    const token = user.token?.access_token
+
+    if (!token) {
+      throw new Error('Failed to obtain authentication token')
+    }
+
+    successMessage.value = 'Authentication successful! Verifying access...'
+
+    const response = await fetch('/api/verify-admin', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({ token }),
+    })
+
+    const data = await response.json()
+
+    if (!response.ok) {
+      throw new Error(data.error || 'Failed to verify admin access')
+    }
+
+    await navigateTo('/admin/orders')
+  } catch (error) {
+    console.error('Login error:', error)
+    errorMessage.value = error instanceof Error ? error.message : 'An unexpected error occurred'
+    isLoading.value = false
+  }
+}
+
+// Initialize Netlify Identity. If the user is already authenticated (e.g.
+// returning from an OAuth redirect via the global plugin), auto-proceed.
 onMounted(() => {
-  // Load Netlify Identity script if not already loaded
-  if (!window.netlifyIdentity) {
+  const setupIdentity = () => {
+    const existingUser = window.netlifyIdentity.currentUser()
+    if (existingUser) {
+      processLogin(existingUser)
+    }
+  }
+
+  if (window.netlifyIdentity) {
+    setupIdentity()
+  } else {
     const script = document.createElement('script')
     script.src = 'https://identity.netlify.com/v1/netlify-identity-widget.js'
     script.async = true
+    script.onload = setupIdentity
     document.head.appendChild(script)
   }
 })
@@ -62,7 +108,7 @@ const handleLogin = async () => {
     // Open Netlify Identity modal
     window.netlifyIdentity.open('login')
 
-    // Wait for authentication to complete
+    // Wait for the modal to close, then check for a logged-in user
     const user = await new Promise<any>((resolve, reject) => {
       const handleClose = () => {
         const user = window.netlifyIdentity.currentUser()
@@ -74,11 +120,10 @@ const handleLogin = async () => {
         window.netlifyIdentity.off('close', handleClose)
       }
 
-      // Set a timeout in case the user takes too long
       const timeout = setTimeout(() => {
         window.netlifyIdentity.off('close', handleClose)
         reject(new Error('Login timeout'))
-      }, 5 * 60 * 1000) // 5 minutes
+      }, 5 * 60 * 1000)
 
       window.netlifyIdentity.on('close', () => {
         clearTimeout(timeout)
@@ -86,32 +131,7 @@ const handleLogin = async () => {
       })
     })
 
-    // Get the JWT token from the user
-    const token = user.token?.access_token
-
-    if (!token) {
-      throw new Error('Failed to obtain authentication token')
-    }
-
-    successMessage.value = 'Authentication successful! Verifying access...'
-
-    // Send token to backend to verify and set session cookie
-    const response = await fetch('/api/verify-admin', {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-      },
-      body: JSON.stringify({ token }),
-    })
-
-    const data = await response.json()
-
-    if (!response.ok) {
-      throw new Error(data.error || 'Failed to verify admin access')
-    }
-
-    // Redirect to admin dashboard
-    await navigateTo('/admin/orders')
+    await processLogin(user)
   } catch (error) {
     console.error('Login error:', error)
     errorMessage.value = error instanceof Error ? error.message : 'An unexpected error occurred'

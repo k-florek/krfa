@@ -9,6 +9,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       checkoutApiBaseUrl: process.env.NUXT_PUBLIC_CHECKOUT_API_BASE_URL || '',
+      netlifySiteUrl: process.env.NUXT_PUBLIC_NETLIFY_SITE_URL || '',
       checkoutSuccessPath: '/gallery/success',
       checkoutCancelPath: '/gallery/cancel'
     }
