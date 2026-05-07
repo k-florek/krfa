@@ -3,7 +3,7 @@
  * Redirects to /admin/login if no valid session cookie
  */
 
-export default defineRouteMiddleware((to, from) => {
+export default defineNuxtRouteMiddleware((to, from) => {
   // Only check on client-side
   if (process.server) return
 

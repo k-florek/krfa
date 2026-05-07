@@ -1,28 +1,28 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center bg-gray-100">
-    <div class="max-w-md w-full bg-white rounded-lg shadow-md p-8">
-      <h1 class="text-3xl font-bold text-center mb-2">Admin Login</h1>
-      <p class="text-gray-600 text-center mb-8">Sign in with your Netlify Identity account to access the admin dashboard.</p>
+  <div class="login-page">
+    <div class="login-card">
+      <h1 class="login-title">Admin Login</h1>
+      <p class="login-subtitle">Sign in with your Netlify Identity account to access the admin dashboard.</p>
 
-      <div class="space-y-4">
+      <div class="login-actions">
         <button
           @click="handleLogin"
           :disabled="isLoading"
-          class="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white font-semibold py-3 px-4 rounded-lg transition duration-200"
+          class="login-btn"
         >
           {{ isLoading ? 'Signing in...' : 'Sign in with Netlify' }}
         </button>
 
-        <div v-if="errorMessage" class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+        <div v-if="errorMessage" class="login-message login-message--error">
           {{ errorMessage }}
         </div>
 
-        <div v-if="successMessage" class="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg">
+        <div v-if="successMessage" class="login-message login-message--success">
           {{ successMessage }}
         </div>
       </div>
 
-      <p class="text-sm text-gray-500 text-center mt-8">
+      <p class="login-footer">
         Not authorized? Contact the site administrator.
       </p>
     </div>
@@ -121,6 +121,90 @@ const handleLogin = async () => {
 </script>
 
 <style scoped>
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  background-color: var(--color-bg-body);
+}
+
+.login-card {
+  width: 100%;
+  max-width: 28rem;
+  background: white;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+  padding: 2.5rem 2rem;
+}
+
+.login-title {
+  font-size: 1.75rem;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.login-subtitle {
+  color: var(--color-text-secondary, #6b7280);
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 1rem;
+}
+
+.login-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.login-btn {
+  width: 100%;
+  background-color: #2563eb;
+  color: white;
+  font-weight: 600;
+  padding: 0.75rem 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.2s;
+}
+
+.login-btn:hover:not(:disabled) {
+  background-color: #1d4ed8;
+}
+
+.login-btn:disabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
+}
+
+.login-message {
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 0.9375rem;
+}
+
+.login-message--error {
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #b91c1c;
+}
+
+.login-message--success {
+  background-color: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  color: #15803d;
+}
+
+.login-footer {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary, #6b7280);
+  text-align: center;
+  margin-top: 2rem;
+}
+
 /* Ensure Netlify Identity modal appears on top */
 :deep(.netlify-identity-widget) {
   z-index: 9999 !important;
