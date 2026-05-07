@@ -4,9 +4,8 @@
     <p class="subtitle">Review paid orders, approve them, and submit approved orders to WHCC.</p>
 
     <div class="auth-row">
-      <label for="token">Admin API Token</label>
-      <input id="token" v-model="adminToken" type="password" placeholder="Paste ADMIN_API_TOKEN" class="form-control" />
-      <button @click="saveToken" class="btn btn-primary">Save Token</button>
+      <h2>Welcome, Admin</h2>
+      <button @click="handleLogout" class="btn btn-secondary">Sign Out</button>
     </div>
 
     <div class="controls">
@@ -67,6 +66,10 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
+definePageMeta({
+  middleware: 'admin-auth',
+})
+
 
 type OrderRecord = {
   id: string
@@ -85,20 +88,15 @@ const loading = ref(false)
 const error = ref<string | null>(null)
 const workingOrderId = ref<string | null>(null)
 const statusFilter = ref<'pending_approval' | 'approved' | 'submitted_to_whcc'>('pending_approval')
-const adminToken = ref('')
 
 onMounted(() => {
-  if (import.meta.client) {
-    adminToken.value = localStorage.getItem('krfa-admin-token') || ''
-  }
   loadOrders()
 })
 
-function saveToken() {
-  if (!import.meta.client) {
-    return
-  }
-  localStorage.setItem('krfa-admin-token', adminToken.value)
+const { logout } = useAdminAuth()
+
+function handleLogout() {
+  logout()
 }
 
 async function loadOrders() {
@@ -144,16 +142,12 @@ async function callApi(path: string, method: 'GET' | 'POST', body?: unknown) {
     throw new Error('NUXT_PUBLIC_CHECKOUT_API_BASE_URL is not configured.')
   }
 
-  if (!adminToken.value) {
-    throw new Error('Admin token is required.')
-  }
-
   const response = await fetch(`${baseUrl}${path}`, {
     method,
     headers: {
       'content-type': 'application/json',
-      authorization: `Bearer ${adminToken.value}`,
     },
+      credentials: 'include',
     body: method === 'POST' ? JSON.stringify(body || {}) : undefined,
   })
 

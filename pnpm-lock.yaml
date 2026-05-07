@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@netlify/identity':
+        specifier: ^1.1.0
+        version: 1.1.0
       '@nuxt/content':
         specifier: 3.7.1
         version: 3.7.1(better-sqlite3@12.4.1)(magicast@0.3.5)
@@ -514,6 +517,10 @@ packages:
 
   '@napi-rs/wasm-runtime@1.0.7':
     resolution: {integrity: sha512-SeDnOO0Tk7Okiq6DbXmmBODgOAb9dp9gjlphokTUxmt8U3liIP1ZsozBahH69j/RJv+Rfs6IwUKHTgQYJ/HBAw==}
+
+  '@netlify/identity@1.1.0':
+    resolution: {integrity: sha512-sZdw2a6kVlJcBHJSNcaOs1C++DSWQGnZhOkLHlrpf1gEoC494CE/IYPv8/BXp3JUltf/sI21HCiu5lSgm4Ycow==}
+    engines: {node: '>=22'}
 
   '@nodelib/fs.scandir@2.1.5':
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -2580,6 +2587,9 @@ packages:
   gopd@1.2.0:
     resolution: {integrity: sha512-ZUKRh6/kUFoAiTAtTYPZJ3hw9wNxx+BIBOijnlG9PnrJsCcSjs1wyyD6vJpaYtgnzDrKYRSqf3OO6Rfa93xsRg==}
     engines: {node: '>= 0.4'}
+
+  gotrue-js@1.0.1:
+    resolution: {integrity: sha512-ZynwwM4bEo2y5yNWO3/Ynbx1AvQz9ONJSM9tB1jpooAvDPevGdvgeFP3NwM59FAlkd0szSkQRAhjINMkJSDfAQ==}
 
   graceful-fs@4.2.11:
     resolution: {integrity: sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==}
@@ -5358,6 +5368,10 @@ snapshots:
       '@tybys/wasm-util': 0.10.1
     optional: true
 
+  '@netlify/identity@1.1.0':
+    dependencies:
+      gotrue-js: 1.0.1
+
   '@nodelib/fs.scandir@2.1.5':
     dependencies:
       '@nodelib/fs.stat': 2.0.5
@@ -7681,6 +7695,8 @@ snapshots:
       unicorn-magic: 0.3.0
 
   gopd@1.2.0: {}
+
+  gotrue-js@1.0.1: {}
 
   graceful-fs@4.2.11: {}
 

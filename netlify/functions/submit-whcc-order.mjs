@@ -5,6 +5,8 @@ import {
   markOrderFailed,
   markOrderSubmitted,
 } from './_orders.mjs'
+import { requireAdminSession } from './_auth-common.mjs'
+
 
 export async function handler(event) {
   const origin = event.headers.origin || ''
@@ -17,11 +19,10 @@ export async function handler(event) {
     return jsonResponse(405, origin, { error: 'Method not allowed' })
   }
 
-  const adminToken = process.env.ADMIN_API_TOKEN
-  const authHeader = event.headers.authorization || ''
+  const auth = requireAdminSession(event)
 
-  if (!adminToken || authHeader !== `Bearer ${adminToken}`) {
-    return jsonResponse(401, origin, { error: 'Unauthorized' })
+  if (!auth.authorized) {
+    return jsonResponse(401, origin, { error: 'Unauthorized', details: auth.error })
   }
 
   try {
