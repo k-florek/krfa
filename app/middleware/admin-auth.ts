@@ -4,7 +4,7 @@
  */
 
 export default defineNuxtRouteMiddleware(async (to) => {
-  if (process.server || !to.path.startsWith('/admin')) return
+  if (import.meta.server || !to.path.startsWith('/admin')) return
 
   const { isAuthenticated, refreshSession, sessionState } = useAdminAuth()
 

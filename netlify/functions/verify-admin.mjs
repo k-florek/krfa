@@ -14,20 +14,31 @@ import { getSessionCookieHeader, isEmailAuthorized, shouldUseSecureCookies } fro
 import { getCorsHeaders } from './_shared.mjs'
 
 
-// Decode JWT without verification (Netlify Identity tokens are trusted)
-// In production, verify the signature using Netlify's public key
-function decodeJWT(token) {
+function decodeJwtPayload(token) {
   try {
     const parts = token.split('.')
     if (parts.length !== 3) {
       throw new Error('Invalid JWT format')
     }
-    
-    // Decode the payload (second part)
-    const payload = JSON.parse(Buffer.from(parts[1], 'base64').toString())
+
+    const payload = JSON.parse(Buffer.from(parts[1], 'base64url').toString('utf-8'))
     return payload
   } catch (error) {
     throw new Error(`Failed to decode JWT: ${error.message}`)
+  }
+}
+
+function validateJwtClaims(payload) {
+  const nowSeconds = Math.floor(Date.now() / 1000)
+  const exp = Number(payload?.exp)
+  const nbf = Number(payload?.nbf)
+
+  if (Number.isFinite(exp) && nowSeconds >= exp) {
+    throw new Error('Identity token has expired')
+  }
+
+  if (Number.isFinite(nbf) && nowSeconds < nbf) {
+    throw new Error('Identity token is not valid yet')
   }
 }
 
@@ -44,17 +55,19 @@ export async function handler(event) {
 
   try {
     const payload = JSON.parse(event.body || '{}')
-    const token = payload.token || ''
+    const token = String(payload.token || '').trim()
 
     if (!token) {
       return jsonResponse(400, origin, { error: 'token is required' })
     }
 
-    // Decode JWT to extract user email
-    const decoded = decodeJWT(token)
-    const userEmail = decoded.email || decoded.sub || ''
+    // Netlify Identity owns auth; we still enforce basic claim validity before session minting.
+    const decoded = decodeJwtPayload(token)
+    validateJwtClaims(decoded)
 
-    if (!userEmail) {
+    const userEmail = String(decoded.email || decoded.sub || '').trim().toLowerCase()
+
+    if (!userEmail || !userEmail.includes('@')) {
       return jsonResponse(400, origin, { error: 'Unable to extract email from token' })
     }
 

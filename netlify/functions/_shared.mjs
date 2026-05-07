@@ -17,7 +17,7 @@ export function getCorsHeaders(origin) {
   return {
     'access-control-allow-origin': allowedOrigin,
     'access-control-allow-methods': 'GET,POST,OPTIONS',
-    'access-control-allow-headers': 'content-type,stripe-signature,authorization',
+    'access-control-allow-headers': 'content-type,authorization',
     'access-control-allow-credentials': 'true',
   }
 }

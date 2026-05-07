@@ -10,7 +10,8 @@ export interface CatalogImage {
 export interface ProductVariant {
   id: string
   label: string
-  stripePriceId: string
+  whccProductId?: string
+  whccDesignId?: string
   priceCents: number
   currency: 'usd'
   whccSku?: string
@@ -27,16 +28,4 @@ export interface GalleryProduct {
   active: boolean
   image: CatalogImage
   variants: ProductVariant[]
-}
-
-export interface CartItem {
-  productId: string
-  productTitle: string
-  productType: ProductType
-  variantId: string
-  variantLabel: string
-  stripePriceId: string
-  unitPriceCents: number
-  quantity: number
-  imageSrc: string
 }

@@ -17,7 +17,8 @@
       {
         "id": "8x10",
         "label": "8 x 10 Open Edition Print",
-        "stripePriceId": "price_replace_me_8x10",
+        "whccProductId": "replace_me_product_poaf_8x10",
+        "whccDesignId": "replace_me_design_poaf_8x10",
         "priceCents": 4500,
         "currency": "usd",
         "whccSku": "WHCC-POAF-8X10",
@@ -26,7 +27,8 @@
       {
         "id": "11x14",
         "label": "11 x 14 Open Edition Print",
-        "stripePriceId": "price_replace_me_11x14",
+        "whccProductId": "replace_me_product_poaf_11x14",
+        "whccDesignId": "replace_me_design_poaf_11x14",
         "priceCents": 6500,
         "currency": "usd",
         "whccSku": "WHCC-POAF-11X14",
@@ -52,7 +54,8 @@
       {
         "id": "8x10",
         "label": "8 x 10 Open Edition Print",
-        "stripePriceId": "price_replace_me_wetcrow_8x10",
+        "whccProductId": "replace_me_product_wetcrow_8x10",
+        "whccDesignId": "replace_me_design_wetcrow_8x10",
         "priceCents": 4500,
         "currency": "usd",
         "whccSku": "WHCC-WC-8X10",
@@ -78,7 +81,6 @@
       {
         "id": "original",
         "label": "Original Artwork",
-        "stripePriceId": "price_replace_me_original_goat",
         "priceCents": 45000,
         "currency": "usd",
         "whccSku": "ORIGINAL-GOAT",

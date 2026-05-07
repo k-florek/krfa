@@ -47,7 +47,7 @@ export const useAdminAuth = () => {
   const isAuthenticated = computed(() => sessionState.value === 'authenticated')
 
   const refreshSession = async (force = false) => {
-    if (process.server) {
+    if (import.meta.server) {
       return {
         authenticated: false,
         email: null,
@@ -101,7 +101,7 @@ export const useAdminAuth = () => {
   }
 
   const waitForIdentity = async (timeoutMs = 5000) => {
-    if (process.server) {
+    if (import.meta.server) {
       throw new Error('Netlify Identity is only available in the browser.')
     }
 
@@ -163,7 +163,7 @@ export const useAdminAuth = () => {
   }
 
   const logout = async () => {
-    if (process.server) {
+    if (import.meta.server) {
       return
     }
 

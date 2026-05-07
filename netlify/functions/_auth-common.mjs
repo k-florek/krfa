@@ -2,14 +2,20 @@
  * Shared authentication utilities for admin endpoints
  */
 
+import { createHmac, timingSafeEqual } from 'node:crypto'
+
+const SESSION_COOKIE_NAME = 'admin_session'
+const SESSION_SECRET_ENV = 'ADMIN_SESSION_SECRET'
+
 function isLocalhostHost(host = '') {
   return host.startsWith('localhost') || host.startsWith('127.0.0.1')
 }
 
 function buildSessionCookieHeader(token, expiryDate, secure) {
   const attributes = [
-    `admin_session=${token}`,
+    `${SESSION_COOKIE_NAME}=${token}`,
     'Path=/',
+    'HttpOnly',
     `SameSite=${secure ? 'Strict' : 'Lax'}`,
     `Expires=${expiryDate.toUTCString()}`,
   ]
@@ -26,7 +32,19 @@ export function parseCookies(cookieHeader) {
   const cookies = {}
   if (cookieHeader) {
     cookieHeader.split(';').forEach((cookie) => {
-      const [name, value] = cookie.split('=')
+      const trimmed = cookie.trim()
+      if (!trimmed) {
+        return
+      }
+
+      const separatorIndex = trimmed.indexOf('=')
+      if (separatorIndex <= 0) {
+        return
+      }
+
+      const name = trimmed.slice(0, separatorIndex)
+      const value = trimmed.slice(separatorIndex + 1)
+
       if (name && value) {
         cookies[name.trim()] = decodeURIComponent(value.trim())
       }
@@ -35,14 +53,61 @@ export function parseCookies(cookieHeader) {
   return cookies
 }
 
+function getSessionSecret() {
+  const secret = String(process.env[SESSION_SECRET_ENV] || '').trim()
+  if (!secret) {
+    throw new Error(`Missing ${SESSION_SECRET_ENV} environment variable.`)
+  }
+  return secret
+}
+
+function signPayload(payloadSegment, secret) {
+  return createHmac('sha256', secret).update(payloadSegment).digest('base64url')
+}
+
+function toSessionToken(payload, secret) {
+  const payloadSegment = Buffer.from(JSON.stringify(payload)).toString('base64url')
+  const signature = signPayload(payloadSegment, secret)
+  return `${payloadSegment}.${signature}`
+}
+
+function decodeSessionToken(token, secret) {
+  const [payloadSegment, signature] = String(token || '').split('.')
+
+  if (!payloadSegment || !signature) {
+    throw new Error('Invalid session token format')
+  }
+
+  const expectedSignature = signPayload(payloadSegment, secret)
+  const signatureBuffer = Buffer.from(signature)
+  const expectedBuffer = Buffer.from(expectedSignature)
+
+  if (
+    signatureBuffer.length !== expectedBuffer.length
+    || !timingSafeEqual(signatureBuffer, expectedBuffer)
+  ) {
+    throw new Error('Invalid session token signature')
+  }
+
+  return JSON.parse(Buffer.from(payloadSegment, 'base64url').toString('utf-8'))
+}
+
 // Create httpOnly session cookie value
 export function createSessionCookie(userEmail, expiryDays = 7) {
+  const secret = getSessionSecret()
   const expiryDate = new Date()
   expiryDate.setDate(expiryDate.getDate() + expiryDays)
-  
-  // Session token: simple base64 encoded email + timestamp for now
-  // In production, use a proper JWT with signing
-  const token = Buffer.from(`${userEmail}:${Date.now()}`).toString('base64')
+
+  const issuedAt = Date.now()
+  const expiresAt = expiryDate.getTime()
+  const token = toSessionToken(
+    {
+      email: String(userEmail || '').trim().toLowerCase(),
+      issuedAt,
+      expiresAt,
+    },
+    secret
+  )
   
   return {
     token,
@@ -75,7 +140,7 @@ export function getSessionCookieHeader(userEmail, expiryDays = 7, options = {}) 
   const secure = options.secure !== false
   
   return {
-    name: 'admin_session',
+    name: SESSION_COOKIE_NAME,
     header: buildSessionCookieHeader(token, expiryDate, secure),
     token,
   }
@@ -89,26 +154,22 @@ export function getClearedSessionCookieHeader(options = {}) {
 // Validate admin session from cookie
 export function validateAdminSession(cookieHeader) {
   const cookies = parseCookies(cookieHeader)
-  const sessionToken = cookies.admin_session
+  const sessionToken = cookies[SESSION_COOKIE_NAME]
   
   if (!sessionToken) {
     return { valid: false, email: null, error: 'No session cookie' }
   }
   
   try {
-    // Decode the session token
-    const decoded = Buffer.from(sessionToken, 'base64').toString('utf-8')
-    const [email, timestamp] = decoded.split(':')
-    
-    if (!email || !timestamp) {
+    const payload = decodeSessionToken(sessionToken, getSessionSecret())
+    const email = String(payload?.email || '').trim().toLowerCase()
+    const expiresAt = Number(payload?.expiresAt)
+
+    if (!email || !Number.isFinite(expiresAt)) {
       return { valid: false, email: null, error: 'Invalid session token format' }
     }
-    
-    // Check if session is not expired (7 days default from creation)
-    const sessionAge = Date.now() - parseInt(timestamp, 10)
-    const maxAge = 7 * 24 * 60 * 60 * 1000 // 7 days in milliseconds
-    
-    if (sessionAge > maxAge) {
+
+    if (Date.now() >= expiresAt) {
       return { valid: false, email: null, error: 'Session expired' }
     }
     
@@ -138,6 +199,14 @@ export function requireAdminSession(event) {
       authorized: false,
       email: null,
       error: session.error,
+    }
+  }
+
+  if (!isEmailAuthorized(session.email)) {
+    return {
+      authorized: false,
+      email: null,
+      error: 'Session user is not authorized',
     }
   }
   

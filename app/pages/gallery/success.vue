@@ -1,9 +1,9 @@
 <template>
   <section class="checkout-status">
-    <h1 class="watercolor-heading">Order Received</h1>
+    <h1 class="watercolor-heading">Order Confirmed</h1>
     <p>
-      Thank you for your purchase. We have received your payment and will review the order before
-      sending it to fulfillment.
+      Your design has been submitted to print. You will receive a confirmation email once
+      your order is in production.
     </p>
     <div class="actions-row">
       <NuxtLink to="/gallery" class="btn btn-primary">Continue Shopping</NuxtLink>
@@ -14,8 +14,8 @@
 
 <script setup lang="ts">
 useSeoMeta({
-  title: 'Checkout Success',
-  description: 'Your order was received successfully.',
+  title: 'Order Confirmed',
+  description: 'Your print order has been submitted successfully.',
 })
 </script>
 

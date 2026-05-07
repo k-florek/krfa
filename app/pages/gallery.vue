@@ -8,14 +8,6 @@
         </div>
         <div class="gallery-title-row">
           <h1 class="watercolor-heading">Gallery Shop</h1>
-          <button class="gallery-cart-indicator" @click="cartOpen = true" aria-label="Open cart">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
-              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
-            </svg>
-            <span>Cart</span>
-            <span v-if="itemCount > 0" class="cart-badge">{{ itemCount }}</span>
-          </button>
         </div>
       </div>
     </div>
@@ -32,7 +24,10 @@
         </button>
       </div>
 
-      <div v-if="error" class="status error">{{ error }}</div>
+      <div v-if="error" class="status error">
+        <span>{{ error }}</span>
+        <button class="btn btn-secondary" @click="loadCatalog">Retry</button>
+      </div>
       <div v-else-if="loading" class="status loading">Loading gallery catalog...</div>
 
       <div v-else class="gallery-masonry">
@@ -46,65 +41,27 @@
           <div class="gallery-card-footer">
             <p class="product-type">{{ product.type === 'print' ? 'Print' : 'Original' }}</p>
             <h3>{{ product.title }}</h3>
-            <button class="filter-btn btn-block" @click="openSizeModal(product)">
-              Add to Cart
+            <button
+              v-if="product.type === 'print'"
+              class="btn btn-primary btn-block"
+              @click="openOrderModal(product)"
+            >
+              Order Print
             </button>
           </div>
         </article>
       </div>
     </section>
 
-    <!-- Cart Drawer -->
+    <!-- Order Modal -->
     <Teleport to="body">
-      <div v-if="cartOpen" class="cart-drawer-overlay" @click="cartOpen = false" aria-hidden="true"></div>
-      <div :class="['cart-drawer', { open: cartOpen }]" role="dialog" aria-label="Shopping cart" aria-modal="true">
-        <div class="cart-drawer-header">
-          <h2>Cart ({{ itemCount }})</h2>
-          <button class="modal-close" @click="cartOpen = false" aria-label="Close cart">&times;</button>
-        </div>
-        <div class="cart-drawer-body">
-          <div v-if="items.length === 0" class="empty-cart">Your cart is empty.</div>
-          <ul v-else class="cart-items">
-            <li v-for="item in items" :key="`${item.productId}-${item.variantId}`" class="cart-item">
-              <img :src="item.imageSrc" :alt="item.productTitle" class="cart-thumb" loading="lazy" />
-              <div class="cart-item-content">
-                <p class="cart-item-title">{{ item.productTitle }}</p>
-                <p class="cart-item-variant">{{ item.variantLabel }}</p>
-                <p class="cart-item-price">{{ formatMoney(item.unitPriceCents) }}</p>
-                <div class="qty-row">
-                  <button @click="decreaseItem(item)" aria-label="Decrease quantity">-</button>
-                  <span>{{ item.quantity }}</span>
-                  <button @click="increaseItem(item)" aria-label="Increase quantity">+</button>
-                  <button class="remove-btn btn btn-danger-text" @click="removeItem(item.productId, item.variantId)">Remove</button>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </div>
-        <div class="cart-summary">
-          <div class="summary-line">
-            <span>Subtotal</span>
-            <strong>{{ formatMoney(subtotalCents) }}</strong>
-          </div>
-          <p class="summary-note">Shipping and tax calculated at Stripe checkout.</p>
-          <button class="btn btn-primary btn-block" :disabled="checkoutLoading || items.length === 0" @click="startCheckout">
-            {{ checkoutLoading ? 'Redirecting...' : 'Checkout with Stripe' }}
-          </button>
-          <button class="btn btn-muted btn-block" :disabled="items.length === 0" @click="clearCart">Clear Cart</button>
-          <p v-if="checkoutError" class="checkout-error">{{ checkoutError }}</p>
-        </div>
-      </div>
-    </Teleport>
-
-    <!-- Size Selection Modal -->
-    <Teleport to="body">
-      <div v-if="selectedProduct" class="modal-overlay" @click.self="closeSizeModal">
-        <div class="modal-content size-modal-content" role="dialog" aria-modal="true" :aria-label="`Select size for ${selectedProduct.title}`">
-          <button class="modal-close" @click="closeSizeModal" aria-label="Close">&times;</button>
+      <div v-if="selectedProduct" class="modal-overlay" @click.self="closeOrderModal">
+        <div class="modal-content size-modal-content" role="dialog" aria-modal="true" :aria-label="`Order ${selectedProduct.title}`">
+          <button class="modal-close" @click="closeOrderModal" aria-label="Close">&times;</button>
           <div class="size-modal-body">
             <img :src="selectedProduct.image.src" :alt="selectedProduct.image.alt" class="size-modal-img" />
             <div class="size-modal-info">
-              <p class="product-type">{{ selectedProduct.type === 'print' ? 'Print' : 'Original' }}</p>
+              <p class="product-type">Print</p>
               <h3>{{ selectedProduct.title }}</h3>
               <p class="product-description">{{ selectedProduct.description }}</p>
               <p class="product-medium">{{ selectedProduct.medium }}</p>
@@ -122,12 +79,13 @@
                 </button>
               </div>
               <button
-                class="filter-btn btn-block"
-                :disabled="!selectedVariantId"
-                @click="confirmAddToCart"
+                class="btn btn-primary btn-block"
+                :disabled="!selectedVariantId || editorLoading"
+                @click="launchEditor"
               >
-                Add to Cart
+                {{ editorLoading ? 'Opening editor...' : 'Customize & Order' }}
               </button>
+              <p v-if="editorError" class="checkout-error">{{ editorError }}</p>
             </div>
           </div>
         </div>
@@ -138,17 +96,15 @@
 
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
-import { useCart } from '@/composables/useCart'
-import type { CartItem, GalleryProduct } from '@/types/gallery'
+import type { GalleryProduct } from '@/types/gallery'
 
 const config = useRuntimeConfig()
 const catalog = ref<GalleryProduct[]>([])
 const loading = ref(true)
 const error = ref<string | null>(null)
-const checkoutLoading = ref(false)
-const checkoutError = ref<string | null>(null)
+const editorLoading = ref(false)
+const editorError = ref<string | null>(null)
 const selectedFilter = ref<'all' | 'print' | 'original'>('all')
-const cartOpen = ref(false)
 const selectedProduct = ref<GalleryProduct | null>(null)
 const selectedVariantId = ref<string | null>(null)
 
@@ -157,8 +113,6 @@ const filterOptions = [
   { label: 'Prints', value: 'print' as const },
   { label: 'Originals', value: 'original' as const },
 ]
-
-const { items, itemCount, subtotalCents, addItem, updateQuantity, removeItem, clearCart } = useCart()
 
 const filteredProducts = computed(() => {
   if (selectedFilter.value === 'all') {
@@ -169,7 +123,10 @@ const filteredProducts = computed(() => {
   )
 })
 
-onMounted(async () => {
+async function loadCatalog() {
+  loading.value = true
+  error.value = null
+
   try {
     const response = await fetch('/data/gallery-catalog.json')
     if (!response.ok) {
@@ -181,97 +138,85 @@ onMounted(async () => {
   } finally {
     loading.value = false
   }
+}
+
+onMounted(async () => {
+  await loadCatalog()
 })
 
-function openSizeModal(product: GalleryProduct) {
+function openOrderModal(product: GalleryProduct) {
+  if (product.type !== 'print') {
+    return
+  }
+
   selectedProduct.value = product
   const firstInStock = product.variants.find((v) => v.inStock)
   selectedVariantId.value = firstInStock?.id ?? null
+  editorError.value = null
 }
 
-function closeSizeModal() {
+function closeOrderModal() {
   selectedProduct.value = null
   selectedVariantId.value = null
+  editorError.value = null
 }
 
-function confirmAddToCart() {
+function hasWhccMapping(variant: GalleryProduct['variants'][number]) {
+  return !!variant.whccProductId && !!variant.whccDesignId
+}
+
+async function launchEditor() {
   if (!selectedProduct.value || !selectedVariantId.value) return
   const product = selectedProduct.value
+  if (product.type !== 'print') return
+
   const variant = product.variants.find((v) => v.id === selectedVariantId.value)
   if (!variant || !variant.inStock) return
 
-  const item: CartItem = {
-    productId: product.id,
-    productTitle: product.title,
-    productType: product.type,
-    variantId: variant.id,
-    variantLabel: variant.label,
-    stripePriceId: variant.stripePriceId,
-    unitPriceCents: variant.priceCents,
-    quantity: 1,
-    imageSrc: product.image.src,
+  if (!hasWhccMapping(variant)) {
+    editorError.value = 'This print is not fully configured for WHCC ordering yet.'
+    return
   }
 
-  addItem(item)
-  closeSizeModal()
-}
-
-function increaseItem(item: CartItem) {
-  updateQuantity(item.productId, item.variantId, item.quantity + 1)
-}
-
-function decreaseItem(item: CartItem) {
-  updateQuantity(item.productId, item.variantId, item.quantity - 1)
-}
-
-async function startCheckout() {
-  checkoutLoading.value = true
-  checkoutError.value = null
+  editorLoading.value = true
+  editorError.value = null
 
   try {
     const baseUrl = (config.public.checkoutApiBaseUrl || '').replace(/\/$/, '')
-    if (!baseUrl) {
-      throw new Error('Checkout API base URL is not configured yet.')
-    }
+    const endpoint = baseUrl ? `${baseUrl}/api/create-whcc-editor` : '/api/create-whcc-editor'
 
-    const response = await fetch(`${baseUrl}/api/create-checkout-session`, {
+    const response = await fetch(endpoint, {
       method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-      },
+      headers: { 'content-type': 'application/json' },
       body: JSON.stringify({
-        lineItems: items.value.map((item) => ({
-          stripePriceId: item.stripePriceId,
-          quantity: item.quantity,
-          productId: item.productId,
-          variantId: item.variantId,
-          productTitle: item.productTitle,
-          variantLabel: item.variantLabel,
-          unitPriceCents: item.unitPriceCents,
-        })),
-        successPath: config.public.checkoutSuccessPath,
-        cancelPath: config.public.checkoutCancelPath,
+        lineItems: [
+          {
+            productId: product.id,
+            variantId: variant.id,
+            productType: product.type,
+            productTitle: product.title,
+            variantLabel: variant.label,
+            quantity: 1,
+            whccProductId: variant.whccProductId,
+            whccDesignId: variant.whccDesignId,
+            whccSku: variant.whccSku,
+          },
+        ],
       }),
     })
 
-    if (!response.ok) {
-      throw new Error('Failed to create checkout session')
+    const payload = (await response.json()) as { editorUrl?: string; error?: string }
+
+    if (!response.ok || !payload.editorUrl) {
+      throw new Error(payload.error || 'Failed to open editor')
     }
 
-    const payload = (await response.json()) as { checkoutUrl?: string }
-
-    if (!payload.checkoutUrl) {
-      throw new Error('Checkout URL missing from API response')
-    }
-
-    window.location.href = payload.checkoutUrl
-  } catch (checkoutErrorValue) {
-    checkoutError.value =
-      checkoutErrorValue instanceof Error
-        ? checkoutErrorValue.message
-        : 'Unable to start checkout'
+    window.location.href = payload.editorUrl
+  } catch (launchError) {
+    editorError.value =
+      launchError instanceof Error ? launchError.message : 'Unable to open editor'
   } finally {
-    checkoutLoading.value = false
+    editorLoading.value = false
   }
 }
 
@@ -284,7 +229,7 @@ function formatMoney(cents: number) {
 
 useSeoMeta({
   title: 'Gallery Shop',
-  description: 'Buy open-edition prints and view original artwork availability.',
+  description: 'Buy open-edition prints from the gallery.',
 })
 </script>
 
