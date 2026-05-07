@@ -2,10 +2,7 @@
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
-  routeRules: {
-    // Keep admin routes server-rendered only.
-    '/admin/**': { prerender: false }
-  },
+  routeRules: {},
   runtimeConfig: {
     public: {
       checkoutApiBaseUrl: process.env.NUXT_PUBLIC_CHECKOUT_API_BASE_URL || '',
