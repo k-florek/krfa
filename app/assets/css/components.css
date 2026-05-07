@@ -381,6 +381,13 @@
   border-radius: var(--radius-pill);
   padding: 0.4rem 0.8rem;
   cursor: pointer;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.filter-btn:hover {
+  background: #14213d;
+  color: var(--color-surface);
+  border-color: #14213d;
 }
 
 .filter-btn.active {
