@@ -12,9 +12,21 @@ function parsePositiveInt(value, fallback) {
   return parsed
 }
 
+function normalizeEditorApiBaseUrl(rawBaseUrl) {
+  const baseUrl = String(rawBaseUrl || DEFAULT_WHCC_API_BASE_URL).replace(/\/$/, '')
+
+  if (baseUrl.endsWith('/api/v1')) {
+    return baseUrl
+  }
+
+  // WHCC docs list staging host without path in some places.
+  // Ensure requests always target the v1 API root.
+  return `${baseUrl}/api/v1`
+}
+
 export function getWhccConfig() {
   return {
-    apiBaseUrl: (process.env.WHCC_EDITOR_API_BASE_URL || DEFAULT_WHCC_API_BASE_URL).replace(/\/$/, ''),
+    apiBaseUrl: normalizeEditorApiBaseUrl(process.env.WHCC_EDITOR_API_BASE_URL),
     key: process.env.WHCC_KEY || '',
     secret: process.env.WHCC_SECRET || '',
     defaultAccountId: process.env.WHCC_ACCOUNT_ID || '',
@@ -136,7 +148,8 @@ export async function getWhccAccessToken(accountIdInput) {
   }
 
   if (!response.ok) {
-    throw new Error(`WHCC token request failed (${response.status}): ${responseText}`)
+    const keyHint = config.key ? `${config.key.slice(0, 4)}…` : '(empty)'
+    throw new Error(`WHCC token request failed (${response.status}) [key=${keyHint}]: ${responseText}`)
   }
 
   const token = getTokenFromResponse(payload)

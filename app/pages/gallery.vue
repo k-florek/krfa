@@ -8,6 +8,9 @@
         </div>
         <div class="gallery-title-row">
           <h1 class="watercolor-heading">Gallery Shop</h1>
+          <NuxtLink to="/gallery/success" class="btn btn-outline-dark">
+            Cart ({{ totalItems }})
+          </NuxtLink>
         </div>
       </div>
     </div>
@@ -22,6 +25,17 @@
         >
           {{ option.label }}
         </button>
+      </div>
+
+      <div v-if="hasItems" class="gallery-cart-banner panel">
+        <p>
+          <strong>{{ totalItems }}</strong>
+          {{ totalItems === 1 ? 'item is' : 'items are' }} in your cart.
+        </p>
+        <p>
+          Subtotal: <strong>{{ formatMoney(subtotalCents) }}</strong>
+        </p>
+        <NuxtLink to="/gallery/success" class="btn btn-secondary">Review Cart</NuxtLink>
       </div>
 
       <div v-if="error" class="status error">
@@ -65,25 +79,12 @@
               <h3>{{ selectedProduct.title }}</h3>
               <p class="product-description">{{ selectedProduct.description }}</p>
               <p class="product-medium">{{ selectedProduct.medium }}</p>
-              <div class="size-options">
-                <button
-                  v-for="variant in selectedProduct.variants"
-                  :key="variant.id"
-                  :class="['size-option', { selected: selectedVariantId === variant.id, disabled: !variant.inStock }]"
-                  :disabled="!variant.inStock"
-                  @click="selectedVariantId = variant.id"
-                >
-                  <span class="size-option-label">{{ variant.label }}</span>
-                  <span class="size-option-price">{{ formatMoney(variant.priceCents) }}</span>
-                  <span v-if="!variant.inStock" class="size-option-soldout">Sold Out</span>
-                </button>
-              </div>
               <button
                 class="btn btn-primary btn-block"
                 :disabled="!selectedVariantId || editorLoading"
                 @click="launchEditor"
               >
-                {{ editorLoading ? 'Opening editor...' : 'Customize & Order' }}
+                {{ editorLoading ? 'Opening editor...' : 'Order Print' }}
               </button>
               <p v-if="editorError" class="checkout-error">{{ editorError }}</p>
             </div>
@@ -97,8 +98,10 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
 import type { GalleryProduct } from '@/types/gallery'
+import { useWhccCart } from '@/composables/useWhccCart'
 
 const config = useRuntimeConfig()
+const { hasItems, subtotalCents, totalItems, loadFromStorage } = useWhccCart()
 const catalog = ref<GalleryProduct[]>([])
 const loading = ref(true)
 const error = ref<string | null>(null)
@@ -107,6 +110,7 @@ const editorError = ref<string | null>(null)
 const selectedFilter = ref<'all' | 'print' | 'original'>('all')
 const selectedProduct = ref<GalleryProduct | null>(null)
 const selectedVariantId = ref<string | null>(null)
+const PENDING_STORAGE_KEY = 'krfa-whcc-pending-launches-v1'
 
 const filterOptions = [
   { label: 'All', value: 'all' as const },
@@ -116,10 +120,10 @@ const filterOptions = [
 
 const filteredProducts = computed(() => {
   if (selectedFilter.value === 'all') {
-    return catalog.value.filter((product) => product.active)
+    return catalog.value.filter((product) => product.active && !product.hidden)
   }
   return catalog.value.filter(
-    (product) => product.active && product.type === selectedFilter.value
+    (product) => product.active && !product.hidden && product.type === selectedFilter.value
   )
 })
 
@@ -141,6 +145,7 @@ async function loadCatalog() {
 }
 
 onMounted(async () => {
+  loadFromStorage()
   await loadCatalog()
 })
 
@@ -161,8 +166,17 @@ function closeOrderModal() {
   editorError.value = null
 }
 
+function isPlaceholderWhccValue(value?: string) {
+  return String(value || '').trim().toLowerCase().startsWith('replace_me_')
+}
+
 function hasWhccMapping(variant: GalleryProduct['variants'][number]) {
-  return !!variant.whccProductId && !!variant.whccDesignId
+  return (
+    !!variant.whccProductId
+    && !!variant.whccDesignId
+    && !isPlaceholderWhccValue(variant.whccProductId)
+    && !isPlaceholderWhccValue(variant.whccDesignId)
+  )
 }
 
 async function launchEditor() {
@@ -174,7 +188,7 @@ async function launchEditor() {
   if (!variant || !variant.inStock) return
 
   if (!hasWhccMapping(variant)) {
-    editorError.value = 'This print is not fully configured for WHCC ordering yet.'
+    editorError.value = 'This print is not fully configured for WHCC ordering. Replace placeholder whccProductId/whccDesignId in gallery-catalog.json.'
     return
   }
 
@@ -205,11 +219,29 @@ async function launchEditor() {
       }),
     })
 
-    const payload = (await response.json()) as { editorUrl?: string; error?: string }
+    const payload = (await response.json()) as {
+      checkoutId?: string
+      editorId?: string
+      editorUrl?: string
+      error?: string
+    }
 
-    if (!response.ok || !payload.editorUrl) {
+    if (!response.ok || !payload.editorUrl || !payload.checkoutId || !payload.editorId) {
       throw new Error(payload.error || 'Failed to open editor')
     }
+
+    persistPendingLaunch(payload.checkoutId, {
+      productId: product.id,
+      variantId: variant.id,
+      productTitle: product.title,
+      variantLabel: variant.label,
+      quantity: 1,
+      priceCents: variant.priceCents,
+      currency: variant.currency,
+      whccSku: variant.whccSku || null,
+      whccProductId: variant.whccProductId,
+      whccDesignId: variant.whccDesignId,
+    })
 
     window.location.href = payload.editorUrl
   } catch (launchError) {
@@ -218,6 +250,50 @@ async function launchEditor() {
   } finally {
     editorLoading.value = false
   }
+}
+
+type PendingLaunchItem = {
+  productId: string
+  variantId: string
+  productTitle: string
+  variantLabel: string
+  quantity: number
+  priceCents: number
+  currency: 'usd'
+  whccSku: string | null
+  whccProductId?: string
+  whccDesignId?: string
+}
+
+function readPendingLaunches() {
+  if (import.meta.server) {
+    return {}
+  }
+
+  try {
+    const raw = window.localStorage.getItem(PENDING_STORAGE_KEY)
+    if (!raw) {
+      return {}
+    }
+
+    const parsed = JSON.parse(raw)
+    return parsed && typeof parsed === 'object' ? parsed : {}
+  } catch {
+    return {}
+  }
+}
+
+function persistPendingLaunch(checkoutId: string, item: PendingLaunchItem) {
+  if (import.meta.server) {
+    return
+  }
+
+  const launches = readPendingLaunches()
+  launches[checkoutId] = {
+    ...item,
+    createdAt: new Date().toISOString(),
+  }
+  window.localStorage.setItem(PENDING_STORAGE_KEY, JSON.stringify(launches))
 }
 
 function formatMoney(cents: number) {

@@ -38,33 +38,19 @@
 
 <script lang="ts" setup>
 import { ref, onMounted, onUnmounted } from 'vue'
+import type { GalleryProduct } from '@/types/gallery'
 
-interface ImageProp {
-  src: string
-  alt?: string
-  width?: number | string
-  height?: number | string
-  loading?: 'eager' | 'lazy'
-  srcset?: string
-}
-
-interface Artwork {
-  id: string
-  title: string
-  description?: string
-  image: ImageProp
-}
-
-const artworks = ref<Artwork[]>([])
+const artworks = ref<GalleryProduct[]>([])
 const loading = ref(true)
 const error = ref<string | null>(null)
-const selected = ref<Artwork | null>(null)
+const selected = ref<GalleryProduct | null>(null)
 
 onMounted(async () => {
   try {
-    const response = await fetch('/data/featured-works.json')
+    const response = await fetch('/data/gallery-catalog.json')
     if (!response.ok) throw new Error('Failed to load featured works')
-    artworks.value = await response.json()
+    const catalog = (await response.json()) as GalleryProduct[]
+    artworks.value = catalog.filter((item) => item.active && item.featuredwork === true && !item.hidden)
   } catch (e) {
     error.value = e instanceof Error ? e.message : 'Failed to load featured works'
   } finally {
@@ -72,7 +58,7 @@ onMounted(async () => {
   }
 })
 
-function openLightbox(artwork: Artwork) {
+function openLightbox(artwork: GalleryProduct) {
   selected.value = artwork
   document.body.style.overflow = 'hidden'
 }
@@ -80,14 +66,6 @@ function openLightbox(artwork: Artwork) {
 function closeLightbox() {
   selected.value = null
   document.body.style.overflow = ''
-}
-
-function rowSpan(image: ImageProp): number {
-  const w = Number(image.width)
-  const h = Number(image.height)
-  if (!w || !h) return 30
-  // grid-auto-rows: 10px; scale factor 35 gives ~350px for a square image
-  return Math.ceil((h / w) * 35) + 1
 }
 
 function onKeydown(e: KeyboardEvent) {

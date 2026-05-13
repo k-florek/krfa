@@ -22,6 +22,10 @@ function normalizeLineItems(items) {
     .filter((item) => item.productId && item.variantId && item.quantity > 0)
 }
 
+function isPlaceholderValue(value) {
+  return String(value || '').trim().toLowerCase().startsWith('replace_me_')
+}
+
 function getAccountIdFromPayload(payload) {
   const fromPayload = String(payload?.accountId || '').trim()
   const fromEnvironment = String(process.env.WHCC_ACCOUNT_ID || '').trim()
@@ -88,6 +92,18 @@ export async function handler(event) {
       })
     }
 
+    const placeholderMapping = lineItems.find(
+      (item) => isPlaceholderValue(item.whccProductId) || isPlaceholderValue(item.whccDesignId)
+    )
+    if (placeholderMapping) {
+      return jsonResponse(400, origin, {
+        error:
+          'WHCC variant mapping still uses placeholder values. Replace whccProductId/whccDesignId with real IDs from WHCC staging or production.',
+        productId: placeholderMapping.productId,
+        variantId: placeholderMapping.variantId,
+      })
+    }
+
     const siteUrl = process.env.SITE_URL || 'http://localhost:3000'
     const successPath = '/gallery/success'
     const cancelPath = '/gallery/cancel'
@@ -105,17 +121,23 @@ export async function handler(event) {
     const { token } = await getWhccAccessToken(accountId)
 
     const editorPayload = {
-      accountId,
+      userId: accountId,
       productId: item.whccProductId,
       designId: item.whccDesignId,
-      quantity: item.quantity,
-      completeUrl: `${siteUrl}${successPath}?checkout_id=${checkoutId}&editor_id=%EDITOR_ID%`,
-      cancelUrl: `${siteUrl}${cancelPath}?checkout_id=${checkoutId}`,
-      metadata: {
-        checkoutId,
-        productId: item.productId,
-        variantId: item.variantId,
-        whccSku: item.whccSku || null,
+      redirects: {
+        complete: {
+          text: 'Checkout',
+          url: `${siteUrl}${successPath}?checkout_id=${checkoutId}&editor_id=%EDITOR_ID%`,
+        },
+        cancel: {
+          text: 'Back to Gallery',
+          url: `${siteUrl}${cancelPath}?checkout_id=${checkoutId}`,
+        },
+      },
+      settings: {
+        quantity: {
+          default: item.quantity,
+        },
       },
     }
 

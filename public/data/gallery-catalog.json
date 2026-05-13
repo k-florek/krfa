@@ -7,6 +7,8 @@
     "medium": "Watercolor",
     "type": "print",
     "active": true,
+    "featuredwork": true,
+    "hidden": false,
     "image": {
       "src": "/img/artwork/portrait_of_a_fairy.jpg",
       "alt": "Portrait of a Fairy watercolor painting",
@@ -37,16 +39,18 @@
     ]
   },
   {
-    "id": "wet-crow",
-    "slug": "wet-crow",
-    "title": "Wet Crow",
+    "id": "crow",
+    "slug": "crow",
+    "title": "Crow",
     "description": "An expressive study of texture and resilience.",
     "medium": "Watercolor",
     "type": "print",
     "active": true,
+    "featuredwork": true,
+    "hidden": false,
     "image": {
       "src": "/img/artwork/wet_crow.jpg",
-      "alt": "Wet Crow watercolor painting",
+      "alt": "Crow watercolor painting",
       "width": 800,
       "height": 600
     },
@@ -64,13 +68,15 @@
     ]
   },
   {
-    "id": "goat-original",
-    "slug": "goat-original",
-    "title": "Goat (Original)",
+    "id": "goat",
+    "slug": "goat",
+    "title": "Goat",
     "description": "Original watercolor artwork, one-of-one piece.",
     "medium": "Watercolor",
-    "type": "original",
+    "type": "print",
     "active": true,
+    "featuredwork": true,
+    "hidden": false,
     "image": {
       "src": "/img/artwork/goat.jpg",
       "alt": "Goat watercolor original painting",
@@ -79,12 +85,14 @@
     },
     "variants": [
       {
-        "id": "original",
-        "label": "Original Artwork",
-        "priceCents": 45000,
+        "id": "8x10",
+        "label": "8 x 10 Open Edition Print",
+        "whccProductId": "replace_me_product_wetcrow_8x10",
+        "whccDesignId": "replace_me_design_wetcrow_8x10",
+        "priceCents": 4500,
         "currency": "usd",
-        "whccSku": "ORIGINAL-GOAT",
-        "inStock": false
+        "whccSku": "WHCC-WC-8X10",
+        "inStock": true
       }
     ]
   }

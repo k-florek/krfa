@@ -26,6 +26,8 @@ export interface GalleryProduct {
   medium: string
   type: ProductType
   active: boolean
+  featuredwork?: boolean
+  hidden?: boolean
   image: CatalogImage
   variants: ProductVariant[]
 }

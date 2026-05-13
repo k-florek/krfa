@@ -6,9 +6,13 @@ Nuxt static site with a gallery shop frontend and Netlify function scaffolding f
 
 - Frontend: Nuxt static pages (GitHub Pages compatible)
 - Catalog source for frontend: `public/data/gallery-catalog.json`
-- Checkout: product selection in gallery → WHCC Editor launched via `/api/create-whcc-editor` → order confirmed in WHCC
-- Backend (scaffold): Netlify Functions in `netlify/functions`
-- Fulfillment strategy: direct WHCC ordering flow (no local order database)
+- Checkout flow:
+  1. Product selection in gallery
+  2. Launch WHCC Editor via `/api/create-whcc-editor`
+  3. Return to `/gallery/success` and add completed editor item to local cart
+  4. Submit cart with shipping via `/api/submit-whcc-order` (WHCC Order Submit API)
+- Backend: Netlify Functions in `netlify/functions`
+- Fulfillment strategy: direct WHCC submit flow (no local order database)
 
 ## Run Locally
 
@@ -32,11 +36,11 @@ pnpm dev
 
 Site runs at `http://localhost:3000`.
 
-## New Pages
+## Key Pages
 
-- `app/pages/gallery.vue`: Product listing, filter, and WHCC editor launch per print
-- `app/pages/gallery/success.vue`: Post-checkout success state
-- `app/pages/gallery/cancel.vue`: Post-checkout cancel state
+- `app/pages/gallery.vue`: Product listing, filter, WHCC editor launch, and cart summary
+- `app/pages/gallery/success.vue`: Cart review, shipping collection, and final order submit
+- `app/pages/gallery/cancel.vue`: Editor cancel state and recovery actions
 
 ## Catalog Management
 
@@ -59,7 +63,9 @@ Notes:
 ## Netlify Function Endpoints
 
 - `netlify/functions/create-whcc-editor.mjs` — creates a WHCC editor session and returns editor launch URL
-- `netlify/functions/verify-admin.mjs`, `admin-session.mjs`, `admin-logout.mjs` — admin auth
+- `netlify/functions/whcc-editor-complete.mjs` — validates completed editor return payload and materializes a cart item
+- `netlify/functions/submit-whcc-order.mjs` — exports editor IDs and submits the final order via WHCC Order Submit API
+- `netlify/functions/verify-admin.mjs`, `admin-session.mjs`, `admin-logout.mjs` — admin auth shell
 
 
 ## Environment Variables
@@ -75,6 +81,17 @@ Defined in `.env.example`:
 - `WHCC_KEY`
 - `WHCC_SECRET`
 - `WHCC_ACCOUNT_ID`
+- `WHCC_ORDER_API_BASE_URL`
+- `WHCC_ORDER_KEY`
+- `WHCC_ORDER_SECRET`
+- `WHCC_SHIP_FROM_NAME`
+- `WHCC_SHIP_FROM_ADDR1`
+- `WHCC_SHIP_FROM_ADDR2` (optional)
+- `WHCC_SHIP_FROM_CITY`
+- `WHCC_SHIP_FROM_STATE`
+- `WHCC_SHIP_FROM_ZIP`
+- `WHCC_SHIP_FROM_COUNTRY`
+- `WHCC_SHIP_FROM_PHONE`
 - `WHCC_HTTP_TIMEOUT_MS` (optional, default 15000)
 
 Notes:
@@ -89,8 +106,7 @@ Notes:
 - On Netlify, Nuxt uses the `netlify-static` preset and outputs static assets to `dist`.
 - Frontend must point `NUXT_PUBLIC_CHECKOUT_API_BASE_URL` to the live Netlify backend domain.
 
-## Next Implementation Targets
+## Notes
 
-1. Implement WHCC editor callback handler to capture completed editor state.
-2. Implement WHCC export + order create + confirm sequence after editor completion.
-3. Implement WHCC webhook handler for production/shipping status updates.
+- Local cart state is browser-local and intentionally not persisted to a database.
+- WHCC webhook status syncing is not yet implemented in this repository.
