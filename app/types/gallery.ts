@@ -7,20 +7,17 @@ export interface CatalogImage {
   height?: number
 }
 
-export interface ProductVariant {
-  id: string
-  label: string
-  whccProductId?: string
-  whccDesignId?: string
-  priceCents: number
-  currency: 'usd'
-  whccSku?: string
-  inStock: boolean
+export interface PrintSource {
+  aspectRatio: string
+  src: string
+  width?: number
+  height?: number
 }
 
 export interface GalleryProduct {
   id: string
   slug: string
+  sku: string
   title: string
   description: string
   medium: string
@@ -28,6 +25,6 @@ export interface GalleryProduct {
   active: boolean
   featuredwork?: boolean
   hidden?: boolean
-  image: CatalogImage
-  variants: ProductVariant[]
+  displayImage: CatalogImage
+  printSources: PrintSource[]
 }

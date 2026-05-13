@@ -34,7 +34,7 @@ function normalizeCartItem(item: Partial<WhccCartItem>): WhccCartItem | null {
     return null
   }
 
-  if (!Number.isFinite(priceCents) || priceCents <= 0) {
+  if (!Number.isFinite(priceCents) || priceCents < 0) {
     return null
   }
 
@@ -47,7 +47,7 @@ function normalizeCartItem(item: Partial<WhccCartItem>): WhccCartItem | null {
     productTitle: String(item.productTitle || '').trim(),
     variantLabel: String(item.variantLabel || '').trim(),
     quantity,
-    priceCents,
+    priceCents: Math.max(0, Math.floor(priceCents)),
     currency: 'usd',
     whccSku: item.whccSku ? String(item.whccSku) : null,
     whccProductId: String(item.whccProductId || '').trim(),

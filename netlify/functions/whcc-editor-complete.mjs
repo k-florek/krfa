@@ -50,9 +50,9 @@ export async function handler(event) {
       })
     }
 
-    if (!Number.isFinite(pendingItem.priceCents) || pendingItem.priceCents <= 0) {
+    if (!Number.isFinite(pendingItem.priceCents) || pendingItem.priceCents < 0) {
       return jsonResponse(400, origin, {
-        error: 'Item price must be greater than zero.',
+        error: 'Item price must be zero or greater.',
       })
     }
 

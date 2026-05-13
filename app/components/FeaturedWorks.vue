@@ -13,9 +13,9 @@
         @click="openLightbox(artwork)"
       >
         <img
-          :src="artwork.image.src"
-          :alt="artwork.image.alt || artwork.title"
-          :loading="artwork.image.loading ?? 'lazy'"
+          :src="artwork.displayImage.src"
+          :alt="artwork.displayImage.alt || artwork.title"
+          loading="lazy"
           class="bento-img"
         />
         <div class="masonry-overlay">
@@ -28,7 +28,7 @@
       <div v-if="selected" class="modal-overlay" @click.self="closeLightbox">
         <div class="modal-content">
           <button class="modal-close" @click="closeLightbox" aria-label="Close">&times;</button>
-          <img :src="selected.image.src" :alt="selected.image.alt || selected.title" class="modal-image" />
+          <img :src="selected.displayImage.src" :alt="selected.displayImage.alt || selected.title" class="modal-image" />
           <p class="modal-title">{{ selected.title }}</p>
         </div>
       </div>

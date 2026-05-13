@@ -16,14 +16,48 @@ function normalizeLineItems(items) {
       productType: String(item?.productType || ''),
       quantity: Number(item?.quantity || 0),
       whccSku: String(item?.whccSku || ''),
-      whccProductId: String(item?.whccProductId || ''),
-      whccDesignId: String(item?.whccDesignId || ''),
+      whccProductUID: String(item?.whccProductUID || item?.whccProductId || ''),
+      printSourceUrl: String(item?.printSourceUrl || ''),
+      aspectRatio: String(item?.aspectRatio || ''),
+      slug: String(item?.slug || ''),
     }))
     .filter((item) => item.productId && item.variantId && item.quantity > 0)
 }
 
-function isPlaceholderValue(value) {
-  return String(value || '').trim().toLowerCase().startsWith('replace_me_')
+function toDesignId(slug, aspectRatio) {
+  const normalizedSlug = String(slug || '')
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9-]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+  const normalizedAspectRatio = String(aspectRatio || '')
+    .trim()
+    .replace(':', 'x')
+    .replace(/[^0-9x.]+/g, '')
+
+  if (!normalizedSlug || !normalizedAspectRatio) {
+    return ''
+  }
+
+  return `${normalizedSlug}-${normalizedAspectRatio}`
+}
+
+function toAbsoluteAssetUrl(url, siteUrl) {
+  const trimmed = String(url || '').trim()
+  if (!trimmed) {
+    return ''
+  }
+
+  if (/^https?:\/\//i.test(trimmed)) {
+    return trimmed
+  }
+
+  const normalizedSiteUrl = String(siteUrl || '').trim().replace(/\/$/, '')
+  if (!normalizedSiteUrl) {
+    return trimmed
+  }
+
+  return `${normalizedSiteUrl}${trimmed.startsWith('/') ? '' : '/'}${trimmed}`
 }
 
 function getAccountIdFromPayload(payload) {
@@ -82,25 +116,15 @@ export async function handler(event) {
       })
     }
 
-    const missingMapping = lineItems.find((item) => !item.whccProductId || !item.whccDesignId)
+    const missingMapping = lineItems.find(
+      (item) => !item.whccProductUID || !item.printSourceUrl || !toDesignId(item.slug, item.aspectRatio)
+    )
     if (missingMapping) {
       return jsonResponse(400, origin, {
         error:
-          'Missing WHCC variant mapping. Configure whccProductId and whccDesignId in gallery-catalog.json for each print variant.',
+          'Missing WHCC mapping details. Provide whccProductUID, printSourceUrl, slug, and aspectRatio for each print item.',
         productId: missingMapping.productId,
         variantId: missingMapping.variantId,
-      })
-    }
-
-    const placeholderMapping = lineItems.find(
-      (item) => isPlaceholderValue(item.whccProductId) || isPlaceholderValue(item.whccDesignId)
-    )
-    if (placeholderMapping) {
-      return jsonResponse(400, origin, {
-        error:
-          'WHCC variant mapping still uses placeholder values. Replace whccProductId/whccDesignId with real IDs from WHCC staging or production.',
-        productId: placeholderMapping.productId,
-        variantId: placeholderMapping.variantId,
       })
     }
 
@@ -117,13 +141,15 @@ export async function handler(event) {
 
     const checkoutId = randomUUID()
     const item = lineItems[0]
+    const designId = toDesignId(item.slug, item.aspectRatio)
+    const printSourceUrl = toAbsoluteAssetUrl(item.printSourceUrl, siteUrl)
 
     const { token } = await getWhccAccessToken(accountId)
 
     const editorPayload = {
       userId: accountId,
-      productId: item.whccProductId,
-      designId: item.whccDesignId,
+      productId: item.whccProductUID,
+      designId,
       redirects: {
         complete: {
           text: 'Checkout',
@@ -139,6 +165,15 @@ export async function handler(event) {
           default: item.quantity,
         },
       },
+      photos: [
+        {
+          id: '1',
+          name: `${item.productTitle || item.productId} source`,
+          url: printSourceUrl,
+          printUrl: printSourceUrl,
+          filetype: printSourceUrl.toLowerCase().endsWith('.png') ? 'png' : 'jpg',
+        },
+      ],
     }
 
     const editorResponse = await whccJsonRequest('/editors', {

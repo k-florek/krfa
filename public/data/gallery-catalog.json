@@ -2,6 +2,7 @@
   {
     "id": "portrait-of-a-fairy",
     "slug": "portrait-of-a-fairy",
+    "sku": "KRFA-POAF-001",
     "title": "Portrait of a Fairy",
     "description": "A whimsical watercolor portrait exploring wonder and softness.",
     "medium": "Watercolor",
@@ -9,38 +10,29 @@
     "active": true,
     "featuredwork": true,
     "hidden": false,
-    "image": {
+    "displayImage": {
       "src": "/img/artwork/portrait_of_a_fairy.jpg",
       "alt": "Portrait of a Fairy watercolor painting",
       "width": 800,
       "height": 900
     },
-    "variants": [
+    "printSources": [
       {
-        "id": "8x10",
-        "label": "8 x 10 Open Edition Print",
-        "whccProductId": "replace_me_product_poaf_8x10",
-        "whccDesignId": "replace_me_design_poaf_8x10",
-        "priceCents": 4500,
-        "currency": "usd",
-        "whccSku": "WHCC-POAF-8X10",
-        "inStock": true
+        "aspectRatio": "4:5",
+        "src": "/img/artwork/portrait_of_a_fairy.jpg",
+        "width": 800,
+        "height": 900
       },
       {
-        "id": "11x14",
-        "label": "11 x 14 Open Edition Print",
-        "whccProductId": "replace_me_product_poaf_11x14",
-        "whccDesignId": "replace_me_design_poaf_11x14",
-        "priceCents": 6500,
-        "currency": "usd",
-        "whccSku": "WHCC-POAF-11X14",
-        "inStock": true
+        "aspectRatio": "11:14",
+        "src": "/img/artwork/portrait_of_a_fairy.jpg"
       }
     ]
   },
   {
     "id": "crow",
     "slug": "crow",
+    "sku": "KRFA-CROW-001",
     "title": "Crow",
     "description": "An expressive study of texture and resilience.",
     "medium": "Watercolor",
@@ -48,28 +40,25 @@
     "active": true,
     "featuredwork": true,
     "hidden": false,
-    "image": {
+    "displayImage": {
       "src": "/img/artwork/wet_crow.jpg",
       "alt": "Crow watercolor painting",
       "width": 800,
       "height": 600
     },
-    "variants": [
+    "printSources": [
       {
-        "id": "8x10",
-        "label": "8 x 10 Open Edition Print",
-        "whccProductId": "replace_me_product_wetcrow_8x10",
-        "whccDesignId": "replace_me_design_wetcrow_8x10",
-        "priceCents": 4500,
-        "currency": "usd",
-        "whccSku": "WHCC-WC-8X10",
-        "inStock": true
+        "aspectRatio": "4:5",
+        "src": "/img/artwork/wet_crow.jpg",
+        "width": 800,
+        "height": 600
       }
     ]
   },
   {
     "id": "goat",
     "slug": "goat",
+    "sku": "KRFA-GOAT-001",
     "title": "Goat",
     "description": "Original watercolor artwork, one-of-one piece.",
     "medium": "Watercolor",
@@ -77,22 +66,18 @@
     "active": true,
     "featuredwork": true,
     "hidden": false,
-    "image": {
+    "displayImage": {
       "src": "/img/artwork/goat.jpg",
       "alt": "Goat watercolor original painting",
       "width": 800,
       "height": 600
     },
-    "variants": [
+    "printSources": [
       {
-        "id": "8x10",
-        "label": "8 x 10 Open Edition Print",
-        "whccProductId": "replace_me_product_wetcrow_8x10",
-        "whccDesignId": "replace_me_design_wetcrow_8x10",
-        "priceCents": 4500,
-        "currency": "usd",
-        "whccSku": "WHCC-WC-8X10",
-        "inStock": true
+        "aspectRatio": "4:5",
+        "src": "/img/artwork/goat.jpg",
+        "width": 800,
+        "height": 600
       }
     ]
   }

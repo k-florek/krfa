@@ -47,7 +47,7 @@
       <div v-else class="gallery-masonry">
         <article v-for="product in filteredProducts" :key="product.id" class="gallery-card">
           <div class="gallery-card-img-wrap">
-            <img :src="product.image.src" :alt="product.image.alt" loading="lazy" />
+            <img :src="product.displayImage.src" :alt="product.displayImage.alt" loading="lazy" />
             <div class="masonry-overlay">
               <span class="masonry-title">{{ product.title }}</span>
             </div>
@@ -73,15 +73,37 @@
         <div class="modal-content size-modal-content" role="dialog" aria-modal="true" :aria-label="`Order ${selectedProduct.title}`">
           <button class="modal-close" @click="closeOrderModal" aria-label="Close">&times;</button>
           <div class="size-modal-body">
-            <img :src="selectedProduct.image.src" :alt="selectedProduct.image.alt" class="size-modal-img" />
+            <img :src="selectedProduct.displayImage.src" :alt="selectedProduct.displayImage.alt" class="size-modal-img" />
             <div class="size-modal-info">
               <p class="product-type">Print</p>
               <h3>{{ selectedProduct.title }}</h3>
               <p class="product-description">{{ selectedProduct.description }}</p>
               <p class="product-medium">{{ selectedProduct.medium }}</p>
+              <div class="size-options" aria-live="polite">
+                <p class="product-medium">Available print options</p>
+                <p v-if="whccCatalogLoading" class="status loading">Loading available WHCC print options...</p>
+                <p v-else-if="whccCatalogError" class="checkout-error">{{ whccCatalogError }}</p>
+                <p v-else-if="!matchedOptions.length" class="checkout-error">
+                  No WHCC fine art products match this artwork's source aspect ratios.
+                </p>
+                <label
+                  v-else
+                  v-for="option in matchedOptions"
+                  :key="option.id"
+                  class="size-option"
+                >
+                  <input
+                    type="radio"
+                    name="matched-print-option"
+                    :value="option.id"
+                    v-model="selectedOptionId"
+                  />
+                  <span>{{ option.label }}</span>
+                </label>
+              </div>
               <button
                 class="btn btn-primary btn-block"
-                :disabled="!selectedVariantId || editorLoading"
+                :disabled="!selectedOptionId || editorLoading || whccCatalogLoading"
                 @click="launchEditor"
               >
                 {{ editorLoading ? 'Opening editor...' : 'Order Print' }}
@@ -107,10 +129,32 @@ const loading = ref(true)
 const error = ref<string | null>(null)
 const editorLoading = ref(false)
 const editorError = ref<string | null>(null)
+const whccCatalogLoading = ref(false)
+const whccCatalogError = ref<string | null>(null)
 const selectedFilter = ref<'all' | 'print' | 'original'>('all')
 const selectedProduct = ref<GalleryProduct | null>(null)
-const selectedVariantId = ref<string | null>(null)
+const selectedOptionId = ref<string | null>(null)
+const whccCatalog = ref<WhccCatalogProduct[]>([])
+const matchedOptions = ref<MatchedPrintOption[]>([])
 const PENDING_STORAGE_KEY = 'krfa-whcc-pending-launches-v1'
+const ASPECT_RATIO_TOLERANCE = 0.01
+
+type WhccCatalogProduct = {
+  productUID: string
+  name: string
+  widthIn: number
+  heightIn: number
+  aspectRatio: string
+}
+
+type MatchedPrintOption = {
+  id: string
+  label: string
+  variantLabel: string
+  whccProductId: string
+  aspectRatio: string
+  printSourceUrl: string
+}
 
 const filterOptions = [
   { label: 'All', value: 'all' as const },
@@ -150,45 +194,185 @@ onMounted(async () => {
 })
 
 function openOrderModal(product: GalleryProduct) {
+  void openOrderModalAsync(product)
+}
+
+async function openOrderModalAsync(product: GalleryProduct) {
   if (product.type !== 'print') {
     return
   }
 
   selectedProduct.value = product
-  const firstInStock = product.variants.find((v) => v.inStock)
-  selectedVariantId.value = firstInStock?.id ?? null
+  selectedOptionId.value = null
+  matchedOptions.value = []
+  whccCatalogError.value = null
   editorError.value = null
+
+  if (!product.printSources.length) {
+    whccCatalogError.value = 'This artwork has no print sources configured.'
+    return
+  }
+
+  try {
+    const products = await loadWhccCatalog()
+    matchedOptions.value = buildMatchedPrintOptions(product, products)
+    selectedOptionId.value = matchedOptions.value[0]?.id || null
+  } catch (catalogError) {
+    whccCatalogError.value =
+      catalogError instanceof Error ? catalogError.message : 'Unable to load WHCC catalog options.'
+  }
 }
 
 function closeOrderModal() {
   selectedProduct.value = null
-  selectedVariantId.value = null
+  selectedOptionId.value = null
+  matchedOptions.value = []
+  whccCatalogError.value = null
   editorError.value = null
 }
 
-function isPlaceholderWhccValue(value?: string) {
-  return String(value || '').trim().toLowerCase().startsWith('replace_me_')
+function parseAspectRatio(aspectRatio: string) {
+  const raw = String(aspectRatio || '').trim()
+  if (!raw) {
+    return null
+  }
+
+  if (raw.includes(':')) {
+    const parts = raw.split(':').map((part) => Number.parseFloat(part))
+    if (parts.length !== 2) {
+      return null
+    }
+
+    const width = parts[0]
+    const height = parts[1]
+    if (width === undefined || height === undefined) {
+      return null
+    }
+
+    if (!Number.isFinite(width) || !Number.isFinite(height) || width <= 0 || height <= 0) {
+      return null
+    }
+
+    return width / height
+  }
+
+  const decimalRatio = Number.parseFloat(raw)
+  if (!Number.isFinite(decimalRatio) || decimalRatio <= 0) {
+    return null
+  }
+
+  return decimalRatio
 }
 
-function hasWhccMapping(variant: GalleryProduct['variants'][number]) {
-  return (
-    !!variant.whccProductId
-    && !!variant.whccDesignId
-    && !isPlaceholderWhccValue(variant.whccProductId)
-    && !isPlaceholderWhccValue(variant.whccDesignId)
-  )
+function normalizeRatioForOrientation(ratio: number) {
+  if (!Number.isFinite(ratio) || ratio <= 0) {
+    return null
+  }
+
+  return ratio >= 1 ? ratio : 1 / ratio
+}
+
+function toAbsoluteAssetUrl(url: string) {
+  const trimmed = String(url || '').trim()
+  if (!trimmed) {
+    return ''
+  }
+
+  if (/^https?:\/\//i.test(trimmed)) {
+    return trimmed
+  }
+
+  const siteUrl = String(config.public.siteUrl || config.public.checkoutApiBaseUrl || '').replace(/\/$/, '')
+  if (!siteUrl) {
+    return trimmed
+  }
+
+  return `${siteUrl}${trimmed.startsWith('/') ? '' : '/'}${trimmed}`
+}
+
+function getApiUrl(path: string) {
+  const baseUrl = (config.public.checkoutApiBaseUrl || '').replace(/\/$/, '')
+  return baseUrl ? `${baseUrl}${path}` : path
+}
+
+async function loadWhccCatalog() {
+  if (whccCatalog.value.length) {
+    return whccCatalog.value
+  }
+
+  whccCatalogLoading.value = true
+  whccCatalogError.value = null
+
+  try {
+    const response = await fetch(getApiUrl('/api/whcc-catalog'))
+    const payload = (await response.json()) as {
+      products?: WhccCatalogProduct[]
+      error?: string
+    }
+
+    if (!response.ok || !Array.isArray(payload.products)) {
+      throw new Error(payload.error || 'Unable to fetch WHCC catalog products.')
+    }
+
+    whccCatalog.value = payload.products
+    return whccCatalog.value
+  } finally {
+    whccCatalogLoading.value = false
+  }
+}
+
+function buildMatchedPrintOptions(product: GalleryProduct, products: WhccCatalogProduct[]) {
+  const options: MatchedPrintOption[] = []
+
+  for (const source of product.printSources) {
+    const sourceRatio = parseAspectRatio(source.aspectRatio)
+    if (!sourceRatio) {
+      continue
+    }
+
+    const normalizedSourceRatio = normalizeRatioForOrientation(sourceRatio)
+    if (!normalizedSourceRatio) {
+      continue
+    }
+
+    const matchingProducts = products.filter((entry) => {
+      const productRatio = Number(entry.widthIn) / Number(entry.heightIn)
+      const normalizedProductRatio = normalizeRatioForOrientation(productRatio)
+      return (
+        normalizedProductRatio !== null
+        && Math.abs(normalizedProductRatio - normalizedSourceRatio) <= ASPECT_RATIO_TOLERANCE
+      )
+    })
+
+    for (const matchedProduct of matchingProducts) {
+      const optionId = `${matchedProduct.productUID}:${source.aspectRatio}:${source.src}`
+      options.push({
+        id: optionId,
+        variantLabel: matchedProduct.name,
+        label: `${matchedProduct.name} (${matchedProduct.widthIn}x${matchedProduct.heightIn}, source ${source.aspectRatio})`,
+        whccProductId: matchedProduct.productUID,
+        aspectRatio: source.aspectRatio,
+        printSourceUrl: toAbsoluteAssetUrl(source.src),
+      })
+    }
+  }
+
+  return options
 }
 
 async function launchEditor() {
-  if (!selectedProduct.value || !selectedVariantId.value) return
+  if (!selectedProduct.value || !selectedOptionId.value) return
   const product = selectedProduct.value
   if (product.type !== 'print') return
 
-  const variant = product.variants.find((v) => v.id === selectedVariantId.value)
-  if (!variant || !variant.inStock) return
+  const selectedOption = matchedOptions.value.find((option) => option.id === selectedOptionId.value)
+  if (!selectedOption) {
+    editorError.value = 'Please choose a print option.'
+    return
+  }
 
-  if (!hasWhccMapping(variant)) {
-    editorError.value = 'This print is not fully configured for WHCC ordering. Replace placeholder whccProductId/whccDesignId in gallery-catalog.json.'
+  if (!selectedOption.printSourceUrl) {
+    editorError.value = 'This print source is not configured with a valid URL.'
     return
   }
 
@@ -206,14 +390,16 @@ async function launchEditor() {
         lineItems: [
           {
             productId: product.id,
-            variantId: variant.id,
+            variantId: selectedOption.id,
             productType: product.type,
             productTitle: product.title,
-            variantLabel: variant.label,
+            variantLabel: selectedOption.variantLabel,
             quantity: 1,
-            whccProductId: variant.whccProductId,
-            whccDesignId: variant.whccDesignId,
-            whccSku: variant.whccSku,
+            whccSku: product.sku,
+            whccProductUID: selectedOption.whccProductId,
+            printSourceUrl: selectedOption.printSourceUrl,
+            aspectRatio: selectedOption.aspectRatio,
+            slug: product.slug,
           },
         ],
       }),
@@ -232,15 +418,15 @@ async function launchEditor() {
 
     persistPendingLaunch(payload.checkoutId, {
       productId: product.id,
-      variantId: variant.id,
+      variantId: selectedOption.id,
       productTitle: product.title,
-      variantLabel: variant.label,
+      variantLabel: selectedOption.variantLabel,
       quantity: 1,
-      priceCents: variant.priceCents,
-      currency: variant.currency,
-      whccSku: variant.whccSku || null,
-      whccProductId: variant.whccProductId,
-      whccDesignId: variant.whccDesignId,
+      priceCents: 0,
+      currency: 'usd',
+      whccSku: product.sku || null,
+      whccProductId: selectedOption.whccProductId,
+      whccDesignId: `${product.slug}-${selectedOption.aspectRatio.replace(':', 'x')}`,
     })
 
     window.location.href = payload.editorUrl
