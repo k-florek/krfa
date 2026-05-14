@@ -81,10 +81,10 @@
               <p class="product-medium">{{ selectedProduct.medium }}</p>
               <div class="size-options" aria-live="polite">
                 <p class="product-medium">Available print options</p>
-                <p v-if="whccCatalogLoading" class="status loading">Loading available WHCC print options...</p>
+                <p v-if="whccCatalogLoading" class="status loading">Loading available print options...</p>
                 <p v-else-if="whccCatalogError" class="checkout-error">{{ whccCatalogError }}</p>
                 <p v-else-if="!matchedOptions.length" class="checkout-error">
-                  No WHCC fine art products match this artwork's source aspect ratios.
+                  No fine art products match this artwork's source aspect ratios.
                 </p>
                 <label
                   v-else
