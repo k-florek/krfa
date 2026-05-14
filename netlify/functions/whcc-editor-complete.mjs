@@ -1,6 +1,9 @@
 import { jsonResponse, handlePreflight } from './_shared.mjs'
 
 function normalizePendingItem(item) {
+  const productNodeId = Number(item?.whccProductNodeId)
+  const paperAttributeUID = Number(item?.whccPaperAttributeUID)
+
   return {
     productId: String(item?.productId || '').trim(),
     variantId: String(item?.variantId || '').trim(),
@@ -11,6 +14,11 @@ function normalizePendingItem(item) {
     currency: String(item?.currency || 'usd').toLowerCase(),
     whccSku: String(item?.whccSku || '').trim(),
     whccProductId: String(item?.whccProductId || '').trim(),
+    whccProductNodeId:
+      Number.isFinite(productNodeId) && productNodeId > 0 ? Math.floor(productNodeId) : null,
+    whccPaperAttributeUID:
+      Number.isFinite(paperAttributeUID) && paperAttributeUID > 0 ? Math.floor(paperAttributeUID) : null,
+    whccPaperLabel: String(item?.whccPaperLabel || '').trim(),
     whccDesignId: String(item?.whccDesignId || '').trim(),
   }
 }
@@ -75,6 +83,9 @@ export async function handler(event) {
       currency: pendingItem.currency === 'usd' ? 'usd' : 'usd',
       whccSku: pendingItem.whccSku || null,
       whccProductId: pendingItem.whccProductId,
+      whccProductNodeId: pendingItem.whccProductNodeId,
+      whccPaperAttributeUID: pendingItem.whccPaperAttributeUID,
+      whccPaperLabel: pendingItem.whccPaperLabel || null,
       whccDesignId: pendingItem.whccDesignId,
       addedAt: new Date().toISOString(),
     }

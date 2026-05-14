@@ -13,8 +13,20 @@ export type WhccCartItem = {
   currency: 'usd'
   whccSku: string | null
   whccProductId: string
+  whccProductNodeId: number | null
+  whccPaperAttributeUID: number | null
+  whccPaperLabel: string | null
   whccDesignId: string
   addedAt: string
+}
+
+function normalizePositiveInteger(value: unknown): number | null {
+  const parsed = Number(value)
+  if (!Number.isFinite(parsed) || parsed <= 0) {
+    return null
+  }
+
+  return Math.floor(parsed)
 }
 
 const STORAGE_KEY = 'krfa-whcc-cart-v1'
@@ -51,6 +63,9 @@ function normalizeCartItem(item: Partial<WhccCartItem>): WhccCartItem | null {
     currency: 'usd',
     whccSku: item.whccSku ? String(item.whccSku) : null,
     whccProductId: String(item.whccProductId || '').trim(),
+    whccProductNodeId: normalizePositiveInteger(item.whccProductNodeId),
+    whccPaperAttributeUID: normalizePositiveInteger(item.whccPaperAttributeUID),
+    whccPaperLabel: item.whccPaperLabel ? String(item.whccPaperLabel).trim() : null,
     whccDesignId: String(item.whccDesignId || '').trim(),
     addedAt: String(item.addedAt || new Date().toISOString()),
   }

@@ -132,6 +132,9 @@ type PendingLaunchItem = {
   currency: 'usd'
   whccSku: string | null
   whccProductId?: string
+  whccProductNodeId?: number
+  whccPaperAttributeUID?: number
+  whccPaperLabel?: string
   whccDesignId?: string
   createdAt: string
 }

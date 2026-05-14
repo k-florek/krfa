@@ -19,6 +19,9 @@ function getAccountIdFromPayload(payload) {
 }
 
 function normalizeCartItem(item) {
+  const productNodeId = Number(item?.whccProductNodeId)
+  const paperAttributeUID = Number(item?.whccPaperAttributeUID)
+
   return {
     id: String(item?.id || '').trim(),
     editorId: String(item?.editorId || '').trim(),
@@ -31,8 +34,87 @@ function normalizeCartItem(item) {
     currency: String(item?.currency || 'usd').toLowerCase(),
     whccSku: String(item?.whccSku || '').trim(),
     whccProductId: String(item?.whccProductId || '').trim(),
+    whccProductNodeId:
+      Number.isFinite(productNodeId) && productNodeId > 0 ? Math.floor(productNodeId) : null,
+    whccPaperAttributeUID:
+      Number.isFinite(paperAttributeUID) && paperAttributeUID > 0 ? Math.floor(paperAttributeUID) : null,
+    whccPaperLabel: String(item?.whccPaperLabel || '').trim(),
     whccDesignId: String(item?.whccDesignId || '').trim(),
   }
+}
+
+function toPositiveInteger(value) {
+  const parsed = Number(value)
+  if (!Number.isFinite(parsed) || parsed <= 0) {
+    return null
+  }
+
+  return Math.floor(parsed)
+}
+
+function applySelectedVariantsToExport(orderPayload, cartItems) {
+  if (!orderPayload || typeof orderPayload !== 'object') {
+    return orderPayload
+  }
+
+  if (!Array.isArray(orderPayload.Orders) || !orderPayload.Orders.length) {
+    return orderPayload
+  }
+
+  const exportedItems = []
+  for (const order of orderPayload.Orders) {
+    const orderItems = Array.isArray(order?.OrderItems) ? order.OrderItems : []
+    for (const item of orderItems) {
+      exportedItems.push(item)
+    }
+  }
+
+  for (let i = 0; i < exportedItems.length; i += 1) {
+    const selected = cartItems[i]
+    if (!selected) {
+      continue
+    }
+
+    const target = exportedItems[i]
+    const quantity = toPositiveInteger(selected.quantity)
+    const productUID = toPositiveInteger(selected.whccProductId)
+    const productNodeId = toPositiveInteger(selected.whccProductNodeId)
+    const paperAttributeUID = toPositiveInteger(selected.whccPaperAttributeUID)
+
+    if (quantity) {
+      target.Quantity = quantity
+    }
+
+    if (productUID) {
+      target.ProductUID = productUID
+    }
+
+    if (!Array.isArray(target.ItemAssets)) {
+      target.ItemAssets = []
+    }
+
+    if (productNodeId) {
+      target.ItemAssets = target.ItemAssets.map((asset) => ({
+        ...asset,
+        ProductNodeID: productNodeId,
+      }))
+    }
+
+    if (!Array.isArray(target.ItemAttributes)) {
+      target.ItemAttributes = []
+    }
+
+    if (paperAttributeUID) {
+      const nextAttributes = target.ItemAttributes.filter((attribute) => {
+        const attributeId = Number(attribute?.AttributeUID)
+        return !Number.isFinite(attributeId) || Math.floor(attributeId) !== paperAttributeUID
+      })
+
+      target.ItemAttributes = [{ AttributeUID: paperAttributeUID }, ...nextAttributes]
+    }
+  }
+
+  return orderPayload
 }
 
 function normalizeShipping(shipping) {
@@ -191,8 +273,9 @@ export async function handler(event) {
     }
 
     const exportedOrder = exportResponse?.data?.order
+    const selectedOrder = applySelectedVariantsToExport(exportedOrder, cartItems)
     const entryId = randomUUID()
-    const orderImportPayload = applyShippingToOrder(exportedOrder, cartItems, shipping, entryId)
+    const orderImportPayload = applyShippingToOrder(selectedOrder, cartItems, shipping, entryId)
 
     const orderToken = await getWhccOrderAccessToken()
 

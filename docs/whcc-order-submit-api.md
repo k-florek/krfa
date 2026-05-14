@@ -29,6 +29,66 @@ All example requests use the **production** URL. All requests must use `https`. 
 
 ---
 
+## Local Pricing and Variation Source
+
+This project now uses a local JSON file as the source of truth for customer-facing print options and prices shown in the gallery modal.
+
+- Data file: `/public/data/whcc-product-variations.json`
+- API endpoint: `GET /api/whcc-print-options`
+- Runtime function: `/netlify/functions/whcc-print-options.mjs`
+
+### Why this exists
+
+WHCC `GET /api/catalog` provides product and attribute metadata, but it does not provide storefront pricing suitable for immediate display in the modal. The local JSON allows controlled pricing and curated option sets while still mapping to WHCC IDs for final order submission.
+
+### JSON Shape
+
+```json
+{
+  "version": 1,
+  "updatedAt": "2026-05-14",
+  "variations": [
+    {
+      "id": "print-8x10",
+      "productUID": "3",
+      "productName": "8x10 Print",
+      "productNodeId": 10000,
+      "widthIn": 8,
+      "heightIn": 10,
+      "aspectRatio": "4:5",
+      "active": true,
+      "sortOrder": 10,
+      "defaultQuantity": 1,
+      "minQuantity": 1,
+      "maxQuantity": 20,
+      "paperOptions": [
+        {
+          "id": "lustre",
+          "paperAttributeUID": 5,
+          "paperLabel": "Lustre Paper",
+          "unitPriceCents": 2800,
+          "active": true
+        }
+      ]
+    }
+  ]
+}
+```
+
+### Required IDs
+
+- `productUID`: maps to `OrderItems[].ProductUID`
+- `productNodeId`: maps to `ItemAssets[].ProductNodeID`
+- `paperAttributeUID`: maps to `ItemAttributes[].AttributeUID`
+
+### Operational Notes
+
+- Gallery modal price display is an app-configured subtotal estimate (`unitPriceCents * quantity`).
+- WHCC import/submit remains authoritative for final totals (shipping/tax/final billed amount).
+- Keep this JSON updated whenever WHCC product mappings or your retail pricing changes.
+
+---
+
 ## Authentication
 
 There are two authentication flows available. For most integrations, **Access Token** is recommended.

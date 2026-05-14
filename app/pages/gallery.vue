@@ -80,11 +80,11 @@
               <p class="product-description">{{ selectedProduct.description }}</p>
               <p class="product-medium">{{ selectedProduct.medium }}</p>
               <div class="size-options" aria-live="polite">
-                <p class="product-medium">Available print options</p>
+                <p class="product-medium">Choose print size</p>
                 <p v-if="whccCatalogLoading" class="status loading">Loading available print options...</p>
                 <p v-else-if="whccCatalogError" class="checkout-error">{{ whccCatalogError }}</p>
                 <p v-else-if="!matchedOptions.length" class="checkout-error">
-                  No fine art products match this artwork's source aspect ratios.
+                  No print options match this artwork's source aspect ratios.
                 </p>
                 <label
                   v-else
@@ -98,12 +98,51 @@
                     :value="option.id"
                     v-model="selectedOptionId"
                   />
-                  <span>{{ option.label }}</span>
+                  <span class="size-option-label">{{ option.label }}</span>
                 </label>
               </div>
+
+              <div v-if="selectedOption && selectedOption.papers.length" class="size-options">
+                <p class="product-medium">Choose paper type</p>
+                <label
+                  v-for="paper in selectedOption.papers"
+                  :key="paper.id"
+                  class="size-option"
+                >
+                  <input
+                    type="radio"
+                    name="matched-paper-option"
+                    :value="paper.id"
+                    v-model="selectedPaperId"
+                  />
+                  <span class="size-option-label">{{ paper.paperLabel }}</span>
+                  <span class="size-option-price">{{ formatMoney(paper.unitPriceCents) }}</span>
+                </label>
+              </div>
+
+              <div v-if="selectedOption" class="size-quantity-wrap">
+                <label class="size-quantity-label" for="print-quantity">Quantity</label>
+                <input
+                  id="print-quantity"
+                  class="size-quantity-input"
+                  type="number"
+                  inputmode="numeric"
+                  :min="selectedOption.minQuantity"
+                  :max="selectedOption.maxQuantity"
+                  :value="selectedQuantity"
+                  @input="onQuantityInput"
+                  @blur="normalizeSelectedQuantity"
+                />
+              </div>
+
+              <p v-if="selectedPaper" class="checkout-total">
+                Estimated print subtotal:
+                <strong>{{ formatMoney(selectedPaper.unitPriceCents * normalizedSelectedQuantity) }}</strong>
+              </p>
+
               <button
                 class="btn btn-primary btn-block"
-                :disabled="!selectedOptionId || editorLoading || whccCatalogLoading"
+                :disabled="!canLaunchEditor"
                 @click="launchEditor"
               >
                 {{ editorLoading ? 'Opening editor...' : 'Order Print' }}
@@ -118,7 +157,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import type { GalleryProduct } from '@/types/gallery'
 import { useWhccCart } from '@/composables/useWhccCart'
 
@@ -134,17 +173,32 @@ const whccCatalogError = ref<string | null>(null)
 const selectedFilter = ref<'all' | 'print' | 'original'>('all')
 const selectedProduct = ref<GalleryProduct | null>(null)
 const selectedOptionId = ref<string | null>(null)
-const whccCatalog = ref<WhccCatalogProduct[]>([])
+const selectedPaperId = ref<string | null>(null)
+const selectedQuantity = ref(1)
+const whccCatalog = ref<WhccPrintVariation[]>([])
 const matchedOptions = ref<MatchedPrintOption[]>([])
 const PENDING_STORAGE_KEY = 'krfa-whcc-pending-launches-v1'
 const ASPECT_RATIO_TOLERANCE = 0.01
 
-type WhccCatalogProduct = {
+type WhccPrintPaperOption = {
+  id: string
+  paperLabel: string
+  paperAttributeUID: number
+  unitPriceCents: number
+}
+
+type WhccPrintVariation = {
+  id: string
   productUID: string
-  name: string
+  productName: string
+  productNodeId: number
   widthIn: number
   heightIn: number
   aspectRatio: string
+  defaultQuantity: number
+  minQuantity: number
+  maxQuantity: number
+  paperOptions: WhccPrintPaperOption[]
 }
 
 type MatchedPrintOption = {
@@ -152,8 +206,13 @@ type MatchedPrintOption = {
   label: string
   variantLabel: string
   whccProductId: string
+  whccProductNodeId: number
   aspectRatio: string
   printSourceUrl: string
+  defaultQuantity: number
+  minQuantity: number
+  maxQuantity: number
+  papers: WhccPrintPaperOption[]
 }
 
 const filterOptions = [
@@ -204,6 +263,8 @@ async function openOrderModalAsync(product: GalleryProduct) {
 
   selectedProduct.value = product
   selectedOptionId.value = null
+  selectedPaperId.value = null
+  selectedQuantity.value = 1
   matchedOptions.value = []
   whccCatalogError.value = null
   editorError.value = null
@@ -214,8 +275,8 @@ async function openOrderModalAsync(product: GalleryProduct) {
   }
 
   try {
-    const products = await loadWhccCatalog()
-    matchedOptions.value = buildMatchedPrintOptions(product, products)
+    const options = await loadWhccCatalog()
+    matchedOptions.value = buildMatchedPrintOptions(product, options)
     selectedOptionId.value = matchedOptions.value[0]?.id || null
   } catch (catalogError) {
     whccCatalogError.value =
@@ -226,6 +287,8 @@ async function openOrderModalAsync(product: GalleryProduct) {
 function closeOrderModal() {
   selectedProduct.value = null
   selectedOptionId.value = null
+  selectedPaperId.value = null
+  selectedQuantity.value = 1
   matchedOptions.value = []
   whccCatalogError.value = null
   editorError.value = null
@@ -304,24 +367,24 @@ async function loadWhccCatalog() {
   whccCatalogError.value = null
 
   try {
-    const response = await fetch(getApiUrl('/api/whcc-catalog'))
+    const response = await fetch(getApiUrl('/api/whcc-print-options'))
     const payload = (await response.json()) as {
-      products?: WhccCatalogProduct[]
+      options?: WhccPrintVariation[]
       error?: string
     }
 
-    if (!response.ok || !Array.isArray(payload.products)) {
-      throw new Error(payload.error || 'Unable to fetch WHCC catalog products.')
+    if (!response.ok || !Array.isArray(payload.options)) {
+      throw new Error(payload.error || 'Unable to fetch WHCC print options.')
     }
 
-    whccCatalog.value = payload.products
+    whccCatalog.value = payload.options
     return whccCatalog.value
   } finally {
     whccCatalogLoading.value = false
   }
 }
 
-function buildMatchedPrintOptions(product: GalleryProduct, products: WhccCatalogProduct[]) {
+function buildMatchedPrintOptions(product: GalleryProduct, products: WhccPrintVariation[]) {
   const options: MatchedPrintOption[] = []
 
   for (const source of product.printSources) {
@@ -345,19 +408,91 @@ function buildMatchedPrintOptions(product: GalleryProduct, products: WhccCatalog
     })
 
     for (const matchedProduct of matchingProducts) {
-      const optionId = `${matchedProduct.productUID}:${source.aspectRatio}:${source.src}`
+      const optionId = `${matchedProduct.id}:${source.aspectRatio}:${source.src}`
       options.push({
         id: optionId,
-        variantLabel: matchedProduct.name,
-        label: `${matchedProduct.name} (${matchedProduct.widthIn}x${matchedProduct.heightIn}, source ${source.aspectRatio})`,
+        variantLabel: matchedProduct.productName,
+        label: `${matchedProduct.productName} (${matchedProduct.widthIn}x${matchedProduct.heightIn})`,
         whccProductId: matchedProduct.productUID,
+        whccProductNodeId: matchedProduct.productNodeId,
         aspectRatio: source.aspectRatio,
         printSourceUrl: toAbsoluteAssetUrl(source.src),
+        defaultQuantity: matchedProduct.defaultQuantity,
+        minQuantity: matchedProduct.minQuantity,
+        maxQuantity: matchedProduct.maxQuantity,
+        papers: matchedProduct.paperOptions,
       })
     }
   }
 
-  return options
+  return options.sort((a, b) => {
+    if (a.papers[0]?.unitPriceCents !== b.papers[0]?.unitPriceCents) {
+      return (a.papers[0]?.unitPriceCents || 0) - (b.papers[0]?.unitPriceCents || 0)
+    }
+
+    return a.label.localeCompare(b.label)
+  })
+}
+
+const selectedOption = computed(() => {
+  if (!selectedOptionId.value) {
+    return null
+  }
+
+  return matchedOptions.value.find((option) => option.id === selectedOptionId.value) || null
+})
+
+const selectedPaper = computed(() => {
+  if (!selectedOption.value || !selectedPaperId.value) {
+    return null
+  }
+
+  return selectedOption.value.papers.find((paper) => paper.id === selectedPaperId.value) || null
+})
+
+const normalizedSelectedQuantity = computed(() => {
+  if (!selectedOption.value) {
+    return 1
+  }
+
+  const parsed = Number(selectedQuantity.value)
+  if (!Number.isFinite(parsed)) {
+    return selectedOption.value.defaultQuantity
+  }
+
+  const normalized = Math.floor(parsed)
+  return Math.min(selectedOption.value.maxQuantity, Math.max(selectedOption.value.minQuantity, normalized))
+})
+
+const canLaunchEditor = computed(() => {
+  return Boolean(
+    selectedOption.value
+    && selectedPaper.value
+    && normalizedSelectedQuantity.value >= (selectedOption.value?.minQuantity || 1)
+    && normalizedSelectedQuantity.value <= (selectedOption.value?.maxQuantity || 50)
+    && !editorLoading.value
+    && !whccCatalogLoading.value
+  )
+})
+
+watch(selectedOptionId, () => {
+  if (!selectedOption.value) {
+    selectedPaperId.value = null
+    selectedQuantity.value = 1
+    return
+  }
+
+  selectedPaperId.value = selectedOption.value.papers[0]?.id || null
+  selectedQuantity.value = selectedOption.value.defaultQuantity
+})
+
+function onQuantityInput(event: Event) {
+  const target = event.target as HTMLInputElement | null
+  selectedQuantity.value = Number.parseInt(target?.value || '0', 10)
+}
+
+function normalizeSelectedQuantity() {
+  selectedQuantity.value = normalizedSelectedQuantity.value
 }
 
 async function launchEditor() {
@@ -365,13 +500,20 @@ async function launchEditor() {
   const product = selectedProduct.value
   if (product.type !== 'print') return
 
-  const selectedOption = matchedOptions.value.find((option) => option.id === selectedOptionId.value)
-  if (!selectedOption) {
+  const chosenOption = matchedOptions.value.find((option) => option.id === selectedOptionId.value)
+  const chosenPaper = selectedPaper.value
+
+  if (!chosenOption) {
     editorError.value = 'Please choose a print option.'
     return
   }
 
-  if (!selectedOption.printSourceUrl) {
+  if (!chosenPaper) {
+    editorError.value = 'Please choose a paper type.'
+    return
+  }
+
+  if (!chosenOption.printSourceUrl) {
     editorError.value = 'This print source is not configured with a valid URL.'
     return
   }
@@ -390,15 +532,18 @@ async function launchEditor() {
         lineItems: [
           {
             productId: product.id,
-            variantId: selectedOption.id,
+            variantId: `${chosenOption.id}:${chosenPaper.id}`,
             productType: product.type,
             productTitle: product.title,
-            variantLabel: selectedOption.variantLabel,
-            quantity: 1,
+            variantLabel: `${chosenOption.variantLabel} - ${chosenPaper.paperLabel}`,
+            quantity: normalizedSelectedQuantity.value,
             whccSku: product.sku,
-            whccProductUID: selectedOption.whccProductId,
-            printSourceUrl: selectedOption.printSourceUrl,
-            aspectRatio: selectedOption.aspectRatio,
+            whccProductUID: chosenOption.whccProductId,
+            whccProductNodeId: chosenOption.whccProductNodeId,
+            whccPaperAttributeUID: chosenPaper.paperAttributeUID,
+            whccPaperLabel: chosenPaper.paperLabel,
+            printSourceUrl: chosenOption.printSourceUrl,
+            aspectRatio: chosenOption.aspectRatio,
             slug: product.slug,
           },
         ],
@@ -418,15 +563,18 @@ async function launchEditor() {
 
     persistPendingLaunch(payload.checkoutId, {
       productId: product.id,
-      variantId: selectedOption.id,
+      variantId: `${chosenOption.id}:${chosenPaper.id}`,
       productTitle: product.title,
-      variantLabel: selectedOption.variantLabel,
-      quantity: 1,
-      priceCents: 0,
+      variantLabel: `${chosenOption.variantLabel} - ${chosenPaper.paperLabel}`,
+      quantity: normalizedSelectedQuantity.value,
+      priceCents: chosenPaper.unitPriceCents,
       currency: 'usd',
       whccSku: product.sku || null,
-      whccProductId: selectedOption.whccProductId,
-      whccDesignId: `${product.slug}-${selectedOption.aspectRatio.replace(':', 'x')}`,
+      whccProductId: chosenOption.whccProductId,
+      whccProductNodeId: chosenOption.whccProductNodeId,
+      whccPaperAttributeUID: chosenPaper.paperAttributeUID,
+      whccPaperLabel: chosenPaper.paperLabel,
+      whccDesignId: `${product.slug}-${chosenOption.aspectRatio.replace(':', 'x')}`,
     })
 
     window.location.href = payload.editorUrl
@@ -448,6 +596,9 @@ type PendingLaunchItem = {
   currency: 'usd'
   whccSku: string | null
   whccProductId?: string
+  whccProductNodeId?: number
+  whccPaperAttributeUID?: number
+  whccPaperLabel?: string
   whccDesignId?: string
 }
 

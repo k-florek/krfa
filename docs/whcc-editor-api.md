@@ -38,6 +38,41 @@ All example requests in this document use the **production** hostname. You need 
 
 ---
 
+## Local Product Variation Sync Script
+
+To populate the local storefront variation file from WHCC Editor API products, run:
+
+```bash
+WHCC_KEY=... \
+WHCC_SECRET=... \
+WHCC_ACCOUNT_ID=... \
+scripts/populate-whcc-product-variations.sh
+```
+
+Or rely on your repo `.env` file (auto-loaded by the script):
+
+```bash
+scripts/populate-whcc-product-variations.sh
+```
+
+Use a different env file with:
+
+```bash
+scripts/populate-whcc-product-variations.sh --env /path/to/.env
+```
+
+This updates `/public/data/whcc-product-variations.json` with products returned by `GET /products`.
+
+Notes:
+
+- By default it includes all product types (`WHCC_EDITOR_COMPATIBILITY_FILTER=all`). Set `WHCC_EDITOR_COMPATIBILITY_FILTER` to a comma-separated list (for example `simpleEditor,printEditor`) when you want to narrow results.
+- By default it keeps only fine-art-like products using name/category matching (`WHCC_INCLUDE_PATTERN=fine art|print|poster`) and excludes common non-print storefront items (`WHCC_EXCLUDE_PATTERN=card|ornament|acrylic|album|book|calendar|invitation|announcement|greeting|stationery`).
+- Override these regex patterns if your WHCC account uses different naming conventions for fine art products.
+- Existing `paperOptions` and pricing are preserved when a product/node mapping already exists in the JSON.
+- New entries receive default paper/pricing seed values that you should review before production use.
+
+---
+
 ## Authentication
 
 **Endpoint:** `POST /auth/access-token`

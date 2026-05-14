@@ -1,0 +1,2298 @@
+{
+  "version": 1,
+  "updatedAt": "2026-05-14",
+  "variations": [
+    {
+      "id": "metal-print-4x6",
+      "productUID": "9Nnk4tJb2RwSyZeRa",
+      "productName": "Metal Print",
+      "productNodeId": 10000,
+      "widthIn": 4,
+      "heightIn": 6,
+      "aspectRatio": "1.5",
+      "active": true,
+      "sortOrder": 10,
+      "defaultQuantity": 1,
+      "minQuantity": 1,
+      "maxQuantity": 20,
+      "paperOptions": [
+        {
+          "id": "clear-high-gloss",
+          "paperAttributeUID": 933,
+          "paperLabel": "Clear High Gloss",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "clear-matte",
+          "paperAttributeUID": 1721,
+          "paperLabel": "Clear Matte",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "white-high-gloss",
+          "paperAttributeUID": 651,
+          "paperLabel": "White High Gloss",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "white-high-gloss-external-rated",
+          "paperAttributeUID": 2781,
+          "paperLabel": "White High Gloss, External Rated",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "white-matte",
+          "paperAttributeUID": 1720,
+          "paperLabel": "White Matte",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "white-semi-gloss",
+          "paperAttributeUID": 1974,
+          "paperLabel": "White Semi-Gloss",
+          "unitPriceCents": 1000,
+          "active": true
+        }
+      ]
+    },
+    {
+      "id": "metal-print-5x7",
+      "productUID": "9Nnk4tJb2RwSyZeRa",
+      "productName": "Metal Print",
+      "productNodeId": 10000,
+      "widthIn": 5,
+      "heightIn": 7,
+      "aspectRatio": "1.4",
+      "active": true,
+      "sortOrder": 20,
+      "defaultQuantity": 1,
+      "minQuantity": 1,
+      "maxQuantity": 20,
+      "paperOptions": [
+        {
+          "id": "clear-high-gloss",
+          "paperAttributeUID": 933,
+          "paperLabel": "Clear High Gloss",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "clear-matte",
+          "paperAttributeUID": 1721,
+          "paperLabel": "Clear Matte",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "white-high-gloss",
+          "paperAttributeUID": 651,
+          "paperLabel": "White High Gloss",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "white-high-gloss-external-rated",
+          "paperAttributeUID": 2781,
+          "paperLabel": "White High Gloss, External Rated",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "white-matte",
+          "paperAttributeUID": 1720,
+          "paperLabel": "White Matte",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "white-semi-gloss",
+          "paperAttributeUID": 1974,
+          "paperLabel": "White Semi-Gloss",
+          "unitPriceCents": 1000,
+          "active": true
+        }
+      ]
+    },
+    {
+      "id": "metal-print-8x10",
+      "productUID": "9Nnk4tJb2RwSyZeRa",
+      "productName": "Metal Print",
+      "productNodeId": 10000,
+      "widthIn": 8,
+      "heightIn": 10,
+      "aspectRatio": "1.25",
+      "active": true,
+      "sortOrder": 30,
+      "defaultQuantity": 1,
+      "minQuantity": 1,
+      "maxQuantity": 20,
+      "paperOptions": [
+        {
+          "id": "clear-high-gloss",
+          "paperAttributeUID": 933,
+          "paperLabel": "Clear High Gloss",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "clear-matte",
+          "paperAttributeUID": 1721,
+          "paperLabel": "Clear Matte",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "white-high-gloss",
+          "paperAttributeUID": 651,
+          "paperLabel": "White High Gloss",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "white-high-gloss-external-rated",
+          "paperAttributeUID": 2781,
+          "paperLabel": "White High Gloss, External Rated",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "white-matte",
+          "paperAttributeUID": 1720,
+          "paperLabel": "White Matte",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "white-semi-gloss",
+          "paperAttributeUID": 1974,
+          "paperLabel": "White Semi-Gloss",
+          "unitPriceCents": 1000,
+          "active": true
+        }
+      ]
+    },
+    {
+      "id": "metal-print-8x12",
+      "productUID": "9Nnk4tJb2RwSyZeRa",
+      "productName": "Metal Print",
+      "productNodeId": 10000,
+      "widthIn": 8,
+      "heightIn": 12,
+      "aspectRatio": "1.5",
+      "active": true,
+      "sortOrder": 40,
+      "defaultQuantity": 1,
+      "minQuantity": 1,
+      "maxQuantity": 20,
+      "paperOptions": [
+        {
+          "id": "clear-high-gloss",
+          "paperAttributeUID": 933,
+          "paperLabel": "Clear High Gloss",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "clear-matte",
+          "paperAttributeUID": 1721,
+          "paperLabel": "Clear Matte",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "white-high-gloss",
+          "paperAttributeUID": 651,
+          "paperLabel": "White High Gloss",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "white-high-gloss-external-rated",
+          "paperAttributeUID": 2781,
+          "paperLabel": "White High Gloss, External Rated",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "white-matte",
+          "paperAttributeUID": 1720,
+          "paperLabel": "White Matte",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "white-semi-gloss",
+          "paperAttributeUID": 1974,
+          "paperLabel": "White Semi-Gloss",
+          "unitPriceCents": 1000,
+          "active": true
+        }
+      ]
+    },
+    {
+      "id": "metal-print-11x14",
+      "productUID": "9Nnk4tJb2RwSyZeRa",
+      "productName": "Metal Print",
+      "productNodeId": 10000,
+      "widthIn": 11,
+      "heightIn": 14,
+      "aspectRatio": "1.2727272727272727",
+      "active": true,
+      "sortOrder": 50,
+      "defaultQuantity": 1,
+      "minQuantity": 1,
+      "maxQuantity": 20,
+      "paperOptions": [
+        {
+          "id": "clear-high-gloss",
+          "paperAttributeUID": 933,
+          "paperLabel": "Clear High Gloss",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "clear-matte",
+          "paperAttributeUID": 1721,
+          "paperLabel": "Clear Matte",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "white-high-gloss",
+          "paperAttributeUID": 651,
+          "paperLabel": "White High Gloss",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "white-high-gloss-external-rated",
+          "paperAttributeUID": 2781,
+          "paperLabel": "White High Gloss, External Rated",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "white-matte",
+          "paperAttributeUID": 1720,
+          "paperLabel": "White Matte",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "white-semi-gloss",
+          "paperAttributeUID": 1974,
+          "paperLabel": "White Semi-Gloss",
+          "unitPriceCents": 1000,
+          "active": true
+        }
+      ]
+    },
+    {
+      "id": "metal-print-16x20",
+      "productUID": "9Nnk4tJb2RwSyZeRa",
+      "productName": "Metal Print",
+      "productNodeId": 10000,
+      "widthIn": 16,
+      "heightIn": 20,
+      "aspectRatio": "1.25",
+      "active": true,
+      "sortOrder": 60,
+      "defaultQuantity": 1,
+      "minQuantity": 1,
+      "maxQuantity": 20,
+      "paperOptions": [
+        {
+          "id": "clear-high-gloss",
+          "paperAttributeUID": 933,
+          "paperLabel": "Clear High Gloss",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "clear-matte",
+          "paperAttributeUID": 1721,
+          "paperLabel": "Clear Matte",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "white-high-gloss",
+          "paperAttributeUID": 651,
+          "paperLabel": "White High Gloss",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "white-high-gloss-external-rated",
+          "paperAttributeUID": 2781,
+          "paperLabel": "White High Gloss, External Rated",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "white-matte",
+          "paperAttributeUID": 1720,
+          "paperLabel": "White Matte",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "white-semi-gloss",
+          "paperAttributeUID": 1974,
+          "paperLabel": "White Semi-Gloss",
+          "unitPriceCents": 1000,
+          "active": true
+        }
+      ]
+    },
+    {
+      "id": "metal-print-20x24",
+      "productUID": "9Nnk4tJb2RwSyZeRa",
+      "productName": "Metal Print",
+      "productNodeId": 10000,
+      "widthIn": 20,
+      "heightIn": 24,
+      "aspectRatio": "1.2",
+      "active": true,
+      "sortOrder": 70,
+      "defaultQuantity": 1,
+      "minQuantity": 1,
+      "maxQuantity": 20,
+      "paperOptions": [
+        {
+          "id": "clear-high-gloss",
+          "paperAttributeUID": 933,
+          "paperLabel": "Clear High Gloss",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "clear-matte",
+          "paperAttributeUID": 1721,
+          "paperLabel": "Clear Matte",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "white-high-gloss",
+          "paperAttributeUID": 651,
+          "paperLabel": "White High Gloss",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "white-high-gloss-external-rated",
+          "paperAttributeUID": 2781,
+          "paperLabel": "White High Gloss, External Rated",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "white-matte",
+          "paperAttributeUID": 1720,
+          "paperLabel": "White Matte",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "white-semi-gloss",
+          "paperAttributeUID": 1974,
+          "paperLabel": "White Semi-Gloss",
+          "unitPriceCents": 1000,
+          "active": true
+        }
+      ]
+    },
+    {
+      "id": "metal-print-20x30",
+      "productUID": "9Nnk4tJb2RwSyZeRa",
+      "productName": "Metal Print",
+      "productNodeId": 10000,
+      "widthIn": 20,
+      "heightIn": 30,
+      "aspectRatio": "1.5",
+      "active": true,
+      "sortOrder": 80,
+      "defaultQuantity": 1,
+      "minQuantity": 1,
+      "maxQuantity": 20,
+      "paperOptions": [
+        {
+          "id": "clear-high-gloss",
+          "paperAttributeUID": 933,
+          "paperLabel": "Clear High Gloss",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "clear-matte",
+          "paperAttributeUID": 1721,
+          "paperLabel": "Clear Matte",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "white-high-gloss",
+          "paperAttributeUID": 651,
+          "paperLabel": "White High Gloss",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "white-high-gloss-external-rated",
+          "paperAttributeUID": 2781,
+          "paperLabel": "White High Gloss, External Rated",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "white-matte",
+          "paperAttributeUID": 1720,
+          "paperLabel": "White Matte",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "white-semi-gloss",
+          "paperAttributeUID": 1974,
+          "paperLabel": "White Semi-Gloss",
+          "unitPriceCents": 1000,
+          "active": true
+        }
+      ]
+    },
+    {
+      "id": "framed-print-4x6",
+      "productUID": "ZPzpj6mQPEfPYFYRa",
+      "productName": "Framed Print",
+      "productNodeId": 10000,
+      "widthIn": 4,
+      "heightIn": 6,
+      "aspectRatio": "1.5",
+      "active": true,
+      "sortOrder": 90,
+      "defaultQuantity": 1,
+      "minQuantity": 1,
+      "maxQuantity": 20,
+      "paperOptions": [
+        {
+          "id": "lustre",
+          "paperAttributeUID": 5,
+          "paperLabel": "Lustre Paper",
+          "unitPriceCents": 1000,
+          "active": true
+        }
+      ]
+    },
+    {
+      "id": "framed-print-5x7",
+      "productUID": "ZPzpj6mQPEfPYFYRa",
+      "productName": "Framed Print",
+      "productNodeId": 10000,
+      "widthIn": 5,
+      "heightIn": 7,
+      "aspectRatio": "1.4",
+      "active": true,
+      "sortOrder": 100,
+      "defaultQuantity": 1,
+      "minQuantity": 1,
+      "maxQuantity": 20,
+      "paperOptions": [
+        {
+          "id": "acrylic-print",
+          "paperAttributeUID": 3368,
+          "paperLabel": "Acrylic Print",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "deep-matte-photo-print",
+          "paperAttributeUID": 1880,
+          "paperLabel": "Deep Matte Photo Print",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-aquarelle-rag-print",
+          "paperAttributeUID": 2905,
+          "paperLabel": "Fine Art Aquarelle Rag Print",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-canvas-print-with-matte-laminate",
+          "paperAttributeUID": 2049,
+          "paperLabel": "Fine Art Canvas Print with Matte Laminate",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-canvas-print-with-semi-gloss-laminate",
+          "paperAttributeUID": 2050,
+          "paperLabel": "Fine Art Canvas Print with Semi-Gloss Laminate",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-photo-rag-baryta-print",
+          "paperAttributeUID": 2710,
+          "paperLabel": "Fine Art Photo Rag Baryta Print",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-photo-rag-metallic-print",
+          "paperAttributeUID": 2903,
+          "paperLabel": "Fine Art Photo Rag Metallic Print",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-smooth-matte-print",
+          "paperAttributeUID": 2046,
+          "paperLabel": "Fine Art Smooth Matte Print",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-torchon-print",
+          "paperAttributeUID": 2048,
+          "paperLabel": "Fine Art Torchon Print",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "lustre-photo-print",
+          "paperAttributeUID": 617,
+          "paperLabel": "Lustre Photo Print",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "metal-print-with-clear-base-high-gloss-finish",
+          "paperAttributeUID": 2054,
+          "paperLabel": "Metal Print with Clear Base, High Gloss Finish",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "metal-print-with-clear-base-matte-finish",
+          "paperAttributeUID": 2055,
+          "paperLabel": "Metal Print with Clear Base, Matte Finish",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "metal-print-with-white-base-high-gloss-finish",
+          "paperAttributeUID": 2051,
+          "paperLabel": "Metal Print with White Base, High Gloss Finish",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "metal-print-with-white-base-high-gloss-finish-external-rated",
+          "paperAttributeUID": 2782,
+          "paperLabel": "Metal Print with White Base, High Gloss Finish, External Rated",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "metal-print-with-white-base-matte-finish",
+          "paperAttributeUID": 2053,
+          "paperLabel": "Metal Print with White Base, Matte Finish",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "metal-print-with-white-base-semi-gloss-finish",
+          "paperAttributeUID": 2052,
+          "paperLabel": "Metal Print with White Base, Semi-Gloss Finish",
+          "unitPriceCents": 1000,
+          "active": true
+        }
+      ]
+    },
+    {
+      "id": "framed-print-8x10",
+      "productUID": "ZPzpj6mQPEfPYFYRa",
+      "productName": "Framed Print",
+      "productNodeId": 10000,
+      "widthIn": 8,
+      "heightIn": 10,
+      "aspectRatio": "1.25",
+      "active": true,
+      "sortOrder": 110,
+      "defaultQuantity": 1,
+      "minQuantity": 1,
+      "maxQuantity": 20,
+      "paperOptions": [
+        {
+          "id": "acrylic-print",
+          "paperAttributeUID": 3368,
+          "paperLabel": "Acrylic Print",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "deep-matte-photo-print",
+          "paperAttributeUID": 1880,
+          "paperLabel": "Deep Matte Photo Print",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-aquarelle-rag-print",
+          "paperAttributeUID": 2905,
+          "paperLabel": "Fine Art Aquarelle Rag Print",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-canvas-print-with-matte-laminate",
+          "paperAttributeUID": 2049,
+          "paperLabel": "Fine Art Canvas Print with Matte Laminate",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-canvas-print-with-semi-gloss-laminate",
+          "paperAttributeUID": 2050,
+          "paperLabel": "Fine Art Canvas Print with Semi-Gloss Laminate",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-photo-rag-baryta-print",
+          "paperAttributeUID": 2710,
+          "paperLabel": "Fine Art Photo Rag Baryta Print",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-photo-rag-metallic-print",
+          "paperAttributeUID": 2903,
+          "paperLabel": "Fine Art Photo Rag Metallic Print",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-smooth-matte-print",
+          "paperAttributeUID": 2046,
+          "paperLabel": "Fine Art Smooth Matte Print",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-torchon-print",
+          "paperAttributeUID": 2048,
+          "paperLabel": "Fine Art Torchon Print",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "lustre-photo-print",
+          "paperAttributeUID": 617,
+          "paperLabel": "Lustre Photo Print",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "metal-print-with-clear-base-high-gloss-finish",
+          "paperAttributeUID": 2054,
+          "paperLabel": "Metal Print with Clear Base, High Gloss Finish",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "metal-print-with-clear-base-matte-finish",
+          "paperAttributeUID": 2055,
+          "paperLabel": "Metal Print with Clear Base, Matte Finish",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "metal-print-with-white-base-high-gloss-finish",
+          "paperAttributeUID": 2051,
+          "paperLabel": "Metal Print with White Base, High Gloss Finish",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "metal-print-with-white-base-high-gloss-finish-external-rated",
+          "paperAttributeUID": 2782,
+          "paperLabel": "Metal Print with White Base, High Gloss Finish, External Rated",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "metal-print-with-white-base-matte-finish",
+          "paperAttributeUID": 2053,
+          "paperLabel": "Metal Print with White Base, Matte Finish",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "metal-print-with-white-base-semi-gloss-finish",
+          "paperAttributeUID": 2052,
+          "paperLabel": "Metal Print with White Base, Semi-Gloss Finish",
+          "unitPriceCents": 1000,
+          "active": true
+        }
+      ]
+    },
+    {
+      "id": "framed-print-8x12",
+      "productUID": "ZPzpj6mQPEfPYFYRa",
+      "productName": "Framed Print",
+      "productNodeId": 10000,
+      "widthIn": 8,
+      "heightIn": 12,
+      "aspectRatio": "1.5",
+      "active": true,
+      "sortOrder": 120,
+      "defaultQuantity": 1,
+      "minQuantity": 1,
+      "maxQuantity": 20,
+      "paperOptions": [
+        {
+          "id": "acrylic-print",
+          "paperAttributeUID": 3368,
+          "paperLabel": "Acrylic Print",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "deep-matte-photo-print",
+          "paperAttributeUID": 1880,
+          "paperLabel": "Deep Matte Photo Print",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-aquarelle-rag-print",
+          "paperAttributeUID": 2905,
+          "paperLabel": "Fine Art Aquarelle Rag Print",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-canvas-print-with-matte-laminate",
+          "paperAttributeUID": 2049,
+          "paperLabel": "Fine Art Canvas Print with Matte Laminate",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-canvas-print-with-semi-gloss-laminate",
+          "paperAttributeUID": 2050,
+          "paperLabel": "Fine Art Canvas Print with Semi-Gloss Laminate",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-photo-rag-baryta-print",
+          "paperAttributeUID": 2710,
+          "paperLabel": "Fine Art Photo Rag Baryta Print",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-photo-rag-metallic-print",
+          "paperAttributeUID": 2903,
+          "paperLabel": "Fine Art Photo Rag Metallic Print",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-smooth-matte-print",
+          "paperAttributeUID": 2046,
+          "paperLabel": "Fine Art Smooth Matte Print",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-torchon-print",
+          "paperAttributeUID": 2048,
+          "paperLabel": "Fine Art Torchon Print",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "lustre-photo-print",
+          "paperAttributeUID": 617,
+          "paperLabel": "Lustre Photo Print",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "metal-print-with-clear-base-high-gloss-finish",
+          "paperAttributeUID": 2054,
+          "paperLabel": "Metal Print with Clear Base, High Gloss Finish",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "metal-print-with-clear-base-matte-finish",
+          "paperAttributeUID": 2055,
+          "paperLabel": "Metal Print with Clear Base, Matte Finish",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "metal-print-with-white-base-high-gloss-finish",
+          "paperAttributeUID": 2051,
+          "paperLabel": "Metal Print with White Base, High Gloss Finish",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "metal-print-with-white-base-high-gloss-finish-external-rated",
+          "paperAttributeUID": 2782,
+          "paperLabel": "Metal Print with White Base, High Gloss Finish, External Rated",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "metal-print-with-white-base-matte-finish",
+          "paperAttributeUID": 2053,
+          "paperLabel": "Metal Print with White Base, Matte Finish",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "metal-print-with-white-base-semi-gloss-finish",
+          "paperAttributeUID": 2052,
+          "paperLabel": "Metal Print with White Base, Semi-Gloss Finish",
+          "unitPriceCents": 1000,
+          "active": true
+        }
+      ]
+    },
+    {
+      "id": "framed-print-11x14",
+      "productUID": "ZPzpj6mQPEfPYFYRa",
+      "productName": "Framed Print",
+      "productNodeId": 10000,
+      "widthIn": 11,
+      "heightIn": 14,
+      "aspectRatio": "1.2727272727272727",
+      "active": true,
+      "sortOrder": 130,
+      "defaultQuantity": 1,
+      "minQuantity": 1,
+      "maxQuantity": 20,
+      "paperOptions": [
+        {
+          "id": "acrylic-print",
+          "paperAttributeUID": 3368,
+          "paperLabel": "Acrylic Print",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "deep-matte-photo-print",
+          "paperAttributeUID": 1880,
+          "paperLabel": "Deep Matte Photo Print",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-aquarelle-rag-print",
+          "paperAttributeUID": 2905,
+          "paperLabel": "Fine Art Aquarelle Rag Print",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-canvas-print-with-matte-laminate",
+          "paperAttributeUID": 2049,
+          "paperLabel": "Fine Art Canvas Print with Matte Laminate",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-canvas-print-with-semi-gloss-laminate",
+          "paperAttributeUID": 2050,
+          "paperLabel": "Fine Art Canvas Print with Semi-Gloss Laminate",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-photo-rag-baryta-print",
+          "paperAttributeUID": 2710,
+          "paperLabel": "Fine Art Photo Rag Baryta Print",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-photo-rag-metallic-print",
+          "paperAttributeUID": 2903,
+          "paperLabel": "Fine Art Photo Rag Metallic Print",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-smooth-matte-print",
+          "paperAttributeUID": 2046,
+          "paperLabel": "Fine Art Smooth Matte Print",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-torchon-print",
+          "paperAttributeUID": 2048,
+          "paperLabel": "Fine Art Torchon Print",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "lustre-photo-print",
+          "paperAttributeUID": 617,
+          "paperLabel": "Lustre Photo Print",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "metal-print-with-clear-base-high-gloss-finish",
+          "paperAttributeUID": 2054,
+          "paperLabel": "Metal Print with Clear Base, High Gloss Finish",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "metal-print-with-clear-base-matte-finish",
+          "paperAttributeUID": 2055,
+          "paperLabel": "Metal Print with Clear Base, Matte Finish",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "metal-print-with-white-base-high-gloss-finish",
+          "paperAttributeUID": 2051,
+          "paperLabel": "Metal Print with White Base, High Gloss Finish",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "metal-print-with-white-base-high-gloss-finish-external-rated",
+          "paperAttributeUID": 2782,
+          "paperLabel": "Metal Print with White Base, High Gloss Finish, External Rated",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "metal-print-with-white-base-matte-finish",
+          "paperAttributeUID": 2053,
+          "paperLabel": "Metal Print with White Base, Matte Finish",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "metal-print-with-white-base-semi-gloss-finish",
+          "paperAttributeUID": 2052,
+          "paperLabel": "Metal Print with White Base, Semi-Gloss Finish",
+          "unitPriceCents": 1000,
+          "active": true
+        }
+      ]
+    },
+    {
+      "id": "framed-print-16x20",
+      "productUID": "ZPzpj6mQPEfPYFYRa",
+      "productName": "Framed Print",
+      "productNodeId": 10000,
+      "widthIn": 16,
+      "heightIn": 20,
+      "aspectRatio": "1.25",
+      "active": true,
+      "sortOrder": 140,
+      "defaultQuantity": 1,
+      "minQuantity": 1,
+      "maxQuantity": 20,
+      "paperOptions": [
+        {
+          "id": "acrylic-print",
+          "paperAttributeUID": 3368,
+          "paperLabel": "Acrylic Print",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "deep-matte-photo-print",
+          "paperAttributeUID": 1880,
+          "paperLabel": "Deep Matte Photo Print",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-aquarelle-rag-print",
+          "paperAttributeUID": 2905,
+          "paperLabel": "Fine Art Aquarelle Rag Print",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-canvas-print-with-matte-laminate",
+          "paperAttributeUID": 2049,
+          "paperLabel": "Fine Art Canvas Print with Matte Laminate",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-canvas-print-with-semi-gloss-laminate",
+          "paperAttributeUID": 2050,
+          "paperLabel": "Fine Art Canvas Print with Semi-Gloss Laminate",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-photo-rag-baryta-print",
+          "paperAttributeUID": 2710,
+          "paperLabel": "Fine Art Photo Rag Baryta Print",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-photo-rag-metallic-print",
+          "paperAttributeUID": 2903,
+          "paperLabel": "Fine Art Photo Rag Metallic Print",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-smooth-matte-print",
+          "paperAttributeUID": 2046,
+          "paperLabel": "Fine Art Smooth Matte Print",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-torchon-print",
+          "paperAttributeUID": 2048,
+          "paperLabel": "Fine Art Torchon Print",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "lustre-photo-print",
+          "paperAttributeUID": 617,
+          "paperLabel": "Lustre Photo Print",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "metal-print-with-clear-base-high-gloss-finish",
+          "paperAttributeUID": 2054,
+          "paperLabel": "Metal Print with Clear Base, High Gloss Finish",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "metal-print-with-clear-base-matte-finish",
+          "paperAttributeUID": 2055,
+          "paperLabel": "Metal Print with Clear Base, Matte Finish",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "metal-print-with-white-base-high-gloss-finish",
+          "paperAttributeUID": 2051,
+          "paperLabel": "Metal Print with White Base, High Gloss Finish",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "metal-print-with-white-base-high-gloss-finish-external-rated",
+          "paperAttributeUID": 2782,
+          "paperLabel": "Metal Print with White Base, High Gloss Finish, External Rated",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "metal-print-with-white-base-matte-finish",
+          "paperAttributeUID": 2053,
+          "paperLabel": "Metal Print with White Base, Matte Finish",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "metal-print-with-white-base-semi-gloss-finish",
+          "paperAttributeUID": 2052,
+          "paperLabel": "Metal Print with White Base, Semi-Gloss Finish",
+          "unitPriceCents": 1000,
+          "active": true
+        }
+      ]
+    },
+    {
+      "id": "framed-print-20x24",
+      "productUID": "ZPzpj6mQPEfPYFYRa",
+      "productName": "Framed Print",
+      "productNodeId": 10000,
+      "widthIn": 20,
+      "heightIn": 24,
+      "aspectRatio": "1.2",
+      "active": true,
+      "sortOrder": 150,
+      "defaultQuantity": 1,
+      "minQuantity": 1,
+      "maxQuantity": 20,
+      "paperOptions": [
+        {
+          "id": "acrylic-print",
+          "paperAttributeUID": 3368,
+          "paperLabel": "Acrylic Print",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "deep-matte-photo-print",
+          "paperAttributeUID": 1880,
+          "paperLabel": "Deep Matte Photo Print",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-aquarelle-rag-print",
+          "paperAttributeUID": 2905,
+          "paperLabel": "Fine Art Aquarelle Rag Print",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-canvas-print-with-matte-laminate",
+          "paperAttributeUID": 2049,
+          "paperLabel": "Fine Art Canvas Print with Matte Laminate",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-canvas-print-with-semi-gloss-laminate",
+          "paperAttributeUID": 2050,
+          "paperLabel": "Fine Art Canvas Print with Semi-Gloss Laminate",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-photo-rag-baryta-print",
+          "paperAttributeUID": 2710,
+          "paperLabel": "Fine Art Photo Rag Baryta Print",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-photo-rag-metallic-print",
+          "paperAttributeUID": 2903,
+          "paperLabel": "Fine Art Photo Rag Metallic Print",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-smooth-matte-print",
+          "paperAttributeUID": 2046,
+          "paperLabel": "Fine Art Smooth Matte Print",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-torchon-print",
+          "paperAttributeUID": 2048,
+          "paperLabel": "Fine Art Torchon Print",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "lustre-photo-print",
+          "paperAttributeUID": 617,
+          "paperLabel": "Lustre Photo Print",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "metal-print-with-clear-base-high-gloss-finish",
+          "paperAttributeUID": 2054,
+          "paperLabel": "Metal Print with Clear Base, High Gloss Finish",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "metal-print-with-clear-base-matte-finish",
+          "paperAttributeUID": 2055,
+          "paperLabel": "Metal Print with Clear Base, Matte Finish",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "metal-print-with-white-base-high-gloss-finish",
+          "paperAttributeUID": 2051,
+          "paperLabel": "Metal Print with White Base, High Gloss Finish",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "metal-print-with-white-base-high-gloss-finish-external-rated",
+          "paperAttributeUID": 2782,
+          "paperLabel": "Metal Print with White Base, High Gloss Finish, External Rated",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "metal-print-with-white-base-matte-finish",
+          "paperAttributeUID": 2053,
+          "paperLabel": "Metal Print with White Base, Matte Finish",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "metal-print-with-white-base-semi-gloss-finish",
+          "paperAttributeUID": 2052,
+          "paperLabel": "Metal Print with White Base, Semi-Gloss Finish",
+          "unitPriceCents": 1000,
+          "active": true
+        }
+      ]
+    },
+    {
+      "id": "framed-print-20x30",
+      "productUID": "ZPzpj6mQPEfPYFYRa",
+      "productName": "Framed Print",
+      "productNodeId": 10000,
+      "widthIn": 20,
+      "heightIn": 30,
+      "aspectRatio": "1.5",
+      "active": true,
+      "sortOrder": 160,
+      "defaultQuantity": 1,
+      "minQuantity": 1,
+      "maxQuantity": 20,
+      "paperOptions": [
+        {
+          "id": "acrylic-print",
+          "paperAttributeUID": 3368,
+          "paperLabel": "Acrylic Print",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "deep-matte-photo-print",
+          "paperAttributeUID": 1880,
+          "paperLabel": "Deep Matte Photo Print",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-aquarelle-rag-print",
+          "paperAttributeUID": 2905,
+          "paperLabel": "Fine Art Aquarelle Rag Print",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-canvas-print-with-matte-laminate",
+          "paperAttributeUID": 2049,
+          "paperLabel": "Fine Art Canvas Print with Matte Laminate",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-canvas-print-with-semi-gloss-laminate",
+          "paperAttributeUID": 2050,
+          "paperLabel": "Fine Art Canvas Print with Semi-Gloss Laminate",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-photo-rag-baryta-print",
+          "paperAttributeUID": 2710,
+          "paperLabel": "Fine Art Photo Rag Baryta Print",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-photo-rag-metallic-print",
+          "paperAttributeUID": 2903,
+          "paperLabel": "Fine Art Photo Rag Metallic Print",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-smooth-matte-print",
+          "paperAttributeUID": 2046,
+          "paperLabel": "Fine Art Smooth Matte Print",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-torchon-print",
+          "paperAttributeUID": 2048,
+          "paperLabel": "Fine Art Torchon Print",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "lustre-photo-print",
+          "paperAttributeUID": 617,
+          "paperLabel": "Lustre Photo Print",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "metal-print-with-clear-base-high-gloss-finish",
+          "paperAttributeUID": 2054,
+          "paperLabel": "Metal Print with Clear Base, High Gloss Finish",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "metal-print-with-clear-base-matte-finish",
+          "paperAttributeUID": 2055,
+          "paperLabel": "Metal Print with Clear Base, Matte Finish",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "metal-print-with-white-base-high-gloss-finish",
+          "paperAttributeUID": 2051,
+          "paperLabel": "Metal Print with White Base, High Gloss Finish",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "metal-print-with-white-base-high-gloss-finish-external-rated",
+          "paperAttributeUID": 2782,
+          "paperLabel": "Metal Print with White Base, High Gloss Finish, External Rated",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "metal-print-with-white-base-matte-finish",
+          "paperAttributeUID": 2053,
+          "paperLabel": "Metal Print with White Base, Matte Finish",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "metal-print-with-white-base-semi-gloss-finish",
+          "paperAttributeUID": 2052,
+          "paperLabel": "Metal Print with White Base, Semi-Gloss Finish",
+          "unitPriceCents": 1000,
+          "active": true
+        }
+      ]
+    },
+    {
+      "id": "wood-print-4x6",
+      "productUID": "hNAJCZpRJBnJk3keJ",
+      "productName": "Wood Print",
+      "productNodeId": 10000,
+      "widthIn": 4,
+      "heightIn": 6,
+      "aspectRatio": "1.5",
+      "active": true,
+      "sortOrder": 170,
+      "defaultQuantity": 1,
+      "minQuantity": 1,
+      "maxQuantity": 20,
+      "paperOptions": [
+        {
+          "id": "lustre",
+          "paperAttributeUID": 5,
+          "paperLabel": "Lustre Paper",
+          "unitPriceCents": 1000,
+          "active": true
+        }
+      ]
+    },
+    {
+      "id": "wood-print-5x7",
+      "productUID": "hNAJCZpRJBnJk3keJ",
+      "productName": "Wood Print",
+      "productNodeId": 10000,
+      "widthIn": 5,
+      "heightIn": 7,
+      "aspectRatio": "1.4",
+      "active": true,
+      "sortOrder": 180,
+      "defaultQuantity": 1,
+      "minQuantity": 1,
+      "maxQuantity": 20,
+      "paperOptions": [
+        {
+          "id": "1-2-maple-wood-panel",
+          "paperAttributeUID": 1875,
+          "paperLabel": "1/2\" Maple Wood Panel",
+          "unitPriceCents": 1000,
+          "active": true
+        }
+      ]
+    },
+    {
+      "id": "wood-print-8x10",
+      "productUID": "hNAJCZpRJBnJk3keJ",
+      "productName": "Wood Print",
+      "productNodeId": 10000,
+      "widthIn": 8,
+      "heightIn": 10,
+      "aspectRatio": "1.25",
+      "active": true,
+      "sortOrder": 190,
+      "defaultQuantity": 1,
+      "minQuantity": 1,
+      "maxQuantity": 20,
+      "paperOptions": [
+        {
+          "id": "1-2-maple-wood-panel",
+          "paperAttributeUID": 1875,
+          "paperLabel": "1/2\" Maple Wood Panel",
+          "unitPriceCents": 1000,
+          "active": true
+        }
+      ]
+    },
+    {
+      "id": "wood-print-8x12",
+      "productUID": "hNAJCZpRJBnJk3keJ",
+      "productName": "Wood Print",
+      "productNodeId": 10000,
+      "widthIn": 8,
+      "heightIn": 12,
+      "aspectRatio": "1.5",
+      "active": true,
+      "sortOrder": 200,
+      "defaultQuantity": 1,
+      "minQuantity": 1,
+      "maxQuantity": 20,
+      "paperOptions": [
+        {
+          "id": "1-2-maple-wood-panel",
+          "paperAttributeUID": 1875,
+          "paperLabel": "1/2\" Maple Wood Panel",
+          "unitPriceCents": 1000,
+          "active": true
+        }
+      ]
+    },
+    {
+      "id": "wood-print-11x14",
+      "productUID": "hNAJCZpRJBnJk3keJ",
+      "productName": "Wood Print",
+      "productNodeId": 10000,
+      "widthIn": 11,
+      "heightIn": 14,
+      "aspectRatio": "1.2727272727272727",
+      "active": true,
+      "sortOrder": 210,
+      "defaultQuantity": 1,
+      "minQuantity": 1,
+      "maxQuantity": 20,
+      "paperOptions": [
+        {
+          "id": "1-2-maple-wood-panel",
+          "paperAttributeUID": 1875,
+          "paperLabel": "1/2\" Maple Wood Panel",
+          "unitPriceCents": 1000,
+          "active": true
+        }
+      ]
+    },
+    {
+      "id": "wood-print-16x20",
+      "productUID": "hNAJCZpRJBnJk3keJ",
+      "productName": "Wood Print",
+      "productNodeId": 10000,
+      "widthIn": 16,
+      "heightIn": 20,
+      "aspectRatio": "1.25",
+      "active": true,
+      "sortOrder": 220,
+      "defaultQuantity": 1,
+      "minQuantity": 1,
+      "maxQuantity": 20,
+      "paperOptions": [
+        {
+          "id": "1-2-maple-wood-panel",
+          "paperAttributeUID": 1875,
+          "paperLabel": "1/2\" Maple Wood Panel",
+          "unitPriceCents": 1000,
+          "active": true
+        }
+      ]
+    },
+    {
+      "id": "wood-print-20x24",
+      "productUID": "hNAJCZpRJBnJk3keJ",
+      "productName": "Wood Print",
+      "productNodeId": 10000,
+      "widthIn": 20,
+      "heightIn": 24,
+      "aspectRatio": "1.2",
+      "active": true,
+      "sortOrder": 230,
+      "defaultQuantity": 1,
+      "minQuantity": 1,
+      "maxQuantity": 20,
+      "paperOptions": [
+        {
+          "id": "1-2-maple-wood-panel",
+          "paperAttributeUID": 1875,
+          "paperLabel": "1/2\" Maple Wood Panel",
+          "unitPriceCents": 1000,
+          "active": true
+        }
+      ]
+    },
+    {
+      "id": "wood-print-20x30",
+      "productUID": "hNAJCZpRJBnJk3keJ",
+      "productName": "Wood Print",
+      "productNodeId": 10000,
+      "widthIn": 20,
+      "heightIn": 30,
+      "aspectRatio": "1.5",
+      "active": true,
+      "sortOrder": 240,
+      "defaultQuantity": 1,
+      "minQuantity": 1,
+      "maxQuantity": 20,
+      "paperOptions": [
+        {
+          "id": "1-2-maple-wood-panel",
+          "paperAttributeUID": 1875,
+          "paperLabel": "1/2\" Maple Wood Panel",
+          "unitPriceCents": 1000,
+          "active": true
+        }
+      ]
+    },
+    {
+      "id": "fine-art-print-4x6",
+      "productUID": "k3dokcveuPWkagDYk",
+      "productName": "Fine Art Print",
+      "productNodeId": 10000,
+      "widthIn": 4,
+      "heightIn": 6,
+      "aspectRatio": "1.5",
+      "active": true,
+      "sortOrder": 250,
+      "defaultQuantity": 1,
+      "minQuantity": 1,
+      "maxQuantity": 20,
+      "paperOptions": [
+        {
+          "id": "fine-art-aquarelle-rag",
+          "paperAttributeUID": 2906,
+          "paperLabel": "Fine Art Aquarelle Rag",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-photo-rag-baryta",
+          "paperAttributeUID": 2711,
+          "paperLabel": "Fine Art Photo Rag Baryta",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-photo-rag-metallic",
+          "paperAttributeUID": 2904,
+          "paperLabel": "Fine Art Photo Rag Metallic",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-smooth-matte",
+          "paperAttributeUID": 2061,
+          "paperLabel": "Fine Art Smooth Matte",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-torchon",
+          "paperAttributeUID": 2062,
+          "paperLabel": "Fine Art Torchon",
+          "unitPriceCents": 1000,
+          "active": true
+        }
+      ]
+    },
+    {
+      "id": "fine-art-print-5x7",
+      "productUID": "k3dokcveuPWkagDYk",
+      "productName": "Fine Art Print",
+      "productNodeId": 10000,
+      "widthIn": 5,
+      "heightIn": 7,
+      "aspectRatio": "1.4",
+      "active": true,
+      "sortOrder": 260,
+      "defaultQuantity": 1,
+      "minQuantity": 1,
+      "maxQuantity": 20,
+      "paperOptions": [
+        {
+          "id": "fine-art-aquarelle-rag",
+          "paperAttributeUID": 2906,
+          "paperLabel": "Fine Art Aquarelle Rag",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-photo-rag-baryta",
+          "paperAttributeUID": 2711,
+          "paperLabel": "Fine Art Photo Rag Baryta",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-photo-rag-metallic",
+          "paperAttributeUID": 2904,
+          "paperLabel": "Fine Art Photo Rag Metallic",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-smooth-matte",
+          "paperAttributeUID": 2061,
+          "paperLabel": "Fine Art Smooth Matte",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-torchon",
+          "paperAttributeUID": 2062,
+          "paperLabel": "Fine Art Torchon",
+          "unitPriceCents": 1000,
+          "active": true
+        }
+      ]
+    },
+    {
+      "id": "fine-art-print-8x10",
+      "productUID": "k3dokcveuPWkagDYk",
+      "productName": "Fine Art Print",
+      "productNodeId": 10000,
+      "widthIn": 8,
+      "heightIn": 10,
+      "aspectRatio": "1.25",
+      "active": true,
+      "sortOrder": 270,
+      "defaultQuantity": 1,
+      "minQuantity": 1,
+      "maxQuantity": 20,
+      "paperOptions": [
+        {
+          "id": "fine-art-aquarelle-rag",
+          "paperAttributeUID": 2906,
+          "paperLabel": "Fine Art Aquarelle Rag",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-photo-rag-baryta",
+          "paperAttributeUID": 2711,
+          "paperLabel": "Fine Art Photo Rag Baryta",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-photo-rag-metallic",
+          "paperAttributeUID": 2904,
+          "paperLabel": "Fine Art Photo Rag Metallic",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-smooth-matte",
+          "paperAttributeUID": 2061,
+          "paperLabel": "Fine Art Smooth Matte",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-torchon",
+          "paperAttributeUID": 2062,
+          "paperLabel": "Fine Art Torchon",
+          "unitPriceCents": 1000,
+          "active": true
+        }
+      ]
+    },
+    {
+      "id": "fine-art-print-8x12",
+      "productUID": "k3dokcveuPWkagDYk",
+      "productName": "Fine Art Print",
+      "productNodeId": 10000,
+      "widthIn": 8,
+      "heightIn": 12,
+      "aspectRatio": "1.5",
+      "active": true,
+      "sortOrder": 280,
+      "defaultQuantity": 1,
+      "minQuantity": 1,
+      "maxQuantity": 20,
+      "paperOptions": [
+        {
+          "id": "fine-art-aquarelle-rag",
+          "paperAttributeUID": 2906,
+          "paperLabel": "Fine Art Aquarelle Rag",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-photo-rag-baryta",
+          "paperAttributeUID": 2711,
+          "paperLabel": "Fine Art Photo Rag Baryta",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-photo-rag-metallic",
+          "paperAttributeUID": 2904,
+          "paperLabel": "Fine Art Photo Rag Metallic",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-smooth-matte",
+          "paperAttributeUID": 2061,
+          "paperLabel": "Fine Art Smooth Matte",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-torchon",
+          "paperAttributeUID": 2062,
+          "paperLabel": "Fine Art Torchon",
+          "unitPriceCents": 1000,
+          "active": true
+        }
+      ]
+    },
+    {
+      "id": "fine-art-print-11x14",
+      "productUID": "k3dokcveuPWkagDYk",
+      "productName": "Fine Art Print",
+      "productNodeId": 10000,
+      "widthIn": 11,
+      "heightIn": 14,
+      "aspectRatio": "1.2727272727272727",
+      "active": true,
+      "sortOrder": 290,
+      "defaultQuantity": 1,
+      "minQuantity": 1,
+      "maxQuantity": 20,
+      "paperOptions": [
+        {
+          "id": "fine-art-aquarelle-rag",
+          "paperAttributeUID": 2906,
+          "paperLabel": "Fine Art Aquarelle Rag",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-photo-rag-baryta",
+          "paperAttributeUID": 2711,
+          "paperLabel": "Fine Art Photo Rag Baryta",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-photo-rag-metallic",
+          "paperAttributeUID": 2904,
+          "paperLabel": "Fine Art Photo Rag Metallic",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-smooth-matte",
+          "paperAttributeUID": 2061,
+          "paperLabel": "Fine Art Smooth Matte",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-torchon",
+          "paperAttributeUID": 2062,
+          "paperLabel": "Fine Art Torchon",
+          "unitPriceCents": 1000,
+          "active": true
+        }
+      ]
+    },
+    {
+      "id": "fine-art-print-16x20",
+      "productUID": "k3dokcveuPWkagDYk",
+      "productName": "Fine Art Print",
+      "productNodeId": 10000,
+      "widthIn": 16,
+      "heightIn": 20,
+      "aspectRatio": "1.25",
+      "active": true,
+      "sortOrder": 300,
+      "defaultQuantity": 1,
+      "minQuantity": 1,
+      "maxQuantity": 20,
+      "paperOptions": [
+        {
+          "id": "fine-art-aquarelle-rag",
+          "paperAttributeUID": 2906,
+          "paperLabel": "Fine Art Aquarelle Rag",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-photo-rag-baryta",
+          "paperAttributeUID": 2711,
+          "paperLabel": "Fine Art Photo Rag Baryta",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-photo-rag-metallic",
+          "paperAttributeUID": 2904,
+          "paperLabel": "Fine Art Photo Rag Metallic",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-smooth-matte",
+          "paperAttributeUID": 2061,
+          "paperLabel": "Fine Art Smooth Matte",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-torchon",
+          "paperAttributeUID": 2062,
+          "paperLabel": "Fine Art Torchon",
+          "unitPriceCents": 1000,
+          "active": true
+        }
+      ]
+    },
+    {
+      "id": "fine-art-print-20x24",
+      "productUID": "k3dokcveuPWkagDYk",
+      "productName": "Fine Art Print",
+      "productNodeId": 10000,
+      "widthIn": 20,
+      "heightIn": 24,
+      "aspectRatio": "1.2",
+      "active": true,
+      "sortOrder": 310,
+      "defaultQuantity": 1,
+      "minQuantity": 1,
+      "maxQuantity": 20,
+      "paperOptions": [
+        {
+          "id": "fine-art-aquarelle-rag",
+          "paperAttributeUID": 2906,
+          "paperLabel": "Fine Art Aquarelle Rag",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-photo-rag-baryta",
+          "paperAttributeUID": 2711,
+          "paperLabel": "Fine Art Photo Rag Baryta",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-photo-rag-metallic",
+          "paperAttributeUID": 2904,
+          "paperLabel": "Fine Art Photo Rag Metallic",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-smooth-matte",
+          "paperAttributeUID": 2061,
+          "paperLabel": "Fine Art Smooth Matte",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-torchon",
+          "paperAttributeUID": 2062,
+          "paperLabel": "Fine Art Torchon",
+          "unitPriceCents": 1000,
+          "active": true
+        }
+      ]
+    },
+    {
+      "id": "fine-art-print-20x30",
+      "productUID": "k3dokcveuPWkagDYk",
+      "productName": "Fine Art Print",
+      "productNodeId": 10000,
+      "widthIn": 20,
+      "heightIn": 30,
+      "aspectRatio": "1.5",
+      "active": true,
+      "sortOrder": 320,
+      "defaultQuantity": 1,
+      "minQuantity": 1,
+      "maxQuantity": 20,
+      "paperOptions": [
+        {
+          "id": "fine-art-aquarelle-rag",
+          "paperAttributeUID": 2906,
+          "paperLabel": "Fine Art Aquarelle Rag",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-photo-rag-baryta",
+          "paperAttributeUID": 2711,
+          "paperLabel": "Fine Art Photo Rag Baryta",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-photo-rag-metallic",
+          "paperAttributeUID": 2904,
+          "paperLabel": "Fine Art Photo Rag Metallic",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-smooth-matte",
+          "paperAttributeUID": 2061,
+          "paperLabel": "Fine Art Smooth Matte",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "fine-art-torchon",
+          "paperAttributeUID": 2062,
+          "paperLabel": "Fine Art Torchon",
+          "unitPriceCents": 1000,
+          "active": true
+        }
+      ]
+    },
+    {
+      "id": "photo-print-4x6",
+      "productUID": "uLSWZLZzEWY5KWr9z",
+      "productName": "Photo Print",
+      "productNodeId": 10000,
+      "widthIn": 4,
+      "heightIn": 6,
+      "aspectRatio": "1.5",
+      "active": true,
+      "sortOrder": 330,
+      "defaultQuantity": 1,
+      "minQuantity": 1,
+      "maxQuantity": 20,
+      "paperOptions": [
+        {
+          "id": "deep-matte-paper",
+          "paperAttributeUID": 1614,
+          "paperLabel": "Deep Matte Paper",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "lustre-paper",
+          "paperAttributeUID": 5,
+          "paperLabel": "Lustre Paper",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "pearl-paper",
+          "paperAttributeUID": 1613,
+          "paperLabel": "Pearl Paper",
+          "unitPriceCents": 1000,
+          "active": true
+        }
+      ]
+    },
+    {
+      "id": "photo-print-5x7",
+      "productUID": "uLSWZLZzEWY5KWr9z",
+      "productName": "Photo Print",
+      "productNodeId": 10000,
+      "widthIn": 5,
+      "heightIn": 7,
+      "aspectRatio": "1.4",
+      "active": true,
+      "sortOrder": 340,
+      "defaultQuantity": 1,
+      "minQuantity": 1,
+      "maxQuantity": 20,
+      "paperOptions": [
+        {
+          "id": "deep-matte-paper",
+          "paperAttributeUID": 1614,
+          "paperLabel": "Deep Matte Paper",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "lustre-paper",
+          "paperAttributeUID": 5,
+          "paperLabel": "Lustre Paper",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "pearl-paper",
+          "paperAttributeUID": 1613,
+          "paperLabel": "Pearl Paper",
+          "unitPriceCents": 1000,
+          "active": true
+        }
+      ]
+    },
+    {
+      "id": "photo-print-8x10",
+      "productUID": "uLSWZLZzEWY5KWr9z",
+      "productName": "Photo Print",
+      "productNodeId": 10000,
+      "widthIn": 8,
+      "heightIn": 10,
+      "aspectRatio": "1.25",
+      "active": true,
+      "sortOrder": 350,
+      "defaultQuantity": 1,
+      "minQuantity": 1,
+      "maxQuantity": 20,
+      "paperOptions": [
+        {
+          "id": "deep-matte-paper",
+          "paperAttributeUID": 1614,
+          "paperLabel": "Deep Matte Paper",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "lustre-paper",
+          "paperAttributeUID": 5,
+          "paperLabel": "Lustre Paper",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "pearl-paper",
+          "paperAttributeUID": 1613,
+          "paperLabel": "Pearl Paper",
+          "unitPriceCents": 1000,
+          "active": true
+        }
+      ]
+    },
+    {
+      "id": "photo-print-8x12",
+      "productUID": "uLSWZLZzEWY5KWr9z",
+      "productName": "Photo Print",
+      "productNodeId": 10000,
+      "widthIn": 8,
+      "heightIn": 12,
+      "aspectRatio": "1.5",
+      "active": true,
+      "sortOrder": 360,
+      "defaultQuantity": 1,
+      "minQuantity": 1,
+      "maxQuantity": 20,
+      "paperOptions": [
+        {
+          "id": "deep-matte-paper",
+          "paperAttributeUID": 1614,
+          "paperLabel": "Deep Matte Paper",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "lustre-paper",
+          "paperAttributeUID": 5,
+          "paperLabel": "Lustre Paper",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "pearl-paper",
+          "paperAttributeUID": 1613,
+          "paperLabel": "Pearl Paper",
+          "unitPriceCents": 1000,
+          "active": true
+        }
+      ]
+    },
+    {
+      "id": "photo-print-11x14",
+      "productUID": "uLSWZLZzEWY5KWr9z",
+      "productName": "Photo Print",
+      "productNodeId": 10000,
+      "widthIn": 11,
+      "heightIn": 14,
+      "aspectRatio": "1.2727272727272727",
+      "active": true,
+      "sortOrder": 370,
+      "defaultQuantity": 1,
+      "minQuantity": 1,
+      "maxQuantity": 20,
+      "paperOptions": [
+        {
+          "id": "deep-matte-paper",
+          "paperAttributeUID": 1614,
+          "paperLabel": "Deep Matte Paper",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "lustre-paper",
+          "paperAttributeUID": 5,
+          "paperLabel": "Lustre Paper",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "pearl-paper",
+          "paperAttributeUID": 1613,
+          "paperLabel": "Pearl Paper",
+          "unitPriceCents": 1000,
+          "active": true
+        }
+      ]
+    },
+    {
+      "id": "photo-print-16x20",
+      "productUID": "uLSWZLZzEWY5KWr9z",
+      "productName": "Photo Print",
+      "productNodeId": 10000,
+      "widthIn": 16,
+      "heightIn": 20,
+      "aspectRatio": "1.25",
+      "active": true,
+      "sortOrder": 380,
+      "defaultQuantity": 1,
+      "minQuantity": 1,
+      "maxQuantity": 20,
+      "paperOptions": [
+        {
+          "id": "protective-lamination",
+          "paperAttributeUID": 2961,
+          "paperLabel": "Protective Lamination",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "deep-matte-paper",
+          "paperAttributeUID": 1614,
+          "paperLabel": "Deep Matte Paper",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "lustre-paper",
+          "paperAttributeUID": 5,
+          "paperLabel": "Lustre Paper",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "pearl-paper",
+          "paperAttributeUID": 1613,
+          "paperLabel": "Pearl Paper",
+          "unitPriceCents": 1000,
+          "active": true
+        }
+      ]
+    },
+    {
+      "id": "photo-print-20x24",
+      "productUID": "uLSWZLZzEWY5KWr9z",
+      "productName": "Photo Print",
+      "productNodeId": 10000,
+      "widthIn": 20,
+      "heightIn": 24,
+      "aspectRatio": "1.2",
+      "active": true,
+      "sortOrder": 390,
+      "defaultQuantity": 1,
+      "minQuantity": 1,
+      "maxQuantity": 20,
+      "paperOptions": [
+        {
+          "id": "protective-lamination",
+          "paperAttributeUID": 2961,
+          "paperLabel": "Protective Lamination",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "deep-matte-paper",
+          "paperAttributeUID": 1614,
+          "paperLabel": "Deep Matte Paper",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "lustre-paper",
+          "paperAttributeUID": 5,
+          "paperLabel": "Lustre Paper",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "pearl-paper",
+          "paperAttributeUID": 1613,
+          "paperLabel": "Pearl Paper",
+          "unitPriceCents": 1000,
+          "active": true
+        }
+      ]
+    },
+    {
+      "id": "photo-print-20x30",
+      "productUID": "uLSWZLZzEWY5KWr9z",
+      "productName": "Photo Print",
+      "productNodeId": 10000,
+      "widthIn": 20,
+      "heightIn": 30,
+      "aspectRatio": "1.5",
+      "active": true,
+      "sortOrder": 400,
+      "defaultQuantity": 1,
+      "minQuantity": 1,
+      "maxQuantity": 20,
+      "paperOptions": [
+        {
+          "id": "protective-lamination",
+          "paperAttributeUID": 2961,
+          "paperLabel": "Protective Lamination",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "deep-matte-paper",
+          "paperAttributeUID": 1614,
+          "paperLabel": "Deep Matte Paper",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "lustre-paper",
+          "paperAttributeUID": 5,
+          "paperLabel": "Lustre Paper",
+          "unitPriceCents": 1000,
+          "active": true
+        },
+        {
+          "id": "pearl-paper",
+          "paperAttributeUID": 1613,
+          "paperLabel": "Pearl Paper",
+          "unitPriceCents": 1000,
+          "active": true
+        }
+      ]
+    }
+  ]
+}
