@@ -11,18 +11,19 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "@netlify/identity": "^1.1.0",
     "@nuxt/content": "3.7.1",
     "@nuxt/image": "1.11.0",
     "@nuxt/ui": "4.0.1",
+    "@pinia/nuxt": "^0.11.3",
     "@types/square-connect": "^4.20201028.6",
-    "nuxt": "^4.1.3",
+    "nuxt": "^4.4.6",
+    "pinia": "^3.0.4",
     "typescript": "^5.9.3",
-    "vue": "^3.5.22",
-    "vue-router": "^4.5.1"
+    "vue": "^3.5.35",
+    "vue-router": "^4.6.4"
   },
   "packageManager": "pnpm@10.18.3+sha512.bbd16e6d7286fd7e01f6b3c0b3c932cda2965c06a908328f74663f10a9aea51f1129eea615134bf992831b009eabe167ecb7008b597f40ff9bc75946aadfb08d",
   "devDependencies": {
-    "@types/node": "^25.6.1"
+    "@types/node": "^25.9.1"
   }
 }

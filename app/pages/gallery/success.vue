@@ -120,23 +120,12 @@
 </template>
 
 <script setup lang="ts">
-import type { WhccCartItem } from '@/composables/useWhccCart'
-
-type PendingLaunchItem = {
-  productId: string
-  variantId: string
+type CartItem = {
+  id: string
   productTitle: string
   variantLabel: string
   quantity: number
   priceCents: number
-  currency: 'usd'
-  whccSku: string | null
-  whccProductId?: string
-  whccProductNodeId?: number
-  whccPaperAttributeUID?: number
-  whccPaperLabel?: string
-  whccDesignId?: string
-  createdAt: string
 }
 
 type ShippingForm = {
@@ -152,24 +141,17 @@ type ShippingForm = {
   sendNotificationEmailAddress: string
 }
 
-const config = useRuntimeConfig()
-const route = useRoute()
-const {
-  items,
-  subtotalCents,
-  addOrUpdateItem,
-  removeItem,
-  updateQuantity,
-  clearCart,
-  loadFromStorage,
-} = useWhccCart()
-
 const callbackStatus = ref('')
 const callbackError = ref('')
 const submitError = ref('')
 const submitSuccess = ref('')
 const submitting = ref(false)
-const processedEditorIds = useState<string[]>('processed-editor-ids', () => [])
+
+const items = ref<CartItem[]>([])
+
+const subtotalCents = computed(() =>
+  items.value.reduce((sum, item) => sum + item.priceCents * item.quantity, 0)
+)
 
 const shipping = ref<ShippingForm>({
   name: '',
@@ -184,147 +166,12 @@ const shipping = ref<ShippingForm>({
   sendNotificationEmailAddress: '',
 })
 
-const PENDING_STORAGE_KEY = 'krfa-whcc-pending-launches-v1'
-
-onMounted(async () => {
-  loadFromStorage()
-  await processWhccReturn()
-})
-
-function onQuantityInput(itemId: string, inputValue: string) {
-  const parsed = Number.parseInt(inputValue, 10)
-  updateQuantity(itemId, parsed)
+function onQuantityInputEvent(_itemId: string, _event: Event) {
+  // TODO: implement cart quantity update
 }
 
-function onQuantityInputEvent(itemId: string, event: Event) {
-  const target = event.target as HTMLInputElement | null
-  onQuantityInput(itemId, target?.value || '0')
-}
-
-function getApiUrl(path: string) {
-  const baseUrl = (config.public.checkoutApiBaseUrl || '').replace(/\/$/, '')
-  return baseUrl ? `${baseUrl}${path}` : path
-}
-
-function readPendingLaunches(): Record<string, PendingLaunchItem> {
-  if (import.meta.server) {
-    return {}
-  }
-
-  try {
-    const raw = window.localStorage.getItem(PENDING_STORAGE_KEY)
-    if (!raw) {
-      return {}
-    }
-
-    const parsed = JSON.parse(raw)
-    return parsed && typeof parsed === 'object' ? parsed : {}
-  } catch {
-    return {}
-  }
-}
-
-function writePendingLaunches(launches: Record<string, PendingLaunchItem>) {
-  if (import.meta.server) {
-    return
-  }
-
-  window.localStorage.setItem(PENDING_STORAGE_KEY, JSON.stringify(launches))
-}
-
-async function processWhccReturn() {
-  const checkoutId = String(route.query.checkout_id || '').trim()
-  const editorId = String(route.query.editor_id || '').trim()
-
-  if (!checkoutId || !editorId || processedEditorIds.value.includes(editorId)) {
-    return
-  }
-
-  callbackError.value = ''
-  callbackStatus.value = 'Finalizing your edited item and adding it to cart...'
-
-  const pendingLaunches = readPendingLaunches()
-  const pendingItem = pendingLaunches[checkoutId]
-
-  if (!pendingItem) {
-    callbackStatus.value = ''
-    callbackError.value = 'Could not find this editor launch in local state. Add the item again from the gallery.'
-    return
-  }
-
-  try {
-    const response = await fetch(getApiUrl('/api/whcc-editor-complete'), {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-      },
-      body: JSON.stringify({
-        checkoutId,
-        editorId,
-        pendingItem,
-      }),
-    })
-
-    const payload = (await response.json()) as {
-      cartItem?: WhccCartItem
-      error?: string
-    }
-
-    if (!response.ok || !payload.cartItem) {
-      throw new Error(payload.error || 'Unable to finalize edited item.')
-    }
-
-    addOrUpdateItem(payload.cartItem)
-    delete pendingLaunches[checkoutId]
-    writePendingLaunches(pendingLaunches)
-    processedEditorIds.value = [...processedEditorIds.value, editorId]
-    callbackStatus.value = 'Item added to cart.'
-  } catch (error) {
-    callbackStatus.value = ''
-    callbackError.value = error instanceof Error ? error.message : 'Failed to add item to cart.'
-  }
-}
-
-async function submitOrder() {
-  submitError.value = ''
-  submitSuccess.value = ''
-
-  if (!items.value.length) {
-    submitError.value = 'Your cart is empty.'
-    return
-  }
-
-  submitting.value = true
-
-  try {
-    const response = await fetch(getApiUrl('/api/submit-whcc-order'), {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-      },
-      body: JSON.stringify({
-        cartItems: items.value,
-        shipping: shipping.value,
-      }),
-    })
-
-    const payload = (await response.json()) as {
-      confirmationId?: string
-      confirmationMessage?: string
-      error?: string
-    }
-
-    if (!response.ok || !payload.confirmationId) {
-      throw new Error(payload.error || 'Unable to place order.')
-    }
-
-    clearCart()
-    submitSuccess.value = `${payload.confirmationMessage || 'Order submitted.'} Confirmation ID: ${payload.confirmationId}`
-  } catch (error) {
-    submitError.value = error instanceof Error ? error.message : 'Unable to place order.'
-  } finally {
-    submitting.value = false
-  }
+function removeItem(_itemId: string) {
+  // TODO: implement cart item removal
 }
 
 function formatMoney(cents: number) {
@@ -332,6 +179,10 @@ function formatMoney(cents: number) {
     style: 'currency',
     currency: 'USD',
   }).format(cents / 100)
+}
+
+function submitOrder() {
+  // TODO: implement order submission
 }
 
 useSeoMeta({

@@ -11,33 +11,6 @@
 </template>
 
 <script setup lang="ts">
-const route = useRoute()
-const PENDING_STORAGE_KEY = 'krfa-whcc-pending-launches-v1'
-
-onMounted(() => {
-  const checkoutId = String(route.query.checkout_id || '').trim()
-  if (!checkoutId || import.meta.server) {
-    return
-  }
-
-  try {
-    const raw = window.localStorage.getItem(PENDING_STORAGE_KEY)
-    if (!raw) {
-      return
-    }
-
-    const launches = JSON.parse(raw)
-    if (!launches || typeof launches !== 'object') {
-      return
-    }
-
-    delete launches[checkoutId]
-    window.localStorage.setItem(PENDING_STORAGE_KEY, JSON.stringify(launches))
-  } catch {
-    // Ignore local storage cleanup failures.
-  }
-})
-
 useSeoMeta({
   title: 'Editor Session Cancelled',
   description: 'The editor session was closed and no item was added to cart.',

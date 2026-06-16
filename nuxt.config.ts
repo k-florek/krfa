@@ -15,7 +15,7 @@ export default defineNuxtConfig({
     '@/assets/fonts/Squidrock/squidrock.css',
     '@/assets/fonts/Refresh-Screen/refresh-screen.css'
   ],
-  modules: ['@nuxt/content', '@nuxt/image', '@nuxt/ui'],
+  modules: ['@nuxt/content', '@nuxt/image', '@nuxt/ui','@pinia/nuxt'],
   app: {
     head: {
       htmlAttrs: {
