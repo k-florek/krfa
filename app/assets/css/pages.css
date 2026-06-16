@@ -1,7 +1,27 @@
 .gallery-page {
-  max-width: 1300px;
-  margin: 0 auto;
-  padding: 2rem 1rem 4rem;
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  max-width: 100%;
+  padding: 2rem 1rem 0;
+  overflow: hidden;
+}
+
+.gallery-page .gallery-header {
+  flex-shrink: 0;
+}
+
+.pixieset-embed {
+  flex: 1;
+  overflow: hidden;
+  margin-top: 1rem;
+}
+
+.pixieset-embed iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
 }
 
 .gallery-header {
